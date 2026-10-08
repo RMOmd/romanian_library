@@ -671,6 +671,27 @@ input.plain{font:inherit;padding:5px 9px;border:1px solid var(--ink-3);border-ra
 .u13out{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 12px;border-radius:var(--r);background:var(--red-soft)}
 .u13out .big3{overflow-wrap:anywhere}
 
+
+/* answer states: correct = green, wrong = red (independent of the book accent) */
+:root{--bad:#c62f2f;--bad-soft:rgba(198,47,47,.09)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bad:#ff7b7b;--bad-soft:rgba(255,123,123,.13)}}
+:root[data-theme="dark"]{--bad:#ff7b7b;--bad-soft:rgba(255,123,123,.13)}
+input.ans.ok,.who.done input.ans{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ink)}
+input.ans.ok{box-shadow:inset 0 -2px 0 var(--ok)}
+input.ans.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.who.done{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,transparent)}
+.who.bad{border-color:var(--bad)}
+.uo.ok button.on{background:color-mix(in srgb,var(--ok) 15%,transparent);border-color:var(--ok);color:var(--ok)}
+.uo.bad button.on{background:color-mix(in srgb,var(--bad) 12%,transparent);border-color:var(--bad);color:var(--bad)}
+.sel2.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,transparent)}
+.sel2.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.ordw.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,transparent)}
+.ordseq li.wrong .ro{color:var(--bad)}
+.pickimg.ok{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok)}
+.pickimg.bad{border-color:var(--bad)}
+.dots i.no{background:var(--bad)}
+.opts button.no{background:color-mix(in srgb,var(--bad) 12%,transparent);border-color:var(--bad);color:var(--bad)}
+.pickimg.no{border-color:var(--bad)}
 </style>
 
 <div class="shell">
