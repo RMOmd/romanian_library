@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Румынская библиотека</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<style>
+/* Layout: the same squared-notebook paper as the books, with real wooden shelves; spines stand on planks, a picked book slides out and opens its card below. */
+:root{
+  --paper:#f6f7f3; --grid:rgba(48,78,150,.075); --sheet:#ffffff; --ink:#1d2b55; --ink-2:#55618a; --ink-3:#8c94b0;
+  --red:#c42038; --red-soft:rgba(196,32,56,.09); --line:#dde1ec; --chip:#eef1f8;
+  --wood:#9c6b43; --wood-hi:#c1905f; --wood-lo:#6d4529; --back:#e9e3d6; --ghost:rgba(29,43,85,.16);
+  --f-display:"Alegreya","Georgia","Times New Roman",serif;
+  --f-body:"PT Sans","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"PT Mono","Consolas","Menlo",monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11151f; --grid:rgba(150,170,230,.05); --sheet:#171c28; --ink:#e3e8f6; --ink-2:#a6b0cc; --ink-3:#6f7995;
+  --red:#ff6f80; --red-soft:rgba(255,111,128,.12); --line:#2a3142; --chip:#212839;
+  --wood:#5b3d27; --wood-hi:#7a5236; --wood-lo:#3a2617; --back:#1c1915; --ghost:rgba(227,232,246,.14); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11151f; --grid:rgba(150,170,230,.05); --sheet:#171c28; --ink:#e3e8f6; --ink-2:#a6b0cc; --ink-3:#6f7995;
+  --red:#ff6f80; --red-soft:rgba(255,111,128,.12); --line:#2a3142; --chip:#212839;
+  --wood:#5b3d27; --wood-hi:#7a5236; --wood-lo:#3a2617; --back:#1c1915; --ghost:rgba(227,232,246,.14); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:24px;padding-block:40px 80px;display:flex;flex-direction:column;gap:36px}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+h1 .art{color:var(--red)}
+.lede{color:var(--ink-2);font-size:1.08rem;max-width:60ch}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--ink-2);font-size:.92rem}
+.stats b{color:var(--ink);font-family:var(--f-mono);font-weight:400}
+
+/* bookcase */
+.case{display:flex;flex-direction:column;gap:34px}
+.shelf{display:flex;flex-direction:column;gap:0}
+.shelf-name{font-family:var(--f-display);font-style:italic;color:var(--red);font-size:1.1rem;margin-bottom:8px}
+.row{position:relative;display:flex;align-items:flex-end;gap:6px;padding:44px 22px 0;min-height:280px;overflow-x:auto;overflow-y:hidden;
+  background:linear-gradient(180deg,var(--back),var(--back) 70%,color-mix(in srgb,var(--back) 80%,#000 20%));border-radius:6px 6px 0 0;
+  box-shadow:inset 0 10px 18px -12px rgba(0,0,0,.35),inset 8px 0 14px -10px rgba(0,0,0,.3),inset -8px 0 14px -10px rgba(0,0,0,.3);scrollbar-width:thin}
+.plank{height:18px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,var(--wood-hi),var(--wood) 45%,var(--wood-lo));box-shadow:0 8px 14px -8px rgba(0,0,0,.45)}
+.spine{flex:none;position:relative;border:0;padding:0;cursor:pointer;border-radius:3px 3px 1px 1px;
+  width:var(--w);height:var(--h);background:var(--c1);color:var(--c2);
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.12),inset -4px 0 6px rgba(0,0,0,.25),0 2px 4px rgba(0,0,0,.25);
+  transform-origin:bottom center;transition:transform .35s cubic-bezier(.2,.9,.3,1.2),box-shadow .3s;
+  animation:arrive .7s cubic-bezier(.2,.9,.3,1.1) both;animation-delay:calc(var(--i)*110ms + 150ms);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding-block:14px 12px}
+@keyframes arrive{from{transform:translateY(-40px) rotate(-4deg);opacity:0}}
+.spine:hover{transform:translateY(-10px)}
+.spine[aria-pressed="true"]{transform:translateY(-26px) rotate(-3deg);box-shadow:inset 3px 0 0 rgba(255,255,255,.12),inset -4px 0 6px rgba(0,0,0,.25),0 18px 24px -10px rgba(0,0,0,.45)}
+.spine .band{width:70%;height:3px;background:var(--c3);border-radius:2px}
+.spine .band.b2{margin-top:4px}
+.spine .t{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--f-display);font-weight:700;font-size:.95rem;line-height:1.15;max-height:calc(var(--h) - 140px);overflow:hidden;text-align:left}
+.spine .a{white-space:nowrap;writing-mode:vertical-rl;transform:rotate(180deg);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.spine .yr{font-family:var(--f-mono);font-size:.72rem;opacity:.85}
+.spine .badge{position:absolute;top:-9px;right:-6px;background:var(--red);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:1px 6px;border-radius:999px;text-transform:uppercase}
+.slot{flex:none;width:var(--w);height:var(--h);border:2px dashed var(--ghost);border-radius:3px;display:grid;place-items:center;color:var(--ink-3);font-size:.7rem;text-align:center;
+  writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;text-transform:uppercase;opacity:.9;animation:arrive .7s ease both;animation-delay:calc(var(--i)*110ms + 150ms)}
+.bookend{flex:none;width:16px;height:120px;background:linear-gradient(90deg,var(--wood-lo),var(--wood));border-radius:3px 3px 0 0;margin-left:auto}
+
+/* card */
+.card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:24px;animation:open .45s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes open{from{opacity:0;transform:translateY(14px)}}
+.cover{aspect-ratio:3/4.1;max-width:100%;border-radius:3px 6px 6px 3px;background:var(--c1);color:var(--c2);padding:18px 16px;display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:inset 6px 0 0 rgba(0,0,0,.18),inset 8px 0 0 rgba(255,255,255,.08),0 12px 22px -12px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.cover .ca{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.cover .ct{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.12}
+.cover .cm{font-family:var(--f-display);font-size:2.6rem;line-height:1;color:var(--c3);letter-spacing:.04em;font-weight:700}
+.cover .cy{font-family:var(--f-mono);font-size:.75rem;opacity:.85}
+.info{display:flex;flex-direction:column;gap:14px;min-width:0}
+.info h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:700}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--ink-2);font-size:.92rem}
+.meta b{color:var(--ink);font-weight:700}
+.desc{max-width:62ch}
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.toc span{background:var(--chip);border-radius:999px;padding:2px 11px;font-size:.88rem}
+.toc span.off{opacity:.45}
+.toc span i{font-style:normal;font-family:var(--f-mono);color:var(--red);margin-right:4px;font-size:.8rem}
+.feat{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink-2);font-size:.9rem}
+.feat span::before{content:"✓ ";color:var(--red);font-weight:700}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);background:var(--ink);color:var(--sheet);border-radius:var(--r);padding:10px 20px;cursor:pointer;font-weight:700;text-decoration:none;font-size:1rem}
+.btn:hover{background:var(--red);border-color:var(--red)}
+.hint{color:var(--ink-3);font-size:.85rem}
+.empty-card{color:var(--ink-2);text-align:center;padding:28px;border:1px dashed var(--ghost);border-radius:var(--r)}
+footer{border-top:1px solid var(--line);padding-top:16px;color:var(--ink-3);font-size:.85rem}
+
+@media (max-width:640px){
+  .wrap{padding-inline:16px;padding-block:28px 60px}
+  .card{grid-template-columns:minmax(0,1fr);padding:18px}
+  .cover{width:170px}
+  .row{padding:40px 14px 0;min-height:270px}.cover .cm{font-size:2rem}.cover .ct{font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Домашняя библиотека</span>
+    <h1>Bibliotec<span class="art">a</span></h1>
+    <p class="lede">Румынский язык для русскоязычных учеников. Выберите книгу на полке: она выдвинется, а ниже появится её описание.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <main class="case" id="case"></main>
+  <section id="detail" aria-live="polite"></section>
+
+  <footer>Книги работают без интернета. Все файлы лежат в одной папке: эта страница и папка <span style="font-family:var(--f-mono)">books</span> рядом с ней.</footer>
+</div>
+
+<script>
+/*
+  КАК ДОБАВИТЬ КНИГУ
+  1. Положите HTML-файл книги в папку books/ рядом с этой страницей.
+  2. Добавьте запись в массив BOOKS ниже. shelf — название полки (новая полка появится сама).
+*/
+const BOOKS=[
+ {id:'grammatika',file:'books/grammatika-rumynskogo.html',shelf:'Грамматика',
+  title:'Грамматика румынского языка в таблицах',spineTitle:'Грамматика в таблицах',ro:'Gramatica limbii române în tabele',
+  author:'О. А. Настасенко',spineAuthor:'Настасенко',year:1996,publisher:'Кишинёв: VIRT',pages:80,
+  colors:['#1d2b55','#f3efe4','#e0465a'],mark:'Ă Â Î',
+  desc:'Вся грамматика в сжатых таблицах: от артиклей до последнего времени глагола. Интерактивное издание: формы меняются на глазах, есть тренажёры и тесты к каждой главе.',
+  chapters:['Существительное','Местоимение','Прилагательное','Числительное','Глагол','Служебные слова','Приложения'],
+  features:['«Машина времени» для 35 глаголов','Тренажёр спряжения','Счётная машина','7 тестов']},
+ {id:'axan1',file:'books/gramatica-functionala-1.html',shelf:'Грамматика',
+  title:'Gramatică funcțională în structuri comunicative și imagini',spineTitle:'Gramatică funcțională',ro:'Ghid gramatical pentru studiul RLN · Nivelul 1',
+  author:'Алексей Аксан',spineAuthor:'Acsan',year:2008,publisher:'Кишинёв: Casa Limbii Române',pages:132,
+  colors:['#0d5c46','#f1efe6','#f2c14e'],mark:'-ul -a',
+  desc:'Грамматика через живые ситуации: «Кто это?», «Что он делает?», «Сколько стоит?». Уроки с картинками, диалогами и упражнениями с ключом. Интерактивное издание: игры, магазин, проверка ответов.',
+  chapters:['Алфавит и счёт','Род и артикль','Местоимения, a fi','Мн. ч. мужского рода','Предлоги, a avea','Мн. ч. ж. и ср. рода','Глагол: настоящее время','Дательный, a-i plăcea','Conjunctiv','Чередования во мн. ч.','Итоги и таблицы'],chapterStart:0,
+  features:['10 уроков и итоговые таблицы','Упражнения с проверкой по ключу','Спряжение 70+ глаголов','10 тестов']}
+];
+const SLOTS_PER_SHELF=6;
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const plural=(n,a,b,c)=>n%10===1&&n%100!==11?a:n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?b:c;
+const last=store.get('lib_last');
+let sel=store.get('lib_sel')||(BOOKS[0]&&BOOKS[0].id);
+const vars=b=>`--c1:${b.colors[0]};--c2:${b.colors[1]};--c3:${b.colors[2]}`;
+
+function render(){
+  const shelves=[...new Set(BOOKS.map(b=>b.shelf))];
+  if(!shelves.length)shelves.push('Полка');
+  const pages=BOOKS.reduce((s,b)=>s+(b.pages||0),0);
+  $('#stats').innerHTML=`<span><b>${BOOKS.length}</b> ${plural(BOOKS.length,'книга','книги','книг')}</span><span><b>${pages}</b> ${plural(pages,'страница','страницы','страниц')} оригиналов</span><span><b>${shelves.length}</b> ${plural(shelves.length,'полка','полки','полок')}</span>`;
+  let i=0;
+  $('#case').innerHTML=shelves.map(sh=>{
+    const bs=BOOKS.filter(b=>b.shelf===sh);
+    const books=bs.map(b=>{const w=Math.max(60,Math.min(92,44+b.pages/3)),h=Math.max(214,Math.min(240,200+b.pages/2));
+      return `<button class="spine" style="${vars(b)};--w:${w}px;--h:${h}px;--i:${i++}" data-id="${b.id}" aria-pressed="${b.id===sel}" aria-label="${esc(b.title)}">${last===b.id?'<span class="badge">читаю</span>':''}<span><span class="band"></span><span class="band b2"></span></span><span class="t">${esc(b.spineTitle||b.title)}</span><span class="a">${esc(b.spineAuthor||b.author)}</span><span class="yr">${b.year||''}</span></button>`}).join('');
+    const hs=[205,190,218,198,210,186];
+    const slots=Array.from({length:Math.max(2,SLOTS_PER_SHELF-bs.length)},(_,k)=>`<div class="slot" style="--w:${[58,64,52,70,60,56][k%6]}px;--h:${hs[k%6]}px;--i:${i++}" aria-hidden="true">${k===0?'скоро':''}</div>`).join('');
+    return `<section class="shelf" aria-label="Полка: ${esc(sh)}"><div class="shelf-name">${esc(sh)}</div><div class="row">${books}${slots}<div class="bookend" aria-hidden="true"></div></div><div class="plank" aria-hidden="true"></div></section>`;
+  }).join('');
+  renderDetail();
+}
+function renderDetail(){
+  const b=BOOKS.find(x=>x.id===sel);
+  if(!b){$('#detail').innerHTML='<div class="empty-card">Выберите книгу на полке.</div>';return}
+  $('#detail').innerHTML=`<article class="card" key="${b.id}">
+    <div class="cover" style="${vars(b)}"><span class="ca">${esc(b.author)}</span><span class="cm">${esc(b.mark||'')}</span><span class="ct">${esc(b.title)}</span><span class="cy">${esc(b.publisher||'')}${b.year?' · '+b.year:''}</span></div>
+    <div class="info">
+      <span class="eyebrow">${esc(b.shelf)}</span>
+      <h2>${esc(b.title)}</h2>
+      <div class="meta"><span><b>${esc(b.author)}</b></span>${b.ro?`<span style="font-family:var(--f-display);font-style:italic">${esc(b.ro)}</span>`:''}<span>${esc(b.publisher||'')}${b.year?', '+b.year:''}</span>${b.pages?`<span>${b.pages} стр. оригинала</span>`:''}</div>
+      <p class="desc">${esc(b.desc)}</p>
+      ${b.chapters?`<div class="toc">${b.chapters.map((c,k)=>{const n=(b.chapterStart??1)+k;const last=k===b.chapters.length-1&&/Итоги/.test(c);const off=b.ready&&!b.ready.includes(n);return `<span class="${off?'off':''}"><i>${/Прилож/.test(c)?'П':last?'∑':n}</i>${esc(c)}</span>`}).join('')}</div>`:''}${b.ready?`<p class="hint">Готово уроков: ${b.ready.length} из ${b.chapters.length}. Остальные появятся позже.</p>`:''}
+      ${b.features?`<div class="feat">${b.features.map(f=>`<span>${esc(f)}</span>`).join('')}</div>`:''}
+      <div class="actions"><a class="btn" href="${esc(b.file)}" data-open="${b.id}">${last===b.id?'Продолжить чтение':'Открыть книгу'} →</a><span class="hint">Книга откроется на той главе, где вы остановились.</span></div>
+    </div></article>`;
+}
+document.addEventListener('click',e=>{
+  const s=e.target.closest('.spine');
+  if(s){if(sel===s.dataset.id){location.href=BOOKS.find(b=>b.id===sel).file;return}sel=s.dataset.id;store.set('lib_sel',sel);document.querySelectorAll('.spine').forEach(x=>x.setAttribute('aria-pressed',x.dataset.id===sel));renderDetail();if(innerWidth<900)$('#detail').scrollIntoView({behavior:'smooth',block:'start'});return}
+  const o=e.target.closest('[data-open]');if(o)store.set('lib_last',o.dataset.open);
+});
+render();
+</script>
+
+</body>
+</html>
