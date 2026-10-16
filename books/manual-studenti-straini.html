@@ -1,0 +1,3251 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Limba română. Manual pentru studenții străini — Grigore Brâncuș (Universitatea din București)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500;1,700&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap">
+<style>
+
+:root {
+  --paper: #fbf9f5;
+  --grid: rgba(122, 28, 48, 0.065);
+  --sheet: #ffffff;
+  --ink: #201418;
+  --ink-2: #544349;
+  --ink-3: #8a777e;
+  --red: #7a1c30;              /* Bucharest academic burgundy */
+  --red-soft: rgba(122, 28, 48, 0.08);
+  --red-border: rgba(122, 28, 48, 0.22);
+  --gold: #d49a37;             /* Bucharest academic amber/gold */
+  --gold-soft: rgba(212, 154, 55, 0.12);
+  --margin: rgba(122, 28, 48, 0.32);
+  --mark: #fef0cd;
+  --mark-ink: #4a3406;
+  --line: #e8ded8;
+  --chip: #f4ece6;
+  --ok: #1c7c4d;
+  --ok-soft: rgba(28, 124, 77, 0.1);
+  --bad: #c5283d;
+  --bad-soft: rgba(197, 40, 61, 0.1);
+  --f-display: "Alegreya", "Georgia", "Times New Roman", serif;
+  --f-body: "PT Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "PT Mono", "Consolas", "Menlo", monospace;
+  --s-1: 0.8125rem;
+  --s0: 1rem;
+  --s1: 1.125rem;
+  --s2: 1.375rem;
+  --s3: 1.75rem;
+  --s4: 2.3rem;
+  --s5: clamp(2.4rem, 6vw, 4.2rem);
+  --r: 7px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #161013;
+    --grid: rgba(212, 154, 55, 0.05);
+    --sheet: #1f171b;
+    --ink: #f5ebe6;
+    --ink-2: #b8a6ad;
+    --ink-3: #847279;
+    --red: #e6687e;
+    --red-soft: rgba(230, 104, 126, 0.14);
+    --red-border: rgba(230, 104, 126, 0.3);
+    --gold: #f0b754;
+    --gold-soft: rgba(240, 183, 84, 0.15);
+    --margin: rgba(230, 104, 126, 0.35);
+    --mark: #593e11;
+    --mark-ink: #fef4db;
+    --line: #33272d;
+    --chip: #2a1f25;
+    --ok: #34d399;
+    --ok-soft: rgba(52, 211, 153, 0.14);
+    --bad: #fb7185;
+    --bad-soft: rgba(251, 113, 133, 0.14);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #161013;
+  --grid: rgba(212, 154, 55, 0.05);
+  --sheet: #1f171b;
+  --ink: #f5ebe6;
+  --ink-2: #b8a6ad;
+  --ink-3: #847279;
+  --red: #e6687e;
+  --red-soft: rgba(230, 104, 126, 0.14);
+  --red-border: rgba(230, 104, 126, 0.3);
+  --gold: #f0b754;
+  --gold-soft: rgba(240, 183, 84, 0.15);
+  --margin: rgba(230, 104, 126, 0.35);
+  --mark: #593e11;
+  --mark-ink: #fef4db;
+  --line: #33272d;
+  --chip: #2a1f25;
+  --ok: #34d399;
+  --ok-soft: rgba(52, 211, 153, 0.14);
+  --bad: #fb7185;
+  --bad-soft: rgba(251, 113, 133, 0.14);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--s0);
+  line-height: 1.55;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; line-height: 1.2; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; border-radius: 3px; }
+
+.ro { font-family: var(--f-display); font-weight: 500; }
+.art { color: var(--red); font-weight: 700; }
+.gold { color: var(--gold); }
+.end { color: var(--red); font-weight: 700; }
+.muted { color: var(--ink-2); }
+.eyebrow { font-size: var(--s-1); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); font-weight: 700; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-family: var(--f-mono); font-size: 0.78rem; font-weight: 700; background: var(--red-soft); color: var(--red); margin-left: 6px; vertical-align: middle; }
+.badge-gold { background: var(--gold-soft); color: var(--gold); }
+
+/* Shell layout */
+.shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 36px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 24px;
+  padding-block: 28px 80px;
+}
+
+/* Sidebar TOC */
+.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 24px);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 0.92rem;
+}
+.backlib {
+  color: var(--red);
+  text-decoration: none;
+  font-size: var(--s-1);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.15s;
+}
+.backlib:hover { opacity: 0.8; text-decoration: underline; }
+.toc .book {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+.toc .book small {
+  display: block;
+  font-family: var(--f-body);
+  font-weight: 400;
+  color: var(--ink-2);
+  font-size: var(--s-1);
+  margin-top: 4px;
+}
+.prog {
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.prog i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--red);
+  transition: width 0.3s;
+}
+.toc .chapters {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.toc .chapters button {
+  all: unset;
+  cursor: pointer;
+  color: var(--ink-2);
+  padding: 6px 10px;
+  border-radius: var(--r);
+  line-height: 1.25;
+  font-size: 0.88rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.15s, color 0.15s;
+}
+.toc .chapters button:hover {
+  background: var(--chip);
+  color: var(--ink);
+}
+.toc .chapters button[aria-current="true"] {
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--red);
+  font-weight: 700;
+}
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: var(--s-1);
+  color: var(--ink-2);
+}
+.theme-btn {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+/* Main page column */
+.page {
+  min-width: 0;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  position: relative;
+}
+.page::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--margin);
+}
+
+/* Hero section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+  border-radius: var(--r);
+  padding: 6px 12px;
+  font-size: var(--s-1);
+  color: var(--ink-2);
+  width: fit-content;
+}
+.hero .word {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--s5);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  user-select: none;
+  cursor: pointer;
+}
+.hero .word .art {
+  display: inline-block;
+  animation: fuse 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s both;
+}
+@keyframes fuse {
+  0% { transform: translateX(0.9em) rotate(6deg); }
+  55% { transform: translateX(-0.04em); }
+  100% { transform: none; }
+}
+.hero h1 { font-size: var(--s3); font-weight: 700; color: var(--ink); }
+.hero .lede { font-size: var(--s1); max-width: 68ch; color: var(--ink-2); }
+.hero .lede b { color: var(--ink); }
+
+.quick-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.quick-bar button {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 7px 13px;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.quick-bar button:hover {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* Sections and articles */
+article.chapter {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-margin-top: 24px;
+}
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sec-head h2 { font-size: var(--s3); font-weight: 700; }
+.sec-head h3 { font-size: var(--s2); font-weight: 700; }
+.sec-head .ro-title {
+  font-family: var(--f-display);
+  font-style: italic;
+  color: var(--red);
+  font-size: var(--s1);
+}
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 70ch;
+  line-height: 1.6;
+}
+p.prose { display: block; }
+.prose em { font-style: italic; color: var(--ink); }
+.note {
+  border-left: 3px solid var(--gold);
+  background: var(--sheet);
+  padding: 12px 16px;
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 0.95rem;
+  display: block;
+  max-width: 70ch;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.note b.t {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--s-1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+mark { background: var(--mark); color: var(--mark-ink); padding: 0 0.2em; border-radius: 2px; }
+
+/* Morph Stage */
+.stage {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  min-height: 210px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.stage .big {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.15;
+  min-height: 1.2em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stage .big .w { white-space: nowrap; }
+.stage .cap { color: var(--ink-2); font-size: 0.95rem; max-width: 58ch; }
+.stage .rule {
+  font-family: var(--f-mono);
+  font-size: 0.88rem;
+  background: var(--red-soft);
+  color: var(--red);
+  padding: 2px 9px;
+  border-radius: 4px;
+}
+.stage .row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stage .modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  background: var(--chip);
+  padding: 4px;
+  border-radius: calc(var(--r) + 2px);
+}
+.stage .modes button {
+  border: 0;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: var(--r);
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.stage .modes button[aria-pressed="true"] {
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  font-weight: 700;
+}
+
+/* Audio & Buttons */
+.iconbtn {
+  border: 1px solid var(--line);
+  background: var(--sheet);
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--ink-2);
+  transition: color 0.15s, border-color 0.15s, transform 0.15s;
+  flex: none;
+}
+.iconbtn:hover {
+  color: var(--red);
+  border-color: var(--red);
+  transform: scale(1.06);
+}
+.btn {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--sheet);
+  border-radius: var(--r);
+  padding: 7px 16px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn.ghost:hover {
+  background: var(--chip);
+  border-color: var(--ink);
+}
+
+/* Tables */
+.tbl-wrap {
+  overflow-x: auto;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+th {
+  font-size: var(--s-1);
+  color: var(--ink-2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--chip);
+}
+td.ro, td .ro { font-size: 1.08rem; }
+tbody tr.w { cursor: pointer; transition: background 0.15s; }
+tbody tr.w:hover { background: var(--chip); }
+tbody tr.w.sel { background: var(--red-soft); }
+td.rule { font-family: var(--f-mono); color: var(--red); font-size: 0.85rem; white-space: nowrap; }
+td.tr { color: var(--ink-2); font-size: 0.9rem; }
+
+/* Dialogues */
+.dialogue-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+}
+.dline {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  padding-block: 6px;
+  border-bottom: 1px dashed var(--line);
+}
+.dline:last-child { border-bottom: 0; }
+.dline-spk {
+  font-weight: 700;
+  font-size: var(--s-1);
+  color: var(--red);
+  min-width: 90px;
+}
+.dline-body { display: flex; flex-direction: column; gap: 2px; }
+.dline-ro { font-family: var(--f-display); font-size: 1.15rem; font-weight: 500; }
+.dline-ru { color: var(--ink-2); font-size: 0.88rem; }
+
+/* Vocabulary cards grid */
+.vocab-grid, .wordgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.wcard {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 11px 15px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 3px 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  user-select: none;
+}
+.wcard:hover {
+  border-color: var(--red);
+  background: var(--chip);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+.wcard .ro {
+  grid-column: 1;
+  grid-row: 1;
+  font-family: var(--f-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.wcard .ru {
+  grid-column: 1;
+  grid-row: 2;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+.wcard::after {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a1c30' stroke-width='2'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'%3E%3C/polygon%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+  transition: background-color 0.15s, border-color 0.15s;
+  justify-self: end;
+}
+.wcard:hover::after {
+  background-color: var(--sheet);
+  border-color: var(--red);
+}
+
+/* Exercises */
+.exercise-box {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+}
+.ex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  line-height: 1.8;
+}
+.ex-row input.ans {
+  font: inherit;
+  font-family: var(--f-display);
+  font-size: 1.08rem;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  width: 14ch;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ex-row input.ans.ok { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+.ex-row input.ans.bad { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.ex-hint {
+  display: none;
+  background: var(--chip);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+/* Quiz box */
+.quiz {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.qtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-2);
+  font-size: var(--s-1);
+}
+.dots { display: flex; gap: 4px; flex-wrap: wrap; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.dots i.ok { background: var(--ok); }
+.dots i.no { background: var(--bad); }
+.dots i.cur { box-shadow: 0 0 0 2px var(--ink); }
+.qq { font-family: var(--f-display); font-size: var(--s2); font-weight: 700; }
+.opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.opts button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 10px 14px;
+  border-radius: var(--r);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+  transition: all 0.15s;
+}
+.opts button:hover:not(:disabled) {
+  border-color: var(--red);
+  background: var(--sheet);
+}
+.opts button.ok {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  color: var(--ok);
+  font-weight: 700;
+}
+.opts button.no {
+  background: var(--bad-soft);
+  border-color: var(--bad);
+  color: var(--bad);
+}
+.why { font-size: 0.95rem; color: var(--ink-2); min-height: 1.4em; }
+
+/* Responsive adjustments */
+@media (max-width: 860px) {
+  .shell { grid-template-columns: minmax(0, 1fr); padding-inline: 16px; }
+  .toc { position: static; }
+  .page::before { display: none; }
+  .opts { grid-template-columns: minmax(0, 1fr); }
+}
+
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Sticky Sidebar Navigation -->
+  <aside class="toc" aria-label="Cuprinsul manualului">
+    <a class="backlib" href="../index.html" title="Înapoi la biblioteca de limba română">← В библиотеку</a>
+
+    <div class="book">
+      Limba română
+      <small>Manual pentru studenții străini · Anul pregătitor (Semestrul I)</small>
+      <div style="font-size:0.78rem;color:var(--ink-3);margin-top:4px;">G. Brâncuș · A. Ionescu · M. Saramandu</div>
+    </div>
+
+    <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+
+    <nav class="chapters" id="chapBtns">
+      <button onclick="switchChapter(0)" aria-current="true">
+        <span>0. Fonetică și alfabet</span>
+        <span class="badge">ĂÂÎȘȚ</span>
+      </button>
+      <button onclick="switchChapter(1)" aria-current="false">
+        <span>1. Lecțiile 1–7: Baza</span>
+        <span class="badge">A fi · Art.</span>
+      </button>
+      <button onclick="switchChapter(2)" aria-current="false">
+        <span>2. Lecțiile 8–15: Trecut</span>
+        <span class="badge">Perf. · Ac.</span>
+      </button>
+      <button onclick="switchChapter(3)" aria-current="false">
+        <span>3. Lecțiile 16–20: Cazuri</span>
+        <span class="badge">G-D · Viitor</span>
+      </button>
+      <button onclick="switchChapter(4)" aria-current="false">
+        <span>4. Lecțiile 21–28: Sintaxă</span>
+        <span class="badge">Clitice · Imp.</span>
+      </button>
+      <button onclick="switchChapter(5)" aria-current="false">
+        <span>5. Lecțiile 29–38: Cultură</span>
+        <span class="badge">Cond. · Supin</span>
+      </button>
+      <button onclick="switchChapter(6)" aria-current="false">
+        <span>6. Tabele și Examen</span>
+        <span class="badge badge-gold">Test A1–B2</span>
+      </button>
+    </nav>
+
+    <div class="theme-toggle-row">
+      <span>Stil caiet academic</span>
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Comută tema">Temă zi / noapte</button>
+    </div>
+  </aside>
+
+  <!-- Main Content Page -->
+  <main class="page">
+    <!-- Hero Block -->
+    <header class="hero">
+      <div class="hero-tag">
+        <span style="color:var(--red);font-weight:700;">Universitatea din București</span> · Editura Universității București · Ediția a IV-a
+      </div>
+      <div class="word" onclick="say('Limba română. Manual pentru studenții străini')">
+        Limb<span class="art">a</span> română
+      </div>
+      <h1>Manual pentru studenții străini (Anul pregătitor)</h1>
+      <p class="lede">
+        <b>Grigore Brâncuș, Adriana Ionescu, Manuela Saramandu</b>.
+        Lucrarea fundamentală de referință a Catedrei de Limba Română pentru Străini a Universității din București.
+        Ediție digitală interactivă: 38 de lecții autentice, sinteză fonetică, trenažoare de conjugare, redare vocală românească, exerciții cu autoverificare și examen final de certificare.
+      </p>
+
+      <div class="quick-bar">
+        <button onclick="switchChapter(0)">🔊 1. Fonetică</button>
+        <button onclick="switchChapter(1)">📖 2. Baza (Lecțiile 1–7)</button>
+        <button onclick="switchChapter(2)">⏱ 3. Timpuri (Lecțiile 8–15)</button>
+        <button onclick="switchChapter(3)">⚖ 4. Cazuri (Lecțiile 16–20)</button>
+        <button onclick="switchChapter(4)">🧩 5. Sintaxă (Lecțiile 21–28)</button>
+        <button onclick="switchChapter(5)">🏛 6. Cultură (Lecțiile 29–38)</button>
+        <button onclick="switchChapter(6)">🎓 7. Marele Examen</button>
+      </div>
+    </header>
+
+    <!-- Chapter 0: Fonetică -->
+    
+<article class="chapter" id="ch0" style="display:flex;">
+  <section class="sec-head">
+    <span class="eyebrow">Curs introductiv · Pag. 5–12</span>
+    <h2>Alfabetul și sistemul fonetic al limbii române</h2>
+    <div class="ro-title">Vocale, consoane, diftongi, triftongi și alternanțe fonetice</div>
+  </section>
+
+  <section class="prose">
+    <p>
+      Limba română folosește alfabetul latin îmbogățit cu <b>5 litere speciale cu diacritice</b>:
+      <mark>Ă ă</mark> [ə], <mark>Â â</mark> [ɨ], <mark>Î î</mark> [ɨ], <mark>Ș ș</mark> [ʃ], <mark>Ț ț</mark> [ts].
+      Fiecare literă redă în mod regulat un singur sunet (ortografie fonetică), iar accentul poate cădea pe oricare dintre silabe, având rol distinctiv de sens.
+    </p>
+  </section>
+
+  <!-- Interactive Morph / Phonetics Stage -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Laborator fonetic interactiv</span>
+      <h3>Sunetele specifice și pronunția de referință</h3>
+    </div>
+    <div class="stage" id="phoneticStage">
+      <div class="big" id="ph_big">
+        <span class="ro" style="color:var(--red);font-size:1.2em;">Ă ă</span>
+        <span class="w ro">[ə]</span>
+      </div>
+      <div class="cap" id="ph_cap">Vocala centrală semiînchisă românească, identică cu primul sunet din englezul «about» sau cu «e» mut francez.</div>
+      <div class="rule" id="ph_rule">Exemplu: apă, casă, învățător, măr</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCurrentPhonetic()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă exemplul
+        </button>
+      </div>
+      <div class="modes" id="phModes">
+        <button onclick="setPhonetic(0)" aria-pressed="true">Ă [ə]</button>
+        <button onclick="setPhonetic(1)" aria-pressed="false">Â / Î [ɨ]</button>
+        <button onclick="setPhonetic(2)" aria-pressed="false">Ș [ʃ]</button>
+        <button onclick="setPhonetic(3)" aria-pressed="false">Ț [ts]</button>
+        <button onclick="setPhonetic(4)" aria-pressed="false">CE / CI [tʃ]</button>
+        <button onclick="setPhonetic(5)" aria-pressed="false">GE / GI [dʒ]</button>
+        <button onclick="setPhonetic(6)" aria-pressed="false">CHE / CHI [k']</button>
+        <button onclick="setPhonetic(7)" aria-pressed="false">GHE / GHI [g']</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabloul Alfabetului Român -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Norma Universității din București</span>
+      <h3>Tabelul complet al alfabetului (31 de litere)</h3>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Literă</th>
+            <th>Denumire oficială</th>
+            <th>Valoare fonetică</th>
+            <th>Exemple din manual</th>
+            <th>Audio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('A, a, apă, studentă')">
+            <td class="ro"><b>A a</b></td>
+            <td class="tr">a</td>
+            <td class="rule">[a]</td>
+            <td class="ro">apă, studentă, an</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Ă, ă, casă, învățător')">
+            <td class="ro"><b class="art">Ă ă</b></td>
+            <td class="tr">ă</td>
+            <td class="rule">[ə]</td>
+            <td class="ro">casă, învățător, măr, săptămână</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Â, â, român, pâine')">
+            <td class="ro"><b class="art">Â â</b></td>
+            <td class="tr">â din a</td>
+            <td class="rule">[ɨ]</td>
+            <td class="ro">român, pâine, mână, când</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('B, b, bancă, băiat')">
+            <td class="ro"><b>B b</b></td>
+            <td class="tr">be / bî</td>
+            <td class="rule">[b]</td>
+            <td class="ro">bancă, băiat, bine, birou</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('C, c, carte, coleg, ce, cinematograf')">
+            <td class="ro"><b>C c</b></td>
+            <td class="tr">ce / cî</td>
+            <td class="rule">[k] / [tʃ]</td>
+            <td class="ro">carte, coleg; ce, cinematograf</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('D, d, dicționar, dimineață')">
+            <td class="ro"><b>D d</b></td>
+            <td class="tr">de / dî</td>
+            <td class="rule">[d]</td>
+            <td class="ro">dicționar, dimineață, doctorand</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('E, e, elev, el, este')">
+            <td class="ro"><b>E e</b></td>
+            <td class="tr">e</td>
+            <td class="rule">[e] / [je]</td>
+            <td class="ro">elev, energie; el [jel], este [jeste]</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('F, f, facultate, frumos')">
+            <td class="ro"><b>F f</b></td>
+            <td class="tr">ef / fî</td>
+            <td class="rule">[f]</td>
+            <td class="ro">facultate, fereastră, frumos</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('G, g, gară, grupă, ger, ginere')">
+            <td class="ro"><b>G g</b></td>
+            <td class="tr">ge / gî</td>
+            <td class="rule">[g] / [dʒ]</td>
+            <td class="ro">gară, grupă; ger, ginere</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('H, h, hartă, haine, hotel')">
+            <td class="ro"><b>H h</b></td>
+            <td class="tr">ha / hî</td>
+            <td class="rule">[h]</td>
+            <td class="ro">hartă, haine, hotel, horă</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('I, i, istorie, institut, studenți')">
+            <td class="ro"><b>I i</b></td>
+            <td class="tr">i</td>
+            <td class="rule">[i] / [ʲ]</td>
+            <td class="ro">istorie, institut; studenți [studenți]</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Î, î, început, în, înainte')">
+            <td class="ro"><b class="art">Î î</b></td>
+            <td class="tr">î din i</td>
+            <td class="rule">[ɨ]</td>
+            <td class="ro">început, în, înainte, înotător</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('L, l, lecție, limbă, luminoasă')">
+            <td class="ro"><b>L l</b></td>
+            <td class="tr">el / lî</td>
+            <td class="rule">[l]</td>
+            <td class="ro">lecție, limbă, luminoasă</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('M, m, manual, masă, muzică')">
+            <td class="ro"><b>M m</b></td>
+            <td class="tr">em / mî</td>
+            <td class="rule">[m]</td>
+            <td class="ro">manual, masă, muzică</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('N, n, noapte, număr, noi')">
+            <td class="ro"><b>N n</b></td>
+            <td class="tr">en / nî</td>
+            <td class="rule">[n]</td>
+            <td class="ro">noapte, număr, noi, nume</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('O, o, oră, oraș, om')">
+            <td class="ro"><b>O o</b></td>
+            <td class="tr">o</td>
+            <td class="rule">[o]</td>
+            <td class="ro">oră, oraș, om, odihnă</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('P, p, profesor, prieten, pix')">
+            <td class="ro"><b>P p</b></td>
+            <td class="tr">pe / pî</td>
+            <td class="rule">[p]</td>
+            <td class="ro">profesor, prieten, pix, pâine</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('R, r, român, radio, revistă')">
+            <td class="ro"><b>R r</b></td>
+            <td class="tr">er / rî</td>
+            <td class="rule">[r]</td>
+            <td class="ro">român, radio, revistă, repede</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('S, s, sală, student, scaun')">
+            <td class="ro"><b>S s</b></td>
+            <td class="tr">es / sî</td>
+            <td class="rule">[s]</td>
+            <td class="ro">sală, student, scaun, seară</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Ș, ș, școală, șase, șapte')">
+            <td class="ro"><b class="art">Ș ș</b></td>
+            <td class="tr">șa / șî</td>
+            <td class="rule">[ʃ]</td>
+            <td class="ro">școală, șase, șapte, și</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('T, t, tablă, teatru, tren')">
+            <td class="ro"><b>T t</b></td>
+            <td class="tr">te / tî</td>
+            <td class="rule">[t]</td>
+            <td class="ro">tablă, teatru, tren, telefon</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Ț, ț, țară, țăran, lecție')">
+            <td class="ro"><b class="art">Ț ț</b></td>
+            <td class="tr">ța / țî</td>
+            <td class="rule">[ts]</td>
+            <td class="ro">țară, țăran, dimineață, băieți</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('U, u, universitate, ușă, un')">
+            <td class="ro"><b>U u</b></td>
+            <td class="tr">u</td>
+            <td class="rule">[u]</td>
+            <td class="ro">universitate, ușă, un, unu</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('V, v, vacanță, vapor, verde')">
+            <td class="ro"><b>V v</b></td>
+            <td class="tr">ve / vî</td>
+            <td class="rule">[v]</td>
+            <td class="ro">vacanță, vapor, verde, vin</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('Z, z, zi, ziar, zece')">
+            <td class="ro"><b>Z z</b></td>
+            <td class="tr">zet / zî</td>
+            <td class="rule">[z]</td>
+            <td class="ro">zi, ziar, zece, zero</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Diftongi și alternanțe fonetice -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Diftongi și fenomene specifice</span>
+      <h3>Grupuri de sunete și alternanțe vocalice</h3>
+    </div>
+    <div class="prose">
+      <p>
+        În limba română, alternanțele vocalice și consonantice însoțesc formarea pluralului și flexiunea verbală:
+      </p>
+    </div>
+    <div class="vocab-grid">
+      <div class="wcard" onclick="say('fată, fete; seară, seri')">
+        <span class="ro">a → e / ea → e</span>
+        <span class="ru">fată → fete; seară → seri</span>
+      </div>
+      <div class="wcard" onclick="say('școală, școli; poartă, porți')">
+        <span class="ro">oa → o</span>
+        <span class="ru">școală → școli; poartă → porți</span>
+      </div>
+      <div class="wcard" onclick="say('tânăr, tineri; mână, mâini')">
+        <span class="ro">â → i</span>
+        <span class="ru">tânăr → tineri; mână → mâini</span>
+      </div>
+      <div class="wcard" onclick="say('student, studenți; băiat, băieți')">
+        <span class="ro">t + i → ți</span>
+        <span class="ru">student → studenți; băiat → băieți</span>
+      </div>
+      <div class="wcard" onclick="say('medic, medici; coleg, colegi')">
+        <span class="ro">c + i → ci; g + i → gi</span>
+        <span class="ru">medic → medici; coleg → colegi</span>
+      </div>
+      <div class="wcard" onclick="say('pas, pași; urs, urși')">
+        <span class="ro">s + i → și</span>
+        <span class="ru">pas → pași; urs → urși</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mini-quiz Fonetică -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Autoverificare</span>
+      <h3>Test rapid: Fonetică și ortografie</h3>
+    </div>
+    <div class="quiz" id="quizCh0_box">
+      <div class="qtop">
+        <span id="q0_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q0_dots"></div>
+      </div>
+      <div class="qq" id="q0_prompt">Care literă redă sunetul [ʃ] din cuvântul «școală»?</div>
+      <div class="opts" id="q0_opts"></div>
+      <div class="why" id="q0_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn0_nextQ" onclick="nextQuiz0()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 1: Lecțiile 1–7 -->
+    
+<article class="chapter" id="ch1" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Blocul I · Lecțiile 1–7 (Pag. 13–73)</span>
+    <h2>Structuri fundamentale și viața de student</h2>
+    <div class="ro-title">Prezentarea, «a fi», «a avea», substantivele, articolul hotărât și indicativul prezent</div>
+  </section>
+
+  <!-- Dialogul Autentic Lecția 1 -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 1 · Text autentic</span>
+      <h3>Cine sunteți dumneavoastră?</h3>
+    </div>
+    <div class="dialogue-box">
+      <div class="dline">
+        <span class="dline-spk">John și Ali:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Bună dimineața!</span>
+          <span class="dline-ru">Доброе утро!</span>
+        </div>
+        <button class="iconbtn" onclick="say('Bună dimineața!')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Prof. Marinescu:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Bună dimineața! Eu sunt Mircea Marinescu. Sunt profesor de limba română. Cine sunteți dumneavoastră?</span>
+          <span class="dline-ru">Доброе утро! Я Мирча Маринеску. Я преподаватель румынского языка. Кто вы?</span>
+        </div>
+        <button class="iconbtn" onclick="say('Bună dimineața! Eu sunt Mircea Marinescu. Sunt profesor de limba română. Cine sunteți dumneavoastră?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">John:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Eu sunt John Smith. El este Ali Kassir.</span>
+          <span class="dline-ru">Я Джон Смит. Он — Али Кассир.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Eu sunt John Smith. El este Ali Kassir.')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Prof. Marinescu:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Sunteți doctoranzi sau studenți?</span>
+          <span class="dline-ru">Вы аспиранты или студенты?</span>
+        </div>
+        <button class="iconbtn" onclick="say('Sunteți doctoranzi sau studenți?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">John:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Suntem specialiști în istorie.</span>
+          <span class="dline-ru">Мы специалисты по истории.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Suntem specialiști în istorie.')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Prof. Marinescu:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— De unde sunteți dumneavoastră?</span>
+          <span class="dline-ru">Откуда вы?</span>
+        </div>
+        <button class="iconbtn" onclick="say('De unde sunteți dumneavoastră?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Ali:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Eu sunt din Siria, John este din Anglia. Acum suntem colegi și prieteni la Universitatea din București.</span>
+          <span class="dline-ru">Я из Сирии, Джон из Англии. Сейчас мы коллеги и друзья в Бухарестском университете.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Eu sunt din Siria, John este din Anglia. Acum suntem colegi și prieteni la Universitatea din București.')" title="Ascultă">🔊</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Morph Stage for Fundamental Verbs -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Trenažor de conjugare</span>
+      <h3>Conjugarea verbelor fundamentale la indicativ prezent</h3>
+    </div>
+    <div class="stage" id="ch1Stage">
+      <div class="big" id="ch1_big">
+        <span class="w ro" id="ch1_pron">Eu</span>
+        <span class="w ro" id="ch1_verb" style="color:var(--red);">sunt</span>
+        <span class="w ro" id="ch1_comp">student</span>
+      </div>
+      <div class="cap" id="ch1_cap">Persoana I singular: eu sunt student (я студент)</div>
+      <div class="rule" id="ch1_rule">a fi · indicativ prezent</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCh1Stage()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă forma
+        </button>
+      </div>
+      <div class="modes" id="ch1Modes">
+        <button onclick="setCh1Person(0)" aria-pressed="true">eu</button>
+        <button onclick="setCh1Person(1)" aria-pressed="false">tu</button>
+        <button onclick="setCh1Person(2)" aria-pressed="false">el / ea</button>
+        <button onclick="setCh1Person(3)" aria-pressed="false">noi</button>
+        <button onclick="setCh1Person(4)" aria-pressed="false">voi</button>
+        <button onclick="setCh1Person(5)" aria-pressed="false">ei / ele</button>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <span class="eyebrow" style="margin-right:8px;">Verbul:</span>
+        <button class="btn ghost" style="padding:4px 10px;font-size:0.85rem;" onclick="setCh1Verb('fi')">a fi</button>
+        <button class="btn ghost" style="padding:4px 10px;font-size:0.85rem;" onclick="setCh1Verb('avea')">a avea</button>
+        <button class="btn ghost" style="padding:4px 10px;font-size:0.85rem;" onclick="setCh1Verb('invata')">a învăța</button>
+        <button class="btn ghost" style="padding:4px 10px;font-size:0.85rem;" onclick="setCh1Verb('lucra')">a lucra</button>
+        <button class="btn ghost" style="padding:4px 10px;font-size:0.85rem;" onclick="setCh1Verb('citi')">a citi</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gramatică: Articolul Hotărât (Lecția 4) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 4 · Mecanismul de bază</span>
+      <h3>Articolul hotărât enclitic (Oпределённый артикль)</h3>
+    </div>
+    <div class="prose">
+      <p>
+        În limba română, articolul hotărât se lipește <b>la sfârșitul cuvântului</b> (articol enclitic):
+      </p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Gen</th>
+            <th>Formă nearticulată (sg.)</th>
+            <th>Cu articol hotărât (sg.)</th>
+            <th>Plural nearticulat</th>
+            <th>Plural cu articol hotărât</th>
+            <th>Ascultă</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('student, studentul; studenți, studenții')">
+            <td><b>Masculin (-ul, -ii)</b></td>
+            <td class="ro">student</td>
+            <td class="ro">student<b class="art">-ul</b></td>
+            <td class="ro">studenți</td>
+            <td class="ro">studenți<b class="art">-i</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('băiat, băiatul; băieți, băieții')">
+            <td><b>Masculin consoană (-ul)</b></td>
+            <td class="ro">băiat</td>
+            <td class="ro">băiat<b class="art">-ul</b></td>
+            <td class="ro">băieți</td>
+            <td class="ro">băieți<b class="art">-i</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('fată, fata; fete, fetele')">
+            <td><b>Feminin (-a, -le)</b></td>
+            <td class="ro">fată</td>
+            <td class="ro">fat<b class="art">-a</b></td>
+            <td class="ro">fete</td>
+            <td class="ro">fete<b class="art">-le</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('sală, sala; săli, sălile')">
+            <td><b>Feminin (-a, -le)</b></td>
+            <td class="ro">sală</td>
+            <td class="ro">sal<b class="art">-a</b></td>
+            <td class="ro">săli</td>
+            <td class="ro">săli<b class="art">-le</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('teatru, teatrul; teatre, teatrele')">
+            <td><b>Neutru (-ul, -le)</b></td>
+            <td class="ro">teatru</td>
+            <td class="ro">teatr<b class="art">-ul</b></td>
+            <td class="ro">teatre</td>
+            <td class="ro">teatre<b class="art">-le</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('caiet, caietul; caiete, caietele')">
+            <td><b>Neutru (-ul, -le)</b></td>
+            <td class="ro">caiet</td>
+            <td class="ro">caiet<b class="art">-ul</b></td>
+            <td class="ro">caiete</td>
+            <td class="ro">caiete<b class="art">-le</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Text Autentic Lecția 5: O zi de lucru -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 5 · Programul zilnic</span>
+      <h3>O zi de lucru (Universitatea din București)</h3>
+    </div>
+    <div class="note">
+      <b class="t">Textul lecției</b>
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «În fiecare dimineață mă trezesc la ora șapte. La ora opt fără un sfert merg la facultate.
+        Cursurile de limba română încep la ora opt fix. În sală ascultăm explicațiile profesorului, citim textele din manual și scriem exerciții pe caiet.
+        La prânz luăm masa la cantina studențească, iar după-amiază învățăm în sala de lectură a bibliotecii.»
+      </p>
+      <div style="margin-top:10px;">
+        <button class="btn ghost" onclick="say('În fiecare dimineață mă trezesc la ora șapte. La ora opt fără un sfert merg la facultate. Cursurile de limba română încep la ora opt fix.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exerciții Interactive Lecțiile 1–7 -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Practică interactivă</span>
+      <h3>Exerciții de antrenament cu verificare automată</h3>
+    </div>
+    <div class="exercise-box">
+      <p><b>1. Completați cu forma corectă a verbului «a fi» la indicativ prezent:</b></p>
+      <div class="ex-row">
+        <span>a) Eu</span>
+        <input class="ans" id="ex1_1" data-ans="sunt|sînt" placeholder="...">
+        <span>student la Facultatea de Istorie.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Voi</span>
+        <input class="ans" id="ex1_2" data-ans="sunteți|sînteți" placeholder="...">
+        <span>din Anglia sau din Siria?</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Maria și Ioana</span>
+        <input class="ans" id="ex1_3" data-ans="sunt|sînt" placeholder="...">
+        <span>prietene bune.</span>
+      </div>
+
+      <p style="margin-top:10px;"><b>2. Adăugați articolul hotărât potrivit:</b></p>
+      <div class="ex-row">
+        <span>a) student →</span>
+        <input class="ans" id="ex1_4" data-ans="studentul" placeholder="...">
+        <span>(sing.)</span>
+      </div>
+      <div class="ex-row">
+        <span>b) fată →</span>
+        <input class="ans" id="ex1_5" data-ans="fata" placeholder="...">
+        <span>(sing.)</span>
+      </div>
+      <div class="ex-row">
+        <span>c) cărți →</span>
+        <input class="ans" id="ex1_6" data-ans="cărțile" placeholder="...">
+        <span>(plur.)</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="checkEx('ch1')">Verifică răspunsurile</button>
+        <button class="btn ghost" onclick="toggleHint('ch1')">Arată cheia</button>
+      </div>
+      <div class="ex-hint" id="hint_ch1">
+        Cheie de verificare: 1a: sunt; 1b: sunteți; 1c: sunt; 2a: studentul; 2b: fata; 2c: cărțile.
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Blocul I -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Evaluare</span>
+      <h3>Testul Blocului I (Lecțiile 1–7)</h3>
+    </div>
+    <div class="quiz" id="quizCh1_box">
+      <div class="qtop">
+        <span id="q1_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q1_dots"></div>
+      </div>
+      <div class="qq" id="q1_prompt">Care este forma de persoana a 2-a plural pentru verbul «a avea»?</div>
+      <div class="opts" id="q1_opts"></div>
+      <div class="why" id="q1_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn1_nextQ" onclick="nextQuiz1()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 2: Lecțiile 8–15 -->
+    
+<article class="chapter" id="ch2" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Blocul II · Lecțiile 8–15 (Pag. 74–137)</span>
+    <h2>Acțiuni cotidiene, trecutul și dorințele</h2>
+    <div class="ro-title">Perfectul compus, Conjunctivul prezent, viitorul «o să», formele clitice de Acuzativ și verbele reflexive</div>
+  </section>
+
+  <!-- Text Autentic Lecția 8: La cantină -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 8 · Text și dialog autentic</span>
+      <h3>La cantină</h3>
+    </div>
+    <div class="dialogue-box">
+      <div class="dline">
+        <span class="dline-spk">Mihai:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Ce ai mâncat astăzi la prânz?</span>
+          <span class="dline-ru">Что ты ел сегодня на обед?</span>
+        </div>
+        <button class="iconbtn" onclick="say('Ce ai mâncat astăzi la prânz?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Ioana:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Am luat o ciorbă de legume, friptură cu cartofi și o salată. Dar Radu unde a fost?</span>
+          <span class="dline-ru">Я взяла овощную чорбу, жаркое с картофелем и салат. А Раду где был?</span>
+        </div>
+        <button class="iconbtn" onclick="say('Am luat o ciorbă de legume, friptură cu cartofi și o salată. Dar Radu unde a fost?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Radu:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Am stat mai mult la bibliotecă, pentru că am scris un referat despre istoria României. Apoi am venit direct aici.</span>
+          <span class="dline-ru">Я задержался в библиотеке, потому что писал реферат по истории Румынии. Затем пришёл прямо сюда.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Am stat mai mult la bibliotecă, pentru că am scris un referat despre istoria României. Apoi am venit direct aici.')" title="Ascultă">🔊</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Morph Stage: Time Machine (Prezent -> Perfect compus -> Viitor o să) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Trenažor de timpuri verbale</span>
+      <h3>«Mașina timpului»: Prezent → Perfect compus → Viitor colocvial</h3>
+    </div>
+    <div class="stage" id="ch2Stage">
+      <div class="big" id="ch2_big">
+        <span class="w ro" id="ch2_pron">Eu</span>
+        <span class="w ro" id="ch2_verb" style="color:var(--red);">am citit</span>
+        <span class="w ro" id="ch2_obj">romanul</span>
+      </div>
+      <div class="cap" id="ch2_cap">Perfectul compus: acțiune încheiată în trecut (Я прочитал роман)</div>
+      <div class="rule" id="ch2_rule">auxiliar «a avea» + participiu (-at, -ut, -it, -s/-t)</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCh2Stage()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă fraza
+        </button>
+      </div>
+      <div class="modes" id="ch2TenseModes">
+        <button onclick="setCh2Tense('prezent')" aria-pressed="false">Prezent (citesc)</button>
+        <button onclick="setCh2Tense('perfect')" aria-pressed="true">Perfect compus (am citit)</button>
+        <button onclick="setCh2Tense('viitor')" aria-pressed="false">Viitor o să (o să citesc)</button>
+        <button onclick="setCh2Tense('conjunctiv')" aria-pressed="false">Conjunctiv (să citesc)</button>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <span class="eyebrow" style="margin-right:8px;">Subiectul:</span>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(0)">eu</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(1)">tu</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(2)">el/ea</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(3)">noi</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(4)">voi</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh2Person(5)">ei/ele</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pronumele Personal în Cazul Acuzativ (Lecția 9 & 12) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 9 și 12 · Mecanismul obiectului direct</span>
+      <h3>Pronumele personal în cazul Acuzativ (forme accentuate și clitice)</h3>
+    </div>
+    <div class="prose">
+      <p>
+        Cazul Acuzativ răspunde la întrebarea <em>«Pe cine?»</em>. În limba română există două serii paralele:
+        <b>formele accentuate</b> (însoțite obligatoriu de prepoziția <em>pe</em>) și <b>formele neaccentuate</b> (clitice, care se alătură verbului).
+      </p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Persoana</th>
+            <th>Formă accentuată (cu «pe»)</th>
+            <th>Formă neaccentuată (clitic)</th>
+            <th>Exemplu de anticipare / dublare</th>
+            <th>Audio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('pe mine, mă; Profesorul mă ascultă pe mine')">
+            <td><b>I sg. (eu)</b></td>
+            <td class="ro">pe mine</td>
+            <td class="ro"><b class="art">mă / m-</b></td>
+            <td class="ro">Profesorul <b class="art">mă</b> ascultă pe mine.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe tine, te; Te caut pe tine de o oră')">
+            <td><b>II sg. (tu)</b></td>
+            <td class="ro">pe tine</td>
+            <td class="ro"><b class="art">te / te-</b></td>
+            <td class="ro"><b class="art">Te</b> caut pe tine de o oră.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe el, îl; Îl văd pe Dan în curte')">
+            <td><b>III sg. masc. (el)</b></td>
+            <td class="ro">pe el</td>
+            <td class="ro"><b class="art">îl / l-</b></td>
+            <td class="ro"><b class="art">Îl</b> văd pe Dan în curte. / <b class="art">L-</b>am văzut.</td>
+            <td><button class="iconbtn" title="Ascultă">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe ea, o; O cunosc pe studenta aceea')">
+            <td><b>III sg. fem. (ea)</b></td>
+            <td class="ro">pe ea</td>
+            <td class="ro"><b class="art">o / -o</b></td>
+            <td class="ro"><b class="art">O</b> cunosc pe studenta aceea. / Am văzut<b class="art">-o</b>.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe noi, ne; Colegii ne așteaptă pe noi')">
+            <td><b>I pl. (noi)</b></td>
+            <td class="ro">pe noi</td>
+            <td class="ro"><b class="art">ne / ne-</b></td>
+            <td class="ro">Colegii <b class="art">ne</b> așteaptă pe noi.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe voi, vă; Vă rog pe voi să intrați')">
+            <td><b>II pl. (voi)</b></td>
+            <td class="ro">pe voi</td>
+            <td class="ro"><b class="art">vă / v-</b></td>
+            <td class="ro"><b class="art">Vă</b> rog pe voi să intrați.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe ei, îi; Îi felicit pe studenți')">
+            <td><b>III pl. masc. (ei)</b></td>
+            <td class="ro">pe ei</td>
+            <td class="ro"><b class="art">îi / i-</b></td>
+            <td class="ro"><b class="art">Îi</b> felicit pe studenți. / <b class="art">I-</b>am felicitat.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('pe ele, le; Le invit pe colege la ceai')">
+            <td><b>III pl. fem. (ele)</b></td>
+            <td class="ro">pe ele</td>
+            <td class="ro"><b class="art">le / le-</b></td>
+            <td class="ro"><b class="art">Le</b> invit pe colege. / <b class="art">Le-</b>am invitat.</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Text Autentic Lecția 12: La doctor -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 12 · Situație comunicativă</span>
+      <h3>La cabinetul medical (La doctor)</h3>
+    </div>
+    <div class="dialogue-box">
+      <div class="dline">
+        <span class="dline-spk">Medicul:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Ce vă supără, tinere? Ce simptome aveți?</span>
+          <span class="dline-ru">Что вас беспокоит, молодой человек? Какие симптомы?</span>
+        </div>
+        <button class="iconbtn" onclick="say('Ce vă supără, tinere? Ce simptome aveți?')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Studentul:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Mă doare capul și am febră mare de ieri seară. Nu pot să înghit și tușesc des.</span>
+          <span class="dline-ru">У меня болит голова и с вчерашнего вечера высокая температура. Не могу глотать и часто кашляю.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Mă doare capul și am febră mare de ieri seară. Nu pot să înghit și tușesc des.')" title="Ascultă">🔊</button>
+      </div>
+      <div class="dline">
+        <span class="dline-spk">Medicul:</span>
+        <div class="dline-body">
+          <span class="dline-ro ro">— Vă rog să deschideți gura. Aveți o amigdalită acută. Trebuie să luați aceste antibiotice și să stați trei zile în pat la cămin.</span>
+          <span class="dline-ru">Пожалуйста, откройте рот. У вас острый тонзиллит. Вы должны принимать эти антибиотики и оставаться в постели три дня.</span>
+        </div>
+        <button class="iconbtn" onclick="say('Vă rog să deschideți gura. Aveți o amigdalită acută. Trebuie să luați aceste antibiotice și să stați trei zile în pat la cămin.')" title="Ascultă">🔊</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exerciții Interactive Blocul II -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Practică interactivă</span>
+      <h3>Exerciții de antrenament: Perfectul compus și Acuzativul</h3>
+    </div>
+    <div class="exercise-box">
+      <p><b>1. Puneți verbul la Perfectul compus:</b></p>
+      <div class="ex-row">
+        <span>a) Noi (a citi)</span>
+        <input class="ans" id="ex2_1" data-ans="am citit" placeholder="...">
+        <span>manualul de limba română.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Ieri Dan și Maria (a merge)</span>
+        <input class="ans" id="ex2_2" data-ans="au mers" placeholder="...">
+        <span>la Teatrul Național.</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Tu (a scrie)</span>
+        <input class="ans" id="ex2_3" data-ans="ai scris" placeholder="...">
+        <span>scrisoarea pentru părinți?</span>
+      </div>
+
+      <p style="margin-top:10px;"><b>2. Completați cu pronumele neaccentuat de Acuzativ potrivit:</b></p>
+      <div class="ex-row">
+        <span>a) Pe profesor</span>
+        <input class="ans" id="ex2_4" data-ans="îl" placeholder="...">
+        <span>așteptăm în fața amfiteatrului.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Pe Maria</span>
+        <input class="ans" id="ex2_5" data-ans="o" placeholder="...">
+        <span>cunosc de doi ani.</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Pe studenți</span>
+        <input class="ans" id="ex2_6" data-ans="îi" placeholder="...">
+        <span>invităm la conferință.</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="checkEx('ch2')">Verifică răspunsurile</button>
+        <button class="btn ghost" onclick="toggleHint('ch2')">Arată cheia</button>
+      </div>
+      <div class="ex-hint" id="hint_ch2">
+        Cheie de verificare: 1a: am citit; 1b: au mers; 1c: ai scris; 2a: îl; 2b: o; 2c: îi.
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Blocul II -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Evaluare</span>
+      <h3>Testul Blocului II (Lecțiile 8–15)</h3>
+    </div>
+    <div class="quiz" id="quizCh2_box">
+      <div class="qtop">
+        <span id="q2_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q2_dots"></div>
+      </div>
+      <div class="qq" id="q2_prompt">Cum se traduce corect: «Я его увидел вчера»?</div>
+      <div class="opts" id="q2_opts"></div>
+      <div class="why" id="q2_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn2_nextQ" onclick="nextQuiz2()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 3: Lecțiile 16–20 -->
+    
+<article class="chapter" id="ch3" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Blocul III · Lecțiile 16–20 (Pag. 138–177)</span>
+    <h2>Dativul, Genitivul și Viitorul standard</h2>
+    <div class="ro-title">Posesia, obiectul indirect, adjectivele posesive, cliticele de Dativ și viitorul literar</div>
+  </section>
+
+  <!-- Text Autentic Lecția 17: Familia mea -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 17 · Text autentic</span>
+      <h3>Familia mea</h3>
+    </div>
+    <div class="note">
+      <b class="t">Textul lecției</b>
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «Mă numesc Andrei Marinescu și sunt student în anul I la Universitatea din București. Familia mea locuiește la Ploiești.
+        Tatăl meu este inginer constructor, iar mama mea este profesoară de matematică la un liceu.
+        Am o soră mai mică, Elena, care este elevă în clasa a zecea, și un frate mai mare, Radu, care este deja medic rezident.
+        Bunicii noștri locuiesc la țară, într-un sat frumos de lângă munți, unde mergem în fiecare vacanță de vară.»
+      </p>
+      <div style="margin-top:10px;">
+        <button class="btn ghost" onclick="say('Mă numesc Andrei Marinescu și sunt student în anul I la Universitatea din București. Familia mea locuiește la Ploiești. Tatăl meu este inginer constructor, iar mama mea este profesoară de matematică.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Morph Stage: Genitiv & Dativ Generator -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Trenažor de cazuri</span>
+      <h3>Generatorul cazurilor Genitiv și Dativ (G-D)</h3>
+    </div>
+    <div class="stage" id="ch3Stage">
+      <div class="big" id="ch3_big">
+        <span class="w ro" id="ch3_prefix">Cartea</span>
+        <span class="w ro" id="ch3_word" style="color:var(--red);">studentului</span>
+      </div>
+      <div class="cap" id="ch3_cap">Genitiv masculin singular: substantiv + articol hotărât -ului (Книга студента)</div>
+      <div class="rule" id="ch3_rule">student + -ului = studentului (G-D masc. sg.)</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCh3Stage()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă forma
+        </button>
+      </div>
+      <div class="modes" id="ch3Modes">
+        <button onclick="setCh3Case(0)" aria-pressed="true">Masc. sg. (-ului)</button>
+        <button onclick="setCh3Case(1)" aria-pressed="false">Fem. sg. (-ei)</button>
+        <button onclick="setCh3Case(2)" aria-pressed="false">Neutru sg. (-ului)</button>
+        <button onclick="setCh3Case(3)" aria-pressed="false">Masc. pl. (-ilor)</button>
+        <button onclick="setCh3Case(4)" aria-pressed="false">Fem. pl. (-elor)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dativul Formelor Neaccentuate (Lecția 18) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 18 · Cliticele obiectului indirect</span>
+      <h3>Pronumele personal în cazul Dativ (forme neaccentuate)</h3>
+    </div>
+    <div class="prose">
+      <p>
+        Cazul Dativ răspunde la întrebarea <em>«Cui?» (Кому?)</em>. Formele neaccentuate se folosesc obligatoriu pentru a exprima destinatarul acțiunii
+        sau în construcții impersonale frecvente:
+      </p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Persoana</th>
+            <th>Dativ neaccentuat (clitic)</th>
+            <th>Construcție verbală</th>
+            <th>Semnificație</th>
+            <th>Audio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('îmi place limba română')">
+            <td><b>I sg. (mie)</b></td>
+            <td class="ro"><b class="art">îmi / mi-</b></td>
+            <td class="ro"><b class="art">Îmi</b> place limba română. / <b class="art">Mi-</b>a scris.</td>
+            <td class="tr">Мне нравится / он мне написал</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('îți dau o carte interesantă')">
+            <td><b>II sg. (ție)</b></td>
+            <td class="ro"><b class="art">îți / ți-</b></td>
+            <td class="ro"><b class="art">Îți</b> dau o carte interesantă.</td>
+            <td class="tr">Я даю тебе интересную книгу</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('îi trimit o scrisoare lui Andrei')">
+            <td><b>III sg. (lui / ei)</b></td>
+            <td class="ro"><b class="art">îi / i-</b></td>
+            <td class="ro"><b class="art">Îi</b> trimit o scrisoare lui Andrei / Mariei.</td>
+            <td class="tr">Я отправляю ему / ей письмо</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('ne povestește despre călătorie')">
+            <td><b>I pl. (nouă)</b></td>
+            <td class="ro"><b class="art">ne / ne-</b></td>
+            <td class="ro"><b class="art">Ne</b> povestește despre călătorie.</td>
+            <td class="tr">Он рассказывает нам о поездке</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('vă urez succes la examene')">
+            <td><b>II pl. (vouă)</b></td>
+            <td class="ro"><b class="art">vă / v-</b></td>
+            <td class="ro"><b class="art">Vă</b> urez succes la examene!</td>
+            <td class="tr">Желаю вам успехов на экзаменах!</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('le explic lecția studenților')">
+            <td><b>III pl. (lor)</b></td>
+            <td class="ro"><b class="art">le / le-</b></td>
+            <td class="ro"><b class="art">Le</b> explic lecția studenților.</td>
+            <td class="tr">Я объясняю им урок студентам</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Viitorul Standard Literar (Lecția 19) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 19 · Timpul Viitor</span>
+      <h3>Viitorul literar standard: auxiliarul «a vrea» + infinitiv</h3>
+    </div>
+    <div class="prose">
+      <p>
+        Spre deosebire de viitorul colocvial (<em>o să citesc</em>), limba literară scrisă și discursul universitar folosesc forma cu auxiliarul special:
+      </p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Persoana</th>
+            <th>Auxiliar</th>
+            <th>Infinitiv</th>
+            <th>Formă completă</th>
+            <th>Traducere</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('eu voi călători în România')">
+            <td>Eu</td>
+            <td class="ro"><b class="art">voi</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>voi călători</b></td>
+            <td class="tr">я буду путешествовать</td>
+          </tr>
+          <tr class="w" onclick="say('tu vei călători')">
+            <td>Tu</td>
+            <td class="ro"><b class="art">vei</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>vei călători</b></td>
+            <td class="tr">ты будешь путешествовать</td>
+          </tr>
+          <tr class="w" onclick="say('el va călători')">
+            <td>El / Ea</td>
+            <td class="ro"><b class="art">va</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>va călători</b></td>
+            <td class="tr">он / она будет путешествовать</td>
+          </tr>
+          <tr class="w" onclick="say('noi vom călători')">
+            <td>Noi</td>
+            <td class="ro"><b class="art">vom</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>vom călători</b></td>
+            <td class="tr">мы будем путешествовать</td>
+          </tr>
+          <tr class="w" onclick="say('voi veți călători')">
+            <td>Voi</td>
+            <td class="ro"><b class="art">veți</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>veți călători</b></td>
+            <td class="tr">вы будете путешествовать</td>
+          </tr>
+          <tr class="w" onclick="say('ei vor călători')">
+            <td>Ei / Ele</td>
+            <td class="ro"><b class="art">vor</b></td>
+            <td class="ro">călători / citi</td>
+            <td class="ro"><b>vor călători</b></td>
+            <td class="tr">они будут путешествовать</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Exerciții Interactive Blocul III -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Practică interactivă</span>
+      <h3>Exerciții de antrenament: Genitivul și Dativul</h3>
+    </div>
+    <div class="exercise-box">
+      <p><b>1. Treceți la cazul Genitiv substantivul din paranteză:</b></p>
+      <div class="ex-row">
+        <span>a) Sala de curs a (profesor)</span>
+        <input class="ans" id="ex3_1" data-ans="profesorului" placeholder="...">
+        <span>este la etajul întâi.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Cărțile (colegă)</span>
+        <input class="ans" id="ex3_2" data-ans="colegei" placeholder="...">
+        <span>sunt pe birou.</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Laboratoarele (studenți)</span>
+        <input class="ans" id="ex3_3" data-ans="studenților" placeholder="...">
+        <span>sunt foarte moderne.</span>
+      </div>
+
+      <p style="margin-top:10px;"><b>2. Puneți forma clitică de Dativ potrivită:</b></p>
+      <div class="ex-row">
+        <span>a) Mie</span>
+        <input class="ans" id="ex3_4" data-ans="îmi" placeholder="...">
+        <span>place mult orașul București.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Profesorul</span>
+        <input class="ans" id="ex3_5" data-ans="ne" placeholder="...">
+        <span>explică nouă regula de gramatică.</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Eu</span>
+        <input class="ans" id="ex3_6" data-ans="îi" placeholder="...">
+        <span>scriu Mariei o felicitare.</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="checkEx('ch3')">Verifică răspunsurile</button>
+        <button class="btn ghost" onclick="toggleHint('ch3')">Arată cheia</button>
+      </div>
+      <div class="ex-hint" id="hint_ch3">
+        Cheie de verificare: 1a: profesorului; 1b: colegei; 1c: studenților; 2a: îmi; 2b: ne; 2c: îi.
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Blocul III -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Evaluare</span>
+      <h3>Testul Blocului III (Lecțiile 16–20)</h3>
+    </div>
+    <div class="quiz" id="quizCh3_box">
+      <div class="qtop">
+        <span id="q3_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q3_dots"></div>
+      </div>
+      <div class="qq" id="q3_prompt">Care este forma de viitor literar persoana I plural pentru «a merge»?</div>
+      <div class="opts" id="q3_opts"></div>
+      <div class="why" id="q3_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn3_nextQ" onclick="nextQuiz3()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 4: Lecțiile 21–28 -->
+    
+<article class="chapter" id="ch4" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Blocul IV · Lecțiile 21–28 (Pag. 178–242)</span>
+    <h2>Sintaxă comunicativă, Imperfectul și Imperativul</h2>
+    <div class="ro-title">Pronumele «care», cliticele duble (Dativ + Acuzativ), formele de Imperativ, cazul Vocativ și timpul Imperfect</div>
+  </section>
+
+  <!-- Text Autentic Lecția 26: Originea limbii române -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 26 · Text istoric și lingvistic</span>
+      <h3>Originea limbii române</h3>
+    </div>
+    <div class="note">
+      <b class="t">Textul fundamental din manual</b>
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «Limba română este o limbă neolatină sau romanică, la fel ca franceza, italiana, spaniola și portugheza.
+        Ea s-a format la nordul și la sudul Dunării, prin romanizarea populației geto-dace de către romani, după cucerirea Daciei de împăratul Traian în anul 106 d.Hr.
+        Structura gramaticală a limbii române și vocabularul său fundamental sunt de origine latină (peste 75% din cuvintele de uz zilnic).
+        De aceea, limba română a păstrat declinarea substantivului (cazurile genitiv, dativ și vocativ) și genul neutru, moștenite direct din limba latină.»
+      </p>
+      <div style="margin-top:10px;">
+        <button class="btn ghost" onclick="say('Limba română este o limbă neolatină sau romanică, la fel ca franceza, italiana, spaniola și portugheza. Ea s-a format la nordul și la sudul Dunării, prin romanizarea populației geto-dace.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Morph Stage: Double Clitics & Imperative -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Trenažor de morfologie avansată</span>
+      <h3>Cliticele combinate: Dativ + Acuzativ (Obiect indirect + Obiect direct)</h3>
+    </div>
+    <div class="stage" id="ch4Stage">
+      <div class="big" id="ch4_big">
+        <span class="w ro" id="ch4_clitic" style="color:var(--red);">Mi-l</span>
+        <span class="w ro" id="ch4_verb">dă</span>
+        <span class="w ro" id="ch4_context">profesorul</span>
+      </div>
+      <div class="cap" id="ch4_cap">Dativ (mie: îmi) + Acuzativ masc. sg. (îl) = mi-l (Он даёт его мне)</div>
+      <div class="rule" id="ch4_rule">îmi + îl = mi-l dă / mi l-a dat</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCh4Stage()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă construcția
+        </button>
+      </div>
+      <div class="modes" id="ch4Modes">
+        <button onclick="setCh4Clitic(0)" aria-pressed="true">mi-l (mie + el)</button>
+        <button onclick="setCh4Clitic(1)" aria-pressed="false">mi-o (mie + ea)</button>
+        <button onclick="setCh4Clitic(2)" aria-pressed="false">ți-l (ție + el)</button>
+        <button onclick="setCh4Clitic(3)" aria-pressed="false">i-o (lui/ei + ea)</button>
+        <button onclick="setCh4Clitic(4)" aria-pressed="false">ni le (nouă + ele)</button>
+        <button onclick="setCh4Clitic(5)" aria-pressed="false">vi-l (vouă + el)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modul Imperativ: Persoana a 2-a singular și plural (Lecția 25) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 25 · Comenzi și rugăminți</span>
+      <h3>Modul Imperativ: Forme regulate și verbe neregulate frecvente</h3>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Verbul</th>
+            <th>Imperativ singular afirmativ</th>
+            <th>Imperativ singular negativ (cu «nu»)</th>
+            <th>Imperativ plural</th>
+            <th>Audio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('a citi: citește!, nu citi!, citiți!')">
+            <td class="ro">a citi</td>
+            <td class="ro"><b class="art">Citește!</b></td>
+            <td class="ro">Nu citi!</td>
+            <td class="ro"><b class="art">Citiți!</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('a scrie: scrie!, nu scrie!, scrieți!')">
+            <td class="ro">a scrie</td>
+            <td class="ro"><b class="art">Scrie!</b></td>
+            <td class="ro">Nu scrie!</td>
+            <td class="ro"><b class="art">Scrieți!</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('a fi: fii atent!, nu fi trist!, fiți atenți!')">
+            <td class="ro"><b>a fi (neregulat)</b></td>
+            <td class="ro"><b class="art">Fii!</b> (fii atent)</td>
+            <td class="ro">Nu fi!</td>
+            <td class="ro"><b class="art">Fiți!</b> (fiți atenți)</td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('a face: fă!, nu face!, faceți!')">
+            <td class="ro"><b>a face (neregulat)</b></td>
+            <td class="ro"><b class="art">Fă!</b> (fă exercițiul)</td>
+            <td class="ro">Nu face!</td>
+            <td class="ro"><b class="art">Faceți!</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('a veni: vino!, nu veni!, veniți!')">
+            <td class="ro"><b>a veni (neregulat)</b></td>
+            <td class="ro"><b class="art">Vino!</b> (vino aici)</td>
+            <td class="ro">Nu veni!</td>
+            <td class="ro"><b class="art">Veniți!</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+          <tr class="w" onclick="say('a zice: zi!, nu zice!, ziceți!')">
+            <td class="ro"><b>a zice (neregulat)</b></td>
+            <td class="ro"><b class="art">Zi!</b> (zi adevărul)</td>
+            <td class="ro">Nu zice!</td>
+            <td class="ro"><b class="art">Ziceți!</b></td>
+            <td><button class="iconbtn">🔊</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Timpul Imperfect (Lecția 27) -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 27 · Trecutul descriptiv</span>
+      <h3>Timpul Imperfect: acțiuni continue și repetitive în trecut</h3>
+    </div>
+    <div class="note">
+      <b class="t">Text: În vacanță la bunici</b>
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «Pe când eram elev de liceu, <b class="art">așteptam</b> cu nerăbdare vacanța să plec la bunici.
+        În fiecare dimineață bunicul <b class="art">mergea</b> în grădină, iar bunica <b class="art">pregătea</b> plăcinte calde.
+        Noi <b class="art">citeam</b> cărți pe prispă sau <b class="art">alergam</b> pe malul râului până la apusul soarelui.»
+      </p>
+      <div style="margin-top:10px;">
+        <button class="btn ghost" onclick="say('Pe când eram elev de liceu, așteptam cu nerăbdare vacanța să plec la bunici. În fiecare dimineață bunicul mergea în grădină.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exerciții Interactive Blocul IV -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Practică interactivă</span>
+      <h3>Exerciții de antrenament: Clitice duble și Imperativ</h3>
+    </div>
+    <div class="exercise-box">
+      <p><b>1. Înlocuiți cu forma corectă de Imperativ afirmativ:</b></p>
+      <div class="ex-row">
+        <span>a) (A fi)</span>
+        <input class="ans" id="ex4_1" data-ans="fii" placeholder="...">
+        <span>atent la explicația profesorului!</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Te rog, (a veni)</span>
+        <input class="ans" id="ex4_2" data-ans="vino" placeholder="...">
+        <span>repede la tablă!</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Tu (a face)</span>
+        <input class="ans" id="ex4_3" data-ans="fă" placeholder="...">
+        <span>exercițiul numărul doi!</span>
+      </div>
+
+      <p style="margin-top:10px;"><b>2. Completați cu cliticele combinate potrivite (Dativ + Acuzativ):</b></p>
+      <div class="ex-row">
+        <span>a) Dicționarul meu? Profesorul</span>
+        <input class="ans" id="ex4_4" data-ans="mi-l" placeholder="...">
+        <span>a dat înapoi ieri. (mie + el)</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Scrisoarea pentru Maria? Eu</span>
+        <input class="ans" id="ex4_5" data-ans="i-o" placeholder="...">
+        <span>trimit astăzi. (ei + ea)</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="checkEx('ch4')">Verifică răspunsurile</button>
+        <button class="btn ghost" onclick="toggleHint('ch4')">Arată cheia</button>
+      </div>
+      <div class="ex-hint" id="hint_ch4">
+        Cheie de verificare: 1a: fii; 1b: vino; 1c: fă; 2a: mi-l; 2b: i-o.
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Blocul IV -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Evaluare</span>
+      <h3>Testul Blocului IV (Lecțiile 21–28)</h3>
+    </div>
+    <div class="quiz" id="quizCh4_box">
+      <div class="qtop">
+        <span id="q4_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q4_dots"></div>
+      </div>
+      <div class="qq" id="q4_prompt">Care este forma negativă corectă a imperativului singular de la verbul «a face»?</div>
+      <div class="opts" id="q4_opts"></div>
+      <div class="why" id="q4_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn4_nextQ" onclick="nextQuiz4()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 5: Lecțiile 29–38 -->
+    
+<article class="chapter" id="ch5" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Blocul V · Lecțiile 29–38 (Pag. 243–338)</span>
+    <h2>Moduri avansate, cultură și civilizație românească</h2>
+    <div class="ro-title">Gerunziul, Condiționalul-optativ, Mai mult ca perfectul, Supinul, Diateza pasivă și capodoperele culturii</div>
+  </section>
+
+  <!-- Text Autentic Lecția 32: Mihai Eminescu -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 32 · Cultură și literatură</span>
+      <h3>Mihai Eminescu — Poetul național al României</h3>
+    </div>
+    <div class="note">
+      <b class="t">Textul autentic din manual</b>
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «Cel mai mare poet român și unul dintre marii poeți ai lumii, Mihai Eminescu (1850–1889), a dat limbii române literare o strălucire de neegalat.
+        Opera sa cuprinde poezii de o profundă meditație filosofică (precum capodopera <em>Luceafărul</em>), poeme de dragoste și natură, proză fantastică (<em>Sărmanul Dionis</em>) și publicistică de o rară vigoare.
+        Dacă <b class="art">ai citi</b> versurile eminesciene în original, <b class="art">ai descoperi</b> armonia desăvârșită și muzicalitatea unică a limbii române.»
+      </p>
+      <div style="margin-top:10px;">
+        <button class="btn ghost" onclick="say('Cel mai mare poet român și unul dintre marii poeți ai lumii, Mihai Eminescu, a dat limbii române literare o strălucire de neegalat. Opera sa cuprinde poezii de o profundă meditație filosofică.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Morph Stage: Advanced Verbal Moods -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Trenažor de forme avansate</span>
+      <h3>Modurile Condițional-optativ, Mai mult ca perfect și Supin</h3>
+    </div>
+    <div class="stage" id="ch5Stage">
+      <div class="big" id="ch5_big">
+        <span class="w ro" id="ch5_pron">Eu</span>
+        <span class="w ro" id="ch5_verb" style="color:var(--red);">aș citi</span>
+        <span class="w ro" id="ch5_comp">cartea cu plăcere</span>
+      </div>
+      <div class="cap" id="ch5_cap">Condițional-optativ prezent: dorință sau acțiune condiționată (Я прочитал бы книгу с удовольствием)</div>
+      <div class="rule" id="ch5_rule">auxiliar (aș, ai, ar, am, ați, ar) + infinitiv</div>
+      <div class="row">
+        <button class="btn ghost" onclick="sayCh5Stage()">
+          <span style="font-size:1.1rem;margin-right:4px;">🔊</span> Ascultă fraza
+        </button>
+      </div>
+      <div class="modes" id="ch5MoodModes">
+        <button onclick="setCh5Mood('cond')" aria-pressed="true">Condițional (aș citi)</button>
+        <button onclick="setCh5Mood('mmcp')" aria-pressed="false">Mai mult ca perfect (citise)</button>
+        <button onclick="setCh5Mood('gerunziu')" aria-pressed="false">Gerunziu (citind)</button>
+        <button onclick="setCh5Mood('supin')" aria-pressed="false">Supin (de citit)</button>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <span class="eyebrow" style="margin-right:8px;">Subiectul:</span>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(0)">eu</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(1)">tu</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(2)">el/ea</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(3)">noi</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(4)">voi</button>
+        <button class="btn ghost" style="padding:4px 9px;font-size:0.85rem;" onclick="setCh5Person(5)">ei/ele</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Text Autentic Lecția 35: Constantin Brâncuși -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 35 · Artă universală</span>
+      <h3>Constantin Brâncuși — Părintele sculpturii moderne</h3>
+    </div>
+    <div class="dialogue-box">
+      <p class="ro" style="font-size:1.05rem;line-height:1.6;">
+        «Muzeul de Artă Modernă din Paris adăpostește atelierul integral al lui <b class="art">Constantin Brâncuși</b> (1876–1957),
+        marele sculptor român care a revoluționat limbajul sculpturii universale.
+        Născut la Hobița, în Gorj, Brâncuși a îmbinat arta arhaică a lemnului țărănesc românesc cu puritatea extremă a formei abstracte.
+        Ansamblul monumental de la Târgu-Jiu — <em>Coloana Infinitului</em>, <em>Poarta Sărutului</em> și <em>Masa Tăcerii</em> —
+        reprezintă un omagiu suprem adus eroilor neamului și o culme a artei secolului al XX-lea.»
+      </p>
+      <div style="margin-top:8px;">
+        <button class="btn ghost" onclick="say('Constantin Brâncuși, marele sculptor român care a revoluționat limbajul sculpturii universale. Coloana Infinitului, Poarta Sărutului și Masa Tăcerii.')">
+          🔊 Ascultă textul
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modul Supin și Timpul Mai mult ca perfect -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Lecția 35 și 36 · Particularități unice românești</span>
+      <h3>Sintaxa Supinului și a timpului Mai mult ca perfect</h3>
+    </div>
+    <div class="prose">
+      <p>
+        <b>Supinul</b> se formează din prepoziție (<em>de, la, pentru, după</em>) + participiu:
+        <em>o carte ușor de citit</em>, <em>mașină de spălat</em>, <em>s-a dus la cules de mere</em>.
+      </p>
+      <p>
+        <b>Mai mult ca perfectul</b> exprimă o acțiune din trecut săvârșită înaintea altei acțiuni trecute,
+        având sufixul sintetic <em>-se-</em> adăugat direct la rădăcina participiului:
+        <em>Când a sosit profesorul, studenții deja <b class="art">intraseră</b> în amfiteatru.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- Exerciții Interactive Blocul V -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Practică interactivă</span>
+      <h3>Exerciții de antrenament: Condiționalul și Supinul</h3>
+    </div>
+    <div class="exercise-box">
+      <p><b>1. Puneți verbul la Modul Condițional-optativ prezent:</b></p>
+      <div class="ex-row">
+        <span>a) Noi (a dori)</span>
+        <input class="ans" id="ex5_1" data-ans="am dori" placeholder="...">
+        <span>să vizităm atelierul lui Brâncuși.</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Tu (a merge)</span>
+        <input class="ans" id="ex5_2" data-ans="ai merge" placeholder="...">
+        <span>la spectacolul de operă?</span>
+      </div>
+      <div class="ex-row">
+        <span>c) Eu (a cumpăra)</span>
+        <input class="ans" id="ex5_3" data-ans="aș cumpăra" placeholder="...">
+        <span>volumul de poezii de Eminescu.</span>
+      </div>
+
+      <p style="margin-top:10px;"><b>2. Completați cu forma corectă de Supin sau Mai mult ca perfect:</b></p>
+      <div class="ex-row">
+        <span>a) Acest roman este foarte captivant și ușor de</span>
+        <input class="ans" id="ex5_4" data-ans="citit" placeholder="...">
+        <span>. (a citi - supin)</span>
+      </div>
+      <div class="ex-row">
+        <span>b) Până la miezul nopții, el (a termina)</span>
+        <input class="ans" id="ex5_5" data-ans="terminase" placeholder="...">
+        <span>tot referatul. (mai mult ca perfect)</span>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="checkEx('ch5')">Verifică răspunsurile</button>
+        <button class="btn ghost" onclick="toggleHint('ch5')">Arată cheia</button>
+      </div>
+      <div class="ex-hint" id="hint_ch5">
+        Cheie de verificare: 1a: am dori; 1b: ai merge; 1c: aș cumpăra; 2a: citit; 2b: terminase.
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Blocul V -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Evaluare</span>
+      <h3>Testul Blocului V (Lecțiile 29–38)</h3>
+    </div>
+    <div class="quiz" id="quizCh5_box">
+      <div class="qtop">
+        <span id="q5_count">Вопрос 1 из 3</span>
+        <div class="dots" id="q5_dots"></div>
+      </div>
+      <div class="qq" id="q5_prompt">Care este forma de persoana a 3-a plural a verbului «a pleca» la Mai mult ca perfect?</div>
+      <div class="opts" id="q5_opts"></div>
+      <div class="why" id="q5_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btn5_nextQ" onclick="nextQuiz5()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+
+    <!-- Chapter 6: Tabele și Examen -->
+    
+<article class="chapter" id="ch6" style="display:none;">
+  <section class="sec-head">
+    <span class="eyebrow">Sinteză finală · Pag. 339–448</span>
+    <h2>Tabele sinoptice, Vocabular și Marele Examen</h2>
+    <div class="ro-title">Sinteza completă a anului pregătitor: conjugări, matricea pronumelor și testul de evaluare universitară</div>
+  </section>
+
+  <!-- Tablou Sinoptic al Verbelor Românești -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Sinteză gramaticală</span>
+      <h3>Tabloul sinoptic al celor patru conjugări</h3>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Conjugare</th>
+            <th>Infinitiv</th>
+            <th>Prezent (eu / el)</th>
+            <th>Perfect compus</th>
+            <th>Imperfect</th>
+            <th>Viitor standard</th>
+            <th>Conjunctiv</th>
+            <th>Condițional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('a învăța: eu învăț, el învață, am învățat, învățam, voi învăța, să învețe, aș învăța')">
+            <td><b>I (-a)</b></td>
+            <td class="ro">a învăța</td>
+            <td class="ro">învăț / învață</td>
+            <td class="ro">am învățat</td>
+            <td class="ro">învățam</td>
+            <td class="ro">voi învăța</td>
+            <td class="ro">să învețe</td>
+            <td class="ro">aș învăța</td>
+          </tr>
+          <tr class="w" onclick="say('a lucra: eu lucrez, el lucrează, am lucrat, lucram, voi lucra, să lucreze, aș lucra')">
+            <td><b>I (-a, -ez)</b></td>
+            <td class="ro">a lucra</td>
+            <td class="ro">lucrez / lucrează</td>
+            <td class="ro">am lucrat</td>
+            <td class="ro">lucram</td>
+            <td class="ro">voi lucra</td>
+            <td class="ro">să lucreze</td>
+            <td class="ro">aș lucra</td>
+          </tr>
+          <tr class="w" onclick="say('a vedea: eu văd, el vede, am văzut, vedeam, voi vedea, să vadă, aș vedea')">
+            <td><b>II (-ea)</b></td>
+            <td class="ro">a vedea</td>
+            <td class="ro">văd / vede</td>
+            <td class="ro">am văzut</td>
+            <td class="ro">vedeam</td>
+            <td class="ro">voi vedea</td>
+            <td class="ro">să vadă</td>
+            <td class="ro">aș vedea</td>
+          </tr>
+          <tr class="w" onclick="say('a scrie: eu scriu, el scrie, am scris, scriam, voi scrie, să scrie, aș scrie')">
+            <td><b>III (-e)</b></td>
+            <td class="ro">a scrie</td>
+            <td class="ro">scriu / scrie</td>
+            <td class="ro">am scris</td>
+            <td class="ro">scriam</td>
+            <td class="ro">voi scrie</td>
+            <td class="ro">să scrie</td>
+            <td class="ro">aș scrie</td>
+          </tr>
+          <tr class="w" onclick="say('a face: eu fac, el face, am făcut, făceam, voi face, să facă, aș face')">
+            <td><b>III (-e)</b></td>
+            <td class="ro">a face</td>
+            <td class="ro">fac / face</td>
+            <td class="ro">am făcut</td>
+            <td class="ro">făceam</td>
+            <td class="ro">voi face</td>
+            <td class="ro">să facă</td>
+            <td class="ro">aș face</td>
+          </tr>
+          <tr class="w" onclick="say('a citi: eu citesc, el citește, am citit, citeam, voi citi, să citească, aș citi')">
+            <td><b>IV (-i, -esc)</b></td>
+            <td class="ro">a citi</td>
+            <td class="ro">citesc / citește</td>
+            <td class="ro">am citit</td>
+            <td class="ro">citeam</td>
+            <td class="ro">voi citi</td>
+            <td class="ro">să citească</td>
+            <td class="ro">aș citi</td>
+          </tr>
+          <tr class="w" onclick="say('a coborî: eu cobor, el coboară, am coborât, coboram, voi coborî, să coboare, aș coborî')">
+            <td><b>IV (-î)</b></td>
+            <td class="ro">a coborî</td>
+            <td class="ro">cobor / coboară</td>
+            <td class="ro">am coborât</td>
+            <td class="ro">coboram</td>
+            <td class="ro">voi coborî</td>
+            <td class="ro">să coboare</td>
+            <td class="ro">aș coborî</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Matricea Comparativă a Pronumelor Personale -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Matrice de referință</span>
+      <h3>Sistemul complet al cazurilor pronumelui personal</h3>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Persoana</th>
+            <th>Nominativ</th>
+            <th>Acuzativ accentuat</th>
+            <th>Acuzativ neaccentuat</th>
+            <th>Dativ accentuat</th>
+            <th>Dativ neaccentuat</th>
+            <th>Genitiv</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="w" onclick="say('eu, pe mine, mă, mie, îmi')">
+            <td>I sg.</td>
+            <td class="ro"><b>eu</b></td>
+            <td class="ro">pe mine</td>
+            <td class="ro"><b class="art">mă / m-</b></td>
+            <td class="ro">mie</td>
+            <td class="ro"><b class="art">îmi / mi-</b></td>
+            <td class="tr">—</td>
+          </tr>
+          <tr class="w" onclick="say('tu, pe tine, te, ție, îți')">
+            <td>II sg.</td>
+            <td class="ro"><b>tu</b></td>
+            <td class="ro">pe tine</td>
+            <td class="ro"><b class="art">te / te-</b></td>
+            <td class="ro">ție</td>
+            <td class="ro"><b class="art">îți / ți-</b></td>
+            <td class="tr">—</td>
+          </tr>
+          <tr class="w" onclick="say('el, pe el, îl, lui, îi')">
+            <td>III sg. m.</td>
+            <td class="ro"><b>el</b></td>
+            <td class="ro">pe el</td>
+            <td class="ro"><b class="art">îl / l-</b></td>
+            <td class="ro">lui</td>
+            <td class="ro"><b class="art">îi / i-</b></td>
+            <td class="ro"><b>lui</b></td>
+          </tr>
+          <tr class="w" onclick="say('ea, pe ea, o, ei, îi')">
+            <td>III sg. f.</td>
+            <td class="ro"><b>ea</b></td>
+            <td class="ro">pe ea</td>
+            <td class="ro"><b class="art">o / -o</b></td>
+            <td class="ro">ei</td>
+            <td class="ro"><b class="art">îi / i-</b></td>
+            <td class="ro"><b>ei</b></td>
+          </tr>
+          <tr class="w" onclick="say('noi, pe noi, ne, nouă, ne')">
+            <td>I pl.</td>
+            <td class="ro"><b>noi</b></td>
+            <td class="ro">pe noi</td>
+            <td class="ro"><b class="art">ne / ne-</b></td>
+            <td class="ro">nouă</td>
+            <td class="ro"><b class="art">ne / ne-</b></td>
+            <td class="tr">—</td>
+          </tr>
+          <tr class="w" onclick="say('voi, pe voi, vă, vouă, vă')">
+            <td>II pl.</td>
+            <td class="ro"><b>voi</b></td>
+            <td class="ro">pe voi</td>
+            <td class="ro"><b class="art">vă / v-</b></td>
+            <td class="ro">vouă</td>
+            <td class="ro"><b class="art">vă / v-</b></td>
+            <td class="tr">—</td>
+          </tr>
+          <tr class="w" onclick="say('ei, pe ei, îi, lor, le')">
+            <td>III pl. m.</td>
+            <td class="ro"><b>ei</b></td>
+            <td class="ro">pe ei</td>
+            <td class="ro"><b class="art">îi / i-</b></td>
+            <td class="ro">lor</td>
+            <td class="ro"><b class="art">le / le-</b></td>
+            <td class="ro"><b>lor</b></td>
+          </tr>
+          <tr class="w" onclick="say('ele, pe ele, le, lor, le')">
+            <td>III pl. f.</td>
+            <td class="ro"><b>ele</b></td>
+            <td class="ro">pe ele</td>
+            <td class="ro"><b class="art">le / le-</b></td>
+            <td class="ro">lor</td>
+            <td class="ro"><b class="art">le / le-</b></td>
+            <td class="ro"><b>lor</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Vocabular Selectiv Academic -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Dicționar activ</span>
+      <h3>Vocabular universitar și colocvial frecvent (cu pronunție audio)</h3>
+    </div>
+    <div class="vocab-grid">
+      <div class="wcard" onclick="say('anul pregătitor')">
+        <span class="ro">anul pregătitor</span>
+        <span class="ru">подготовительный факультет / курс</span>
+      </div>
+      <div class="wcard" onclick="say('amfiteatru')">
+        <span class="ro">amfiteatru</span>
+        <span class="ru">лекционная аудитория / амфитеатр</span>
+      </div>
+      <div class="wcard" onclick="say('sală de lectură')">
+        <span class="ro">sală de lectură</span>
+        <span class="ru">читальный зал библиотеки</span>
+      </div>
+      <div class="wcard" onclick="say('cămin studențesc')">
+        <span class="ro">cămin studențesc</span>
+        <span class="ru">студенческое общежитие</span>
+      </div>
+      <div class="wcard" onclick="say('cantină studențească')">
+        <span class="ro">cantină studențească</span>
+        <span class="ru">студенческая столовая</span>
+      </div>
+      <div class="wcard" onclick="say('sesiune de examene')">
+        <span class="ro">sesiune de examene</span>
+        <span class="ru">экзаменационная сессия</span>
+      </div>
+      <div class="wcard" onclick="say('notă de trecere')">
+        <span class="ro">notă de trecere</span>
+        <span class="ru">проходной балл (минимум 5)</span>
+      </div>
+      <div class="wcard" onclick="say('referat științific')">
+        <span class="ro">referat științific</span>
+        <span class="ru">научный доклад / реферат</span>
+      </div>
+      <div class="wcard" onclick="say('bursă de studiu')">
+        <span class="ro">bursă de studiu</span>
+        <span class="ru">студенческая стипендия</span>
+      </div>
+      <div class="wcard" onclick="say('oră de curs')">
+        <span class="ro">oră de curs</span>
+        <span class="ru">академический час / лекция</span>
+      </div>
+      <div class="wcard" onclick="say('orarul cursurilor')">
+        <span class="ro">orarul cursurilor</span>
+        <span class="ru">расписание занятий</span>
+      </div>
+      <div class="wcard" onclick="say('rectoratul universității')">
+        <span class="ro">rectoratul universității</span>
+        <span class="ru">ректорат университета</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marele Examen Universitar -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Examenul final al semestrului</span>
+      <h3>Marele Examen Universitar de Evaluare (15 întrebări A1–B2)</h3>
+    </div>
+    <div class="quiz" id="quizMain_box">
+      <div class="qtop">
+        <span id="qMain_count">Вопрос 1 из 15</span>
+        <div class="dots" id="qMain_dots"></div>
+      </div>
+      <div class="qq" id="qMain_prompt"></div>
+      <div class="opts" id="qMain_opts"></div>
+      <div class="why" id="qMain_why"></div>
+      <div class="qnav">
+        <button class="btn" id="btnMain_nextQ" onclick="nextQuizMain()" style="display:none">Următoarea întrebare →</button>
+      </div>
+    </div>
+  </section>
+</article>
+
+  </main>
+</div>
+
+<script>
+
+/* ============================================================
+   1. SPEECH SYNTHESIS & AUDIO
+   ============================================================ */
+let roVoice = null;
+let currentAudio = null;
+
+function initVoices(){
+  if(typeof speechSynthesis === 'undefined') return;
+  const vs = speechSynthesis.getVoices();
+  roVoice = vs.find(v => v.lang && (v.lang.startsWith('ro') || v.lang.includes('RON') || v.lang.includes('Romanian'))) || null;
+}
+if(typeof speechSynthesis !== 'undefined'){
+  speechSynthesis.onvoiceschanged = initVoices;
+  initVoices();
+}
+
+function say(text){
+  const spokenText = String(text).replace(/[\[\]\(\)\*\_\—\–]/g, ' ').trim();
+  if(!spokenText) return;
+
+  if(currentAudio){
+    try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){}
+    currentAudio = null;
+  }
+
+  // 1. Native Romanian speech synthesis
+  if(roVoice){
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(spokenText);
+      u.voice = roVoice;
+      u.lang = roVoice.lang;
+      u.rate = 0.85;
+      speechSynthesis.speak(u);
+      return;
+    } catch(e){}
+  }
+
+  // 2. Fallback: Google TTS stream for authentic Romanian pronunciation
+  try {
+    const q = encodeURIComponent(spokenText.slice(0, 240));
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ro&client=tw-ob&q=${q}`;
+    currentAudio = new Audio(url);
+    currentAudio.play().catch(() => {});
+  } catch(e){}
+}
+
+/* ============================================================
+   2. THEME TOGGLE & CHAPTER NAVIGATION
+   ============================================================ */
+function toggleTheme(){
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  const next = (current === 'dark') ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('manual_brancus_theme', next); } catch(e){}
+}
+
+const TOTAL_CHAPTERS = 7;
+let currentChapterIdx = 0;
+
+function switchChapter(idx){
+  currentChapterIdx = idx;
+  for(let i = 0; i < TOTAL_CHAPTERS; i++){
+    const chEl = document.getElementById('ch' + i);
+    if(chEl) chEl.style.display = (i === idx) ? 'flex' : 'none';
+  }
+
+  const buttons = document.querySelectorAll('#chapBtns button');
+  buttons.forEach((btn, i) => {
+    btn.setAttribute('aria-current', i === idx ? 'true' : 'false');
+  });
+
+  const progBar = document.getElementById('progBar');
+  if(progBar){
+    const pct = Math.round(((idx + 1) / TOTAL_CHAPTERS) * 100);
+    progBar.style.width = pct + '%';
+  }
+
+  try { localStorage.setItem('manual_brancus_chap', idx); } catch(e){}
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   3. PHONETIC STAGE (CAPITOLUL 0)
+   ============================================================ */
+const phoneticData = [
+  { sound: 'Ă ă', ipa: '[ə]', desc: 'Vocala centrală semiînchisă românească, asemănătoare primului sunet din englezul «about».', rule: 'Exemplu: apă, casă, învățător, măr, săptămână', say: 'apă, casă, învățător, măr, săptămână' },
+  { sound: 'Â / Î', ipa: '[ɨ]', desc: 'Vocala centrală închisă nerotunjită (sunetul «î / ы»). Se scrie «î» la începutul și sfârșitul cuvântului, «â» în interior.', rule: 'Exemplu: început, în, român, pâine, mână, când', say: 'început, în, român, pâine, mână, când' },
+  { sound: 'Ș ș', ipa: '[ʃ]', desc: 'Consoana fricativă prepalatală surdă (sunetul «ш»). Se scrie întotdeauna cu virgulă dedesubt.', rule: 'Exemplu: școală, șase, șapte, și, știință', say: 'școală, șase, șapte, și, știință' },
+  { sound: 'Ț ț', ipa: '[ts]', desc: 'Consoana africată dentală surdă (sunetul «ц»). Se scrie întotdeauna cu virgulă dedesubt.', rule: 'Exemplu: țară, țăran, dimineață, lecție, băieți', say: 'țară, țăran, dimineață, lecție, băieți' },
+  { sound: 'CE / CI', ipa: '[tʃ]', desc: '«C» urmat de «e» sau «i» se pronunță [tʃ] (sunetul «ч»). Înainte de alte litere se pronunță [k].', rule: 'Exemplu: ce, ceas, cinematograf, citi, cinci', say: 'ce, ceas, cinematograf, citi, cinci' },
+  { sound: 'GE / GI', ipa: '[dʒ]', desc: '«G» urmat de «e» sau «i» se pronunță [dʒ] (sunetul «дж»). Înainte de alte litere se pronunță [g].', rule: 'Exemplu: ger, geantă, ginere, girafă, merge', say: 'ger, geantă, ginere, girafă, merge' },
+  { sound: 'CHE / CHI', ipa: "[k']", desc: 'Grupul «ch» urmat de «e» sau «i» se pronunță ca un [k] palatalizat (sunetul «кь»).', rule: 'Exemplu: cheie, chelner, chitanță, chimie, deschide', say: 'cheie, chelner, chitanță, chimie, deschide' },
+  { sound: 'GHE / GHI', ipa: "[g']", desc: 'Grupul «gh» urmat de «e» sau «i» se pronunță ca un [g] palatalizat (sunetul «гь»).', rule: 'Exemplu: gheață, ghete, ghicitoare, ghid, ghimpe', say: 'gheață, ghete, ghicitoare, ghid, ghimpe' }
+];
+let curPhoneticIdx = 0;
+
+function setPhonetic(idx){
+  curPhoneticIdx = idx;
+  const d = phoneticData[idx];
+  document.getElementById('ph_big').innerHTML = `<span class="ro" style="color:var(--red);font-size:1.2em;">${d.sound}</span> <span class="w ro">${d.ipa}</span>`;
+  document.getElementById('ph_cap').textContent = d.desc;
+  document.getElementById('ph_rule').textContent = d.rule;
+  const btns = document.querySelectorAll('#phModes button');
+  btns.forEach((b, i) => b.setAttribute('aria-pressed', i === idx ? 'true' : 'false'));
+}
+function sayCurrentPhonetic(){
+  say(phoneticData[curPhoneticIdx].say);
+}
+
+/* ============================================================
+   4. CHAPTER 1 MORPH STAGE (CONJUGARE DE BAZĂ)
+   ============================================================ */
+const ch1Verbs = {
+  fi: {
+    name: 'a fi',
+    forms: ['sunt', 'ești', 'este / e', 'suntem', 'sunteți', 'sunt / sînt'],
+    comp: ['student', 'student', 'student / studentă', 'studenți', 'studenți', 'studenți'],
+    tr: ['я студент', 'ты студент', 'он / она студент', 'мы студенты', 'вы студенты', 'они студенты']
+  },
+  avea: {
+    name: 'a avea',
+    forms: ['am', 'ai', 'are', 'avem', 'aveți', 'au'],
+    comp: ['un dicționar', 'un dicționar', 'un dicționar', 'cărți', 'cărți', 'cărți'],
+    tr: ['у меня есть словарь', 'у тебя есть словарь', 'у него есть словарь', 'у нас есть книги', 'у вас есть книги', 'у них есть книги']
+  },
+  invata: {
+    name: 'a învăța',
+    forms: ['învăț', 'înveți', 'învață', 'învățăm', 'învățați', 'învață'],
+    comp: ['românește', 'românește', 'românește', 'la universitate', 'la universitate', 'la universitate'],
+    tr: ['я учу румынский', 'ты учишь румынский', 'он учит румынский', 'мы учимся в университете', 'вы учитесь в университете', 'они учатся в университете']
+  },
+  lucra: {
+    name: 'a lucra',
+    forms: ['lucrez', 'lucrezi', 'lucrează', 'lucrăm', 'lucrați', 'lucrează'],
+    comp: ['la laborator', 'la laborator', 'la laborator', 'la facultate', 'la facultate', 'la facultate'],
+    tr: ['я работаю в лаборатории', 'ты работаешь в лаборатории', 'он работает в лаборатории', 'мы работаем на факультете', 'вы работаете на факультете', 'они работают на факультете']
+  },
+  citi: {
+    name: 'a citi',
+    forms: ['citesc', 'citești', 'citește', 'citim', 'citiți', 'citesc'],
+    comp: ['textul', 'textul', 'textul', 'manualul', 'manualul', 'manualul'],
+    tr: ['я читаю текст', 'ты читаешь текст', 'он читает текст', 'мы читаем учебник', 'вы читаете учебник', 'они читают учебник']
+  }
+};
+const prons = ['Eu', 'Tu', 'El / Ea', 'Noi', 'Voi', 'Ei / Ele'];
+let curCh1Person = 0;
+let curCh1Verb = 'fi';
+
+function updateCh1Stage(){
+  const v = ch1Verbs[curCh1Verb];
+  document.getElementById('ch1_pron').textContent = prons[curCh1Person];
+  document.getElementById('ch1_verb').textContent = v.forms[curCh1Person];
+  document.getElementById('ch1_comp').textContent = v.comp[curCh1Person];
+  document.getElementById('ch1_cap').textContent = `Persoana ${curCh1Person < 3 ? curCh1Person+1 : curCh1Person-2} ${curCh1Person < 3 ? 'singular' : 'plural'}: ${v.tr[curCh1Person]}`;
+  document.getElementById('ch1_rule').textContent = `${v.name} · indicativ prezent`;
+}
+function setCh1Person(idx){
+  curCh1Person = idx;
+  const btns = document.querySelectorAll('#ch1Modes button');
+  btns.forEach((b, i) => b.setAttribute('aria-pressed', i === idx ? 'true' : 'false'));
+  updateCh1Stage();
+}
+function setCh1Verb(vId){
+  curCh1Verb = vId;
+  updateCh1Stage();
+}
+function sayCh1Stage(){
+  const v = ch1Verbs[curCh1Verb];
+  say(`${prons[curCh1Person]} ${v.forms[curCh1Person]} ${v.comp[curCh1Person]}`);
+}
+
+/* ============================================================
+   5. CHAPTER 2 MORPH STAGE (MAȘINA TIMPULUI)
+   ============================================================ */
+let curCh2Tense = 'perfect';
+let curCh2Person = 0;
+const ch2Forms = {
+  prezent: {
+    name: 'Prezent',
+    forms: ['citesc', 'citești', 'citește', 'citim', 'citiți', 'citesc'],
+    desc: 'Acțiune în desfășurare în prezent (Я читаю)'
+  },
+  perfect: {
+    name: 'Perfect compus',
+    forms: ['am citit', 'ai citit', 'a citit', 'am citit', 'ați citit', 'au citit'],
+    desc: 'Acțiune încheiată în trecut (Я прочитал)'
+  },
+  viitor: {
+    name: 'Viitor o să',
+    forms: ['o să citesc', 'o să citești', 'o să citească', 'o să citim', 'o să citiți', 'o să citească'],
+    desc: 'Viitor colocvial frecvent (Я прочитаю / буду читать)'
+  },
+  conjunctiv: {
+    name: 'Conjunctiv',
+    forms: ['să citesc', 'să citești', 'să citească', 'să citim', 'să citiți', 'să citească'],
+    desc: 'Nuanță de dorință sau scop: vreau să citesc (Я хочу прочитать)'
+  }
+};
+
+function updateCh2Stage(){
+  const t = ch2Forms[curCh2Tense];
+  document.getElementById('ch2_pron').textContent = prons[curCh2Person];
+  document.getElementById('ch2_verb').textContent = t.forms[curCh2Person];
+  document.getElementById('ch2_obj').textContent = 'romanul';
+  document.getElementById('ch2_cap').textContent = `${t.name}: ${t.desc}`;
+  document.getElementById('ch2_rule').textContent = `a citi · ${t.name}`;
+}
+function setCh2Tense(t){
+  curCh2Tense = t;
+  const btns = document.querySelectorAll('#ch2TenseModes button');
+  btns.forEach(b => {
+    b.setAttribute('aria-pressed', b.getAttribute('onclick').includes(t) ? 'true' : 'false');
+  });
+  updateCh2Stage();
+}
+function setCh2Person(p){
+  curCh2Person = p;
+  updateCh2Stage();
+}
+function sayCh2Stage(){
+  const t = ch2Forms[curCh2Tense];
+  say(`${prons[curCh2Person]} ${t.forms[curCh2Person]} romanul`);
+}
+
+/* ============================================================
+   6. CHAPTER 3 MORPH STAGE (GENITIV & DATIV)
+   ============================================================ */
+const ch3Cases = [
+  { prefix: 'Cartea', word: 'studentului', cap: 'Genitiv masculin singular: substantiv + articol hotărât -ului (Книга студента)', rule: 'student + -ului = studentului', say: 'Cartea studentului' },
+  { prefix: 'Camera', word: 'colegei', cap: 'Genitiv feminin singular: substantiv + terminație -ei (Комната коллеги)', rule: 'colegă → colege + -i = colegei', say: 'Camera colegei' },
+  { prefix: 'Holul', word: 'teatrului', cap: 'Genitiv neutru singular: substantiv + articol hotărât -ului (Вестибюль театра)', rule: 'teatru + -ului = teatrului', say: 'Holul teatrului' },
+  { prefix: 'Cărțile', word: 'studenților', cap: 'Genitiv masculin plural: plural + terminație -ilor (Книги студентов)', rule: 'studenți + -lor = studenților', say: 'Cărțile studenților' },
+  { prefix: 'Sălile', word: 'facultăților', cap: 'Genitiv feminin plural: plural + terminație -lor (Аудитории факультетов)', rule: 'facultăți + -lor = facultăților', say: 'Sălile facultăților' }
+];
+let curCh3Idx = 0;
+
+function setCh3Case(idx){
+  curCh3Idx = idx;
+  const c = ch3Cases[idx];
+  document.getElementById('ch3_prefix').textContent = c.prefix;
+  document.getElementById('ch3_word').textContent = c.word;
+  document.getElementById('ch3_cap').textContent = c.cap;
+  document.getElementById('ch3_rule').textContent = c.rule;
+  const btns = document.querySelectorAll('#ch3Modes button');
+  btns.forEach((b, i) => b.setAttribute('aria-pressed', i === idx ? 'true' : 'false'));
+}
+function sayCh3Stage(){
+  say(ch3Cases[curCh3Idx].say);
+}
+
+/* ============================================================
+   7. CHAPTER 4 MORPH STAGE (DOUBLE CLITICS)
+   ============================================================ */
+const ch4Clitics = [
+  { clitic: 'Mi-l', verb: 'dă', ctx: 'profesorul', cap: 'Dativ (mie: îmi) + Acuzativ masc. sg. (îl) = mi-l (Он даёт его мне)', rule: 'îmi + îl = mi-l dă / mi l-a dat', say: 'Mi-l dă profesorul' },
+  { clitic: 'Mi-o', verb: 'trimite', ctx: 'Maria', cap: 'Dativ (mie: îmi) + Acuzativ fem. sg. (o) = mi-o (Мария присылает её мне)', rule: 'îmi + o = mi-o trimite / mi-a trimis-o', say: 'Mi-o trimite Maria' },
+  { clitic: 'Ți-l', verb: 'aduc', ctx: 'mâine dimineață', cap: 'Dativ (ție: îți) + Acuzativ masc. sg. (îl) = ți-l (Я принесу его тебе завтра)', rule: 'îți + îl = ți-l aduc', say: 'Ți-l aduc mâine dimineață' },
+  { clitic: 'I-o', verb: 'oferim', ctx: 'colegei noastre', cap: 'Dativ (lui/ei: îi) + Acuzativ fem. sg. (o) = i-o (Мы дарим её нашей коллеге)', rule: 'îi + o = i-o oferim / i-am oferit-o', say: 'I-o oferim colegei noastre' },
+  { clitic: 'Ni le', verb: 'explică', ctx: 'la seminar', cap: 'Dativ (nouă: ne) + Acuzativ fem. pl. (le) = ni le (Он объясняет их нам)', rule: 'ne + le = ni le explică', say: 'Ni le explică la seminar' },
+  { clitic: 'Vi-l', verb: 'prezint', ctx: 'pe noul coleg', cap: 'Dativ (vouă: vă) + Acuzativ masc. sg. (îl) = vi-l (Я представляю его вам)', rule: 'vă + îl = vi-l prezint', say: 'Vi-l prezint pe noul coleg' }
+];
+let curCh4Idx = 0;
+
+function setCh4Clitic(idx){
+  curCh4Idx = idx;
+  const c = ch4Clitics[idx];
+  document.getElementById('ch4_clitic').textContent = c.clitic;
+  document.getElementById('ch4_verb').textContent = c.verb;
+  document.getElementById('ch4_context').textContent = c.ctx;
+  document.getElementById('ch4_cap').textContent = c.cap;
+  document.getElementById('ch4_rule').textContent = c.rule;
+  const btns = document.querySelectorAll('#ch4Modes button');
+  btns.forEach((b, i) => b.setAttribute('aria-pressed', i === idx ? 'true' : 'false'));
+}
+function sayCh4Stage(){
+  say(ch4Clitics[curCh4Idx].say);
+}
+
+/* ============================================================
+   8. CHAPTER 5 MORPH STAGE (ADVANCED MOODS)
+   ============================================================ */
+let curCh5Mood = 'cond';
+let curCh5Person = 0;
+const ch5Data = {
+  cond: {
+    forms: ['aș citi', 'ai citi', 'ar citi', 'am citi', 'ați citi', 'ar citi'],
+    cap: 'Condițional-optativ prezent: dorință sau acțiune condiționată (Я прочитал бы)',
+    rule: 'auxiliar (aș, ai, ar, am, ați, ar) + infinitiv'
+  },
+  mmcp: {
+    forms: ['citise', 'citiseși', 'citise', 'citiserăm', 'citiserăți', 'citiseră'],
+    cap: 'Mai mult ca perfect: acțiune trecută înaintea altei acțiuni trecute (Он уже прочитал)',
+    rule: 'rădăcina participiului + sufixul -se- + desinență'
+  },
+  gerunziu: {
+    forms: ['citind', 'citind', 'citind', 'citind', 'citind', 'citind'],
+    cap: 'Modul Gerunziu: acțiune concomitentă (Читая)',
+    rule: 'rădăcină + -ând / -ind (fără acord de gen/număr)'
+  },
+  supin: {
+    forms: ['de citit', 'de citit', 'de citit', 'de citit', 'de citit', 'de citit'],
+    cap: 'Modul Supin: scop sau destinație (Pentru citit / ușor de citit)',
+    rule: 'prepoziție (de, la, pentru) + participiu'
+  }
+};
+
+function updateCh5Stage(){
+  const m = ch5Data[curCh5Mood];
+  document.getElementById('ch5_pron').textContent = prons[curCh5Person];
+  document.getElementById('ch5_verb').textContent = m.forms[curCh5Person];
+  document.getElementById('ch5_comp').textContent = (curCh5Mood === 'supin') ? 'cartea' : 'cartea cu plăcere';
+  document.getElementById('ch5_cap').textContent = m.cap;
+  document.getElementById('ch5_rule').textContent = m.rule;
+}
+function setCh5Mood(mood){
+  curCh5Mood = mood;
+  const btns = document.querySelectorAll('#ch5MoodModes button');
+  btns.forEach(b => {
+    b.setAttribute('aria-pressed', b.getAttribute('onclick').includes(mood) ? 'true' : 'false');
+  });
+  updateCh5Stage();
+}
+function setCh5Person(p){
+  curCh5Person = p;
+  updateCh5Stage();
+}
+function sayCh5Stage(){
+  const m = ch5Data[curCh5Mood];
+  say(`${prons[curCh5Person]} ${m.forms[curCh5Person]} cartea cu plăcere`);
+}
+
+/* ============================================================
+   9. EXERCISE CHECKER
+   ============================================================ */
+function checkEx(chId){
+  const container = document.getElementById(chId);
+  if(!container) return;
+  const inputs = container.querySelectorAll('input.ans');
+  inputs.forEach(inp => {
+    const rawVal = inp.value.trim().toLowerCase();
+    const allowed = (inp.getAttribute('data-ans') || '').toLowerCase().split('|');
+    const isOk = allowed.some(a => a.trim() === rawVal);
+    inp.classList.remove('ok', 'bad');
+    if(rawVal.length > 0){
+      inp.classList.add(isOk ? 'ok' : 'bad');
+    }
+  });
+}
+
+function toggleHint(chId){
+  const hintEl = document.getElementById('hint_' + chId);
+  if(hintEl){
+    hintEl.style.display = (hintEl.style.display === 'block') ? 'none' : 'block';
+  }
+}
+
+/* ============================================================
+   10. QUIZZES IMPLEMENTATION
+   ============================================================ */
+function makeQuizEngine(questions, prefix){
+  let cur = 0;
+  let score = 0;
+
+  function render(){
+    const q = questions[cur];
+    const cntEl = document.getElementById(prefix + '_count');
+    if(cntEl) cntEl.textContent = `Вопрос ${cur+1} из ${questions.length}`;
+    const pEl = document.getElementById(prefix + '_prompt');
+    if(pEl) pEl.textContent = q.q;
+
+    const dotsEl = document.getElementById(prefix + '_dots');
+    if(dotsEl){
+      dotsEl.innerHTML = questions.map((_, i) => `<i class="${i===cur?'cur':''}"></i>`).join('');
+    }
+
+    const optsEl = document.getElementById(prefix + '_opts');
+    if(optsEl){
+      optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="${prefix}_answer(${i})">${opt}</button>`).join('');
+    }
+
+    const whyEl = document.getElementById(prefix + '_why');
+    if(whyEl) whyEl.textContent = '';
+    const btnNext = document.getElementById('btn' + prefix.replace('q', '') + '_nextQ');
+    if(btnNext) btnNext.style.display = 'none';
+  }
+
+  function answer(idx){
+    const q = questions[cur];
+    const isOk = (idx === q.correct);
+    if(isOk) score++;
+    const btns = document.querySelectorAll('#' + prefix + '_opts button');
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if(i === q.correct) btn.className = 'ok';
+      else if(i === idx && !isOk) btn.className = 'no';
+    });
+    const whyEl = document.getElementById(prefix + '_why');
+    if(whyEl) whyEl.textContent = (isOk ? '✓ Corect! ' : '✗ Incorect. ') + q.why;
+
+    const dots = document.querySelectorAll('#' + prefix + '_dots i');
+    if(dots[cur]) dots[cur].className = isOk ? 'ok' : 'no';
+
+    const btnNext = document.getElementById('btn' + prefix.replace('q', '') + '_nextQ');
+    if(btnNext) btnNext.style.display = 'inline-block';
+  }
+
+  function next(){
+    cur++;
+    if(cur < questions.length){
+      render();
+    } else {
+      const box = document.getElementById('quizCh' + prefix.replace('q', '') + '_box') || document.getElementById('quiz' + prefix + '_box');
+      if(box){
+        box.innerHTML = `
+          <div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center">
+            <span class="eyebrow">Rezultat test</span>
+            <div style="font-family:var(--f-display);font-size:1.8rem;font-weight:700;color:var(--red);">${score} din ${questions.length} puncte</div>
+            <p class="prose" style="text-align:center">
+              ${score === questions.length ? 'Excelent! Ați asimilat perfect toate noțiunile acestui capitol.' : 'Foarte bine! Puteți relua exercițiile pentru consolidarea materiei.'}
+            </p>
+            <button class="btn" onclick="${prefix}_restart()">Reia testul</button>
+          </div>`;
+      }
+    }
+  }
+
+  function restart(){
+    cur = 0; score = 0;
+    const box = document.getElementById('quizCh' + prefix.replace('q', '') + '_box') || document.getElementById('quiz' + prefix + '_box');
+    if(box){
+      box.innerHTML = `
+        <div class="qtop"><span id="${prefix}_count"></span><div class="dots" id="${prefix}_dots"></div></div>
+        <div class="qq" id="${prefix}_prompt"></div>
+        <div class="opts" id="${prefix}_opts"></div>
+        <div class="why" id="${prefix}_why"></div>
+        <div class="qnav"><button class="btn" id="btn${prefix.replace('q','')}_nextQ" onclick="${prefix}_next()" style="display:none">Următoarea întrebare →</button></div>`;
+    }
+    render();
+  }
+
+  return { render, answer, next, restart };
+}
+
+// Quiz Q0 (Phonetics)
+const q0Questions = [
+  { q: 'Care literă redă sunetul [ʃ] din cuvântul «școală»?', opts: ['Ș ș', 'Ț ț', 'Ă ă', 'Â â'], correct: 0, why: 'Litera «Ș ș» corespunde sunetului prepalatal [ʃ].' },
+  { q: 'Cum se scrie corect cuvântul ce înseamnă «хлеб»?', opts: ['păine', 'pâine', 'pîine', 'paine'], correct: 1, why: 'În interiorul cuvântului se scrie litera «â»: pâine.' },
+  { q: 'Ce valoare fonetică are grupul de litere «chi» în «chimie»?', opts: ["[tʃ]", "[k']", "[h]", "[ts]"], correct: 1, why: 'Grupul «chi» redă ocluziva velară palatalizată [k].' }
+];
+const engineQ0 = makeQuizEngine(q0Questions, 'q0');
+window.q0_answer = engineQ0.answer; window.nextQuiz0 = engineQ0.next; window.q0_restart = engineQ0.restart;
+
+// Quiz Q1 (Lecțiile 1–7)
+const q1Questions = [
+  { q: 'Care este forma de persoana a 2-a plural pentru verbul «a avea»?', opts: ['am', 'are', 'aveți', 'au'], correct: 2, why: 'Persoana a 2-a plural a verbului a avea este «voi aveți».' },
+  { q: 'Care este forma articulată hotărât a substantivului feminin «fată»?', opts: ['fatăul', 'fata', 'fetele', 'fatăei'], correct: 1, why: 'Substantivele feminine terminate în -ă primesc articolul hotărât -a: fata.' },
+  { q: 'Cum se formează pluralul substantivului masculin «student»?', opts: ['studente', 'studenți', 'studenturi', 'studenti'], correct: 1, why: 'La masculin plural, terminația -t devine -ți prin alternanță consonantică: studenți.' }
+];
+const engineQ1 = makeQuizEngine(q1Questions, 'q1');
+window.q1_answer = engineQ1.answer; window.nextQuiz1 = engineQ1.next; window.q1_restart = engineQ1.restart;
+
+// Quiz Q2 (Lecțiile 8–15)
+const q2Questions = [
+  { q: 'Cum se traduce corect: «Я его увидел вчера»?', opts: ['L-am văzut ieri', 'Am văzut-o ieri', 'Îi văd ieri', 'M-am văzut ieri'], correct: 0, why: 'Pronumele personal acuzativ masculin singular clitic este «îl / l-»: L-am văzut.' },
+  { q: 'Care este forma de persoana I singular la Perfectul compus pentru «a merge»?', opts: ['am mers', 'ai mers', 'a mers', 'am merserăm'], correct: 0, why: 'Auxiliarul «am» + participiul «mers»: am mers.' },
+  { q: 'Ce formă are conjunctivul prezent pers. a 3-a pentru verbul «a citi»?', opts: ['să citește', 'să citească', 'să citi', 'o să citească'], correct: 1, why: 'La persoana a 3-a singular și plural, verbele pe -esc fac conjunctivul în -ească: să citească.' }
+];
+const engineQ2 = makeQuizEngine(q2Questions, 'q2');
+window.q2_answer = engineQ2.answer; window.nextQuiz2 = engineQ2.next; window.q2_restart = engineQ2.restart;
+
+// Quiz Q3 (Lecțiile 16–20)
+const q3Questions = [
+  { q: 'Care este forma de viitor literar persoana I plural pentru «a merge»?', opts: ['am să merg', 'o să mergem', 'vom merge', 'veți merge'], correct: 2, why: 'Viitorul literar se formează cu auxiliarul «vom» + infinitiv: vom merge.' },
+  { q: 'Care este forma de Genitiv singular a substantivului «profesor»?', opts: ['profesorului', 'profesorii', 'profesorilor', 'profesorei'], correct: 0, why: 'La masculin singular genitiv se adaugă encliticul «-ului»: profesorului.' },
+  { q: 'Ce caz cere verbul «a-i plăcea» pentru persoana căreia îi place ceva?', opts: ['Acuzativ', 'Dativ', 'Genitiv', 'Vocativ'], correct: 1, why: 'Verbul «a plăcea» se construiește cu pronume în cazul Dativ: «Îmi place limba română».' }
+];
+const engineQ3 = makeQuizEngine(q3Questions, 'q3');
+window.q3_answer = engineQ3.answer; window.nextQuiz3 = engineQ3.next; window.q3_restart = engineQ3.restart;
+
+// Quiz Q4 (Lecțiile 21–28)
+const q4Questions = [
+  { q: 'Care este forma negativă a imperativului singular de la «a face»?', opts: ['Nu fă!', 'Nu face!', 'Nu faceți!', 'Nu faci!'], correct: 1, why: 'La imperativ singular negativ, se folosește «Nu» + forma completă de infinitiv: Nu face!' },
+  { q: 'Ce clitic combinat exprimă «Dativ (mie) + Acuzativ masc. (îl)»?', opts: ['i-l', 'ți-l', 'mi-l', 'ni-l'], correct: 2, why: 'Forma combinată este «mi-l» (de exemplu: mi-l dă).' },
+  { q: 'În ce timp este verbul din fraza «Noi citeam în fiecare seară»?', opts: ['Prezent', 'Imperfect', 'Perfect compus', 'Mai mult ca perfect'], correct: 1, why: 'Desinența -eam arată timpul Imperfect, care exprimă o acțiune repetată sau continuă în trecut.' }
+];
+const engineQ4 = makeQuizEngine(q4Questions, 'q4');
+window.q4_answer = engineQ4.answer; window.nextQuiz4 = engineQ4.next; window.q4_restart = engineQ4.restart;
+
+// Quiz Q5 (Lecțiile 29–38)
+const q5Questions = [
+  { q: 'Care este forma de pers. a 3-a plural la Mai mult ca perfect a verbului «a pleca»?', opts: ['au plecat', 'plecaseră', 'plecau', 'ar pleca'], correct: 1, why: 'Sufixul de mai mult ca perfect -se- urmat de desinența de plural -ră dă «plecaseră».' },
+  { q: 'Cum se formează modul Condițional-optativ prezent pentru «noi» la «a dori»?', opts: ['am dori', 'am dorit', 'o să dorim', 'ați dori'], correct: 0, why: 'Auxiliarul «am» + infinitivul «dori» formează «am dori».' },
+  { q: 'Ce mod verbal reprezintă construcția «ușor de înțeles»?', opts: ['Gerunziu', 'Participiu', 'Supin', 'Conjunctiv'], correct: 2, why: 'Prepoziția «de» urmată de participiu formează modul Supin: «de înțeles».' }
+];
+const engineQ5 = makeQuizEngine(q5Questions, 'q5');
+window.q5_answer = engineQ5.answer; window.nextQuiz5 = engineQ5.next; window.q5_restart = engineQ5.restart;
+
+// Marele Examen Universitar (15 întrebări A1-B2)
+const qMainQuestions = [
+  { q: '[A1] Care este traducerea corectă a formulei «Bună dimineața! Cine sunteți dumneavoastră?»?',
+    opts: ['Доброе утро! Кто вы?', 'Добрый вечер! Как дела?', 'До свидания! Откуда вы?', 'Привет! Где ты живёшь?'], correct: 0, why: 'Formulă academică oficială de salut și prezentare la Universitatea din București.' },
+  { q: '[A1] Alegeți forma corectă a verbului «a fi»: «Noi ... studenți la Facultatea de Litere.»',
+    opts: ['sunt', 'ești', 'suntem', 'sunteți'], correct: 2, why: 'La persoana I plural, forma verbului a fi este «suntem».' },
+  { q: '[A1] Care este pluralul corect articulat hotărât pentru substantivul «fereastră»?',
+    opts: ['ferestrele', 'ferestrei', 'ferestre', 'fereastra'], correct: 0, why: 'Substantiv feminin: fereastră → ferestre (plur. neart.) → ferestrele (plur. art.).' },
+  { q: '[A2] Cum se spune corect: «Вчера мы пообедали в студенческой столовой»?',
+    opts: ['Ieri am luat masa la cantina studențească.', 'Ieri luăm masa la cantină.', 'Ieri vom lua masa la cantină.', 'Ieri o să luăm masa la cantină.'], correct: 0, why: 'Pentru o acțiune încheiată în trecut se folosește Perfectul compus: «am luat masa».' },
+  { q: '[A2] Completați cu pronumele clitic potrivit: «Pe prietenul meu ... aștept de o jumătate de oră.»',
+    opts: ['o', 'îl', 'îi', 'le'], correct: 1, why: 'Obiectul direct masculin singular determinat cere cliticul «îl»: îl aștept.' },
+  { q: '[A2] Alegeți forma corectă: «Vreau ... merg la cinematograf cu colegii.»',
+    opts: ['să', 'o să', 'ca', 'de'], correct: 0, why: 'Verbul «a vrea» se construiește cu modul Conjunctiv introdus prin conjuncția «să».' },
+  { q: '[B1] Care este forma de Genitiv singular în propoziția: «Aceasta este ușa ...»?',
+    opts: ['camerei', 'camera', 'camerelor', 'cameră'], correct: 0, why: 'Genitiv feminin singular articulat hotărât: cameră → camerei.' },
+  { q: '[B1] Completați fraza cu cliticul de Dativ: «Profesorul ... explică studenților noua teorie.»',
+    opts: ['îi', 'le', 'îmi', 'ne'], correct: 1, why: 'Destinatarul la plural (studenților) cere pronumele clitic de Dativ persoana a 3-a plural «le».' },
+  { q: '[B1] Cum se adresează corect un ordin către o singură persoană: «... atent la detalii!»?',
+    opts: ['Fii', 'Fă', 'Nu fi', 'Ești'], correct: 0, why: 'Imperativul afirmativ singular de la «a fi» are forma neregulată «Fii!».' },
+  { q: '[B1] Identificați timpul verbului: «În fiecare vară mergeam cu trenul la Sinaia.»',
+    opts: ['Prezent', 'Imperfect', 'Perfect compus', 'Viitor'], correct: 1, why: 'Verbul «mergeam» este la timpul Imperfect, exprimând o acțiune repetată în trecut.' },
+  { q: '[B2] Care frază conține un mod Condițional-optativ prezent corect?',
+    opts: ['Dacă aș avea timp, aș citi romanul.', 'Dacă aveam timp, am citit romanul.', 'Dacă o să am timp, citeam romanul.', 'Dacă aș fi avut timp, citeam romanul.'], correct: 0, why: 'Construcția condițională la prezent cere «aș avea ... aș citi».' },
+  { q: '[B2] Ce valoare gramaticală are cuvântul subliniat: «Exercițiul este ușor _de_rezolvat_»?',
+    opts: ['Gerunziu', 'Participiu', 'Supin', 'Infinitiv lung'], correct: 2, why: 'Prepoziția «de» urmată de participiu formează modul Supin: de rezolvat.' },
+  { q: '[B2] Cine a creat ansamblul sculptural de la Târgu-Jiu (Coloana Infinitului, Poarta Sărutului)?',
+    opts: ['Mihai Eminescu', 'Constantin Brâncuși', 'Lucian Blaga', 'Mircea Eliade'], correct: 1, why: 'Constantin Brâncuși este autorul capodoperelor sculpturale de la Târgu-Jiu.' },
+  { q: '[B2] În propoziția «Când am sosit la facultate, cursul deja ...», ce formă este corectă?',
+    opts: ['începuse', 'a început', 'începea', 'va începe'], correct: 0, why: 'O acțiune trecută petrecută înaintea altei acțiuni trecute cere timpul Mai mult ca perfect: începuse.' },
+  { q: '[B2] Care dintre următoarele limbi aparține aceleiași familii neolatine ca și limba română?',
+    opts: ['Greaca', 'Italiana', 'Maghiara', 'Rusa'], correct: 1, why: 'Limba română este o limbă romanică (neolatină), înrudită direct cu italiana, franceza, spaniola și portugheza.' }
+];
+
+let qMainCur = 0;
+let qMainScore = 0;
+
+function renderQuizMain(){
+  const q = qMainQuestions[qMainCur];
+  const cnt = document.getElementById('qMain_count');
+  if(cnt) cnt.textContent = `Вопрос ${qMainCur+1} из ${qMainQuestions.length}`;
+  const p = document.getElementById('qMain_prompt');
+  if(p) p.textContent = q.q;
+
+  const dotsEl = document.getElementById('qMain_dots');
+  if(dotsEl){
+    dotsEl.innerHTML = qMainQuestions.map((_, i) => `<i class="${i===qMainCur?'cur':''}"></i>`).join('');
+  }
+
+  const optsEl = document.getElementById('qMain_opts');
+  if(optsEl){
+    optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizMain(${i})">${opt}</button>`).join('');
+  }
+
+  const whyEl = document.getElementById('qMain_why');
+  if(whyEl) whyEl.textContent = '';
+  const btnNext = document.getElementById('btnMain_nextQ');
+  if(btnNext) btnNext.style.display = 'none';
+}
+
+function answerQuizMain(idx){
+  const q = qMainQuestions[qMainCur];
+  const isOk = (idx === q.correct);
+  if(isOk) qMainScore++;
+
+  const btns = document.querySelectorAll('#qMain_opts button');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+
+  const whyEl = document.getElementById('qMain_why');
+  if(whyEl) whyEl.textContent = (isOk ? '✓ Corect! ' : '✗ Incorect. ') + q.why;
+
+  const dots = document.querySelectorAll('#qMain_dots i');
+  if(dots[qMainCur]) dots[qMainCur].className = isOk ? 'ok' : 'no';
+
+  const btnNext = document.getElementById('btnMain_nextQ');
+  if(btnNext) btnNext.style.display = 'inline-block';
+}
+
+function nextQuizMain(){
+  qMainCur++;
+  if(qMainCur < qMainQuestions.length){
+    renderQuizMain();
+  } else {
+    const box = document.getElementById('quizMain_box');
+    const pct = Math.round((qMainScore / qMainQuestions.length) * 100);
+    let level = 'Nivel A1 (Începător)';
+    if(qMainScore >= 13) level = 'Nivel B2 (Utilizator independent avansat)';
+    else if(qMainScore >= 10) level = 'Nivel B1 (Prag / Intermediar)';
+    else if(qMainScore >= 6) level = 'Nivel A2 (Elementar / Supraviețuire)';
+
+    box.innerHTML = `
+      <div style="text-align:center;padding:26px;display:flex;flex-direction:column;gap:14px;align-items:center">
+        <span class="eyebrow">Certificat de evaluare semestrială</span>
+        <div style="font-family:var(--f-display);font-size:2.4rem;font-weight:700;color:var(--red);">${qMainScore} din ${qMainQuestions.length} (${pct}%)</div>
+        <div style="font-family:var(--f-display);font-size:1.35rem;font-weight:700;color:var(--gold);">Nivel lingvistic estimat: ${level}</div>
+        <p class="prose" style="text-align:center">
+          ${qMainScore >= 10 ? 'Felicitări! Ați demonstrat o stăpânire remarcabilă a structurilor morfologice, sintactice și lexicale ale limbii române predate la Universitatea din București.' : 'Ați parcurs materia de bază a anului pregătitor. Revedeți capitolele dedicate cazurilor și timpurilor verbale pentru a vă consolida performanța.'}
+        </p>
+        <button class="btn" onclick="restartQuizMain()">Reia Marele Examen Universitar</button>
+      </div>`;
+  }
+}
+
+function restartQuizMain(){
+  qMainCur = 0; qMainScore = 0;
+  const box = document.getElementById('quizMain_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qMain_count"></span><div class="dots" id="qMain_dots"></div></div>
+    <div class="qq" id="qMain_prompt"></div>
+    <div class="opts" id="qMain_opts"></div>
+    <div class="why" id="qMain_why"></div>
+    <div class="qnav"><button class="btn" id="btnMain_nextQ" onclick="nextQuizMain()" style="display:none">Următoarea întrebare →</button></div>`;
+  renderQuizMain();
+}
+
+/* ============================================================
+   11. INITIALIZATION ON LOAD
+   ============================================================ */
+window.addEventListener('DOMContentLoaded', () => {
+  let initialChap = 0;
+  try {
+    const saved = localStorage.getItem('manual_brancus_chap');
+    if(saved !== null) initialChap = parseInt(saved, 10) || 0;
+  } catch(e){}
+
+  switchChapter(initialChap);
+  setPhonetic(0);
+  updateCh1Stage();
+  updateCh2Stage();
+  setCh3Case(0);
+  setCh4Clitic(0);
+  updateCh5Stage();
+
+  engineQ0.render();
+  engineQ1.render();
+  engineQ2.render();
+  engineQ3.render();
+  engineQ4.render();
+  engineQ5.render();
+  renderQuizMain();
+});
+
+</script>
+</body>
+</html>

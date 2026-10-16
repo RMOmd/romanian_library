@@ -1,0 +1,2906 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Descrierea minimală a limbii române (A1–B2) — Standard RLS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500;1,700&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap">
+<style>
+/* Layout: школьная тетрадь в клетку — академическая палитра Babeș-Bolyai: глубокий индиго, тёплый крем, терракота */
+:root{
+  --paper:#f6f7f3; --grid:rgba(27,58,75,.075); --sheet:#ffffff; --ink:#1b3a4b; --ink-2:#486581; --ink-3:#829ab1;
+  --red:#e06d53; --red-soft:rgba(224,109,83,.1); --margin:rgba(224,109,83,.35); --mark:#fce8a9; --mark-ink:#3b2f00;
+  --line:#d9e2ec; --chip:#f0f4f8; --ok:#198754; --ok-soft:rgba(25,135,84,.1); --bad:#dc3545; --bad-soft:rgba(220,53,69,.1);
+  --f-display:"Alegreya", "Georgia", "Times New Roman", serif;
+  --f-body:"PT Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"PT Mono", "Consolas", "Menlo", monospace;
+  --s-1:.8125rem; --s0:1rem; --s1:1.125rem; --s2:1.375rem; --s3:1.75rem; --s4:2.4rem; --s5:clamp(2.6rem, 7vw, 4.6rem);
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#101923; --grid:rgba(130,154,177,.06); --sheet:#16222f; --ink:#e2e8f0; --ink-2:#94a3b8; --ink-3:#627d98;
+  --red:#ff7e67; --red-soft:rgba(255,126,103,.12); --margin:rgba(255,126,103,.35); --mark:#634b07; --mark-ink:#fef3c7;
+  --line:#273746; --chip:#1d2d3e; --ok:#48bb78; --ok-soft:rgba(72,187,120,.12); --bad:#f56565; --bad-soft:rgba(245,101,101,.12); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#101923; --grid:rgba(130,154,177,.06); --sheet:#16222f; --ink:#e2e8f0; --ink-2:#94a3b8; --ink-3:#627d98;
+  --red:#ff7e67; --red-soft:rgba(255,126,103,.12); --margin:rgba(255,126,103,.35); --mark:#634b07; --mark-ink:#fef3c7;
+  --line:#273746; --chip:#1d2d3e; --ok:#48bb78; --ok-soft:rgba(72,187,120,.12); --bad:#f56565; --bad-soft:rgba(245,101,101,.12); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--s0);line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;overflow-x:hidden;}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:3px}
+.ro{font-family:var(--f-display);font-weight:500}
+.art{color:var(--red)}
+.end{color:var(--red);font-weight:700}
+.muted{color:var(--ink-2)}
+.eyebrow{font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+.badge-lvl{display:inline-block;padding:2px 8px;border-radius:999px;font-family:var(--f-mono);font-size:.78rem;font-weight:700;background:var(--red-soft);color:var(--red);margin-left:6px;vertical-align:middle}
+
+/* shell */
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;max-width:1200px;margin:0 auto;padding-inline:24px;padding-block:28px 80px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;display:flex;flex-direction:column;gap:16px;font-size:.92rem}
+.backlib{color:var(--red);text-decoration:none;font-size:var(--s-1);font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.backlib:hover{text-decoration:underline}
+.toc .book{font-family:var(--f-display);font-weight:700;font-size:1.1rem;line-height:1.2}
+.toc .book small{display:block;font-family:var(--f-body);font-weight:400;color:var(--ink-2);font-size:var(--s-1);margin-top:4px}
+.prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+.toc .chapters{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:3px}
+.toc .chapters button{all:unset;cursor:pointer;color:var(--ink-2);padding:5px 8px;border-radius:var(--r);line-height:1.25;font-size:.88rem;display:flex;justify-content:space-between;align-items:center}
+.toc .chapters button:hover{background:var(--chip);color:var(--ink)}
+.toc .chapters button[aria-current="true"]{background:var(--sheet);color:var(--ink);box-shadow:inset 3px 0 0 var(--red);font-weight:700}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc a{display:grid;grid-template-columns:2.4em 1fr;gap:4px;padding:4px 6px;border-radius:var(--r);color:var(--ink-2);text-decoration:none;font-size:.85rem;line-height:1.25}
+.toc a:hover{background:var(--chip);color:var(--ink)}
+.toc a.on{background:var(--sheet);color:var(--ink);box-shadow:inset 2px 0 0 var(--red);font-weight:700}
+
+.page{min-width:0;max-width:820px;display:flex;flex-direction:column;gap:64px;position:relative}
+.page::before{content:"";position:absolute;left:-20px;top:0;bottom:0;width:2px;background:var(--margin)}
+article.chapter{display:flex;flex-direction:column;gap:48px;width:100%;min-width:0}
+
+/* hero */
+.hero{display:flex;flex-direction:column;gap:16px;padding-top:12px}
+.hero .word{font-family:var(--f-display);font-weight:800;font-size:var(--s5);letter-spacing:-.01em;line-height:1;cursor:pointer;user-select:none;white-space:nowrap;width:max-content;max-width:100%}
+.hero .word .art{display:inline-block;animation:fuse 1.3s cubic-bezier(.2,.8,.2,1) .35s both}
+@keyframes fuse{0%{transform:translateX(.9em) rotate(6deg)}55%{transform:translateX(-.04em)}100%{transform:none}}
+.hero h1{font-size:var(--s3);font-weight:700}
+.hero .lede{font-size:var(--s1);max-width:64ch;color:var(--ink-2)}
+.hero .lede b{color:var(--ink)}
+.forms3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+.forms3 div{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.forms3 .ro{font-size:var(--s3)}
+.forms3 small{color:var(--ink-2);font-size:var(--s-1)}
+
+/* sections */
+section{display:flex;flex-direction:column;gap:20px;scroll-margin-top:24px}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+.sec-head h2{font-size:var(--s3);font-weight:700}
+.sec-head .ro-title{font-family:var(--f-display);font-style:italic;color:var(--red);font-size:var(--s1)}
+.prose{display:flex;flex-direction:column;gap:10px;max-width:68ch}
+p.prose{display:block}
+.prose em{font-style:italic;color:var(--ink)}
+.note{border-left:3px solid var(--mark);background:var(--sheet);padding:12px 16px;border-radius:0 var(--r) var(--r) 0;font-size:.95rem;display:block;max-width:68ch}
+.note b.t{display:block;margin-bottom:4px;font-size:var(--s-1);letter-spacing:.08em;text-transform:uppercase}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 .15em;border-radius:2px}
+
+/* morph stage */
+.stage{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-height:200px;justify-content:center}
+.stage .big{font-family:var(--f-display);font-weight:700;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.1;min-height:1.15em;display:flex;align-items:baseline;gap:.25em;flex-wrap:wrap;justify-content:center}
+.stage .big .w{white-space:nowrap}
+.stage .cap{color:var(--ink-2);font-size:.95rem;max-width:56ch}
+.stage .rule{font-family:var(--f-mono);font-size:.88rem;background:var(--red-soft);color:var(--red);padding:2px 8px;border-radius:4px}
+.stage .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.stage .modes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;background:var(--chip);padding:4px;border-radius:calc(var(--r) + 2px)}
+.stage .modes button{border:0;background:transparent;padding:6px 12px;border-radius:var(--r);cursor:pointer;color:var(--ink-2);font-size:.9rem;font-weight:500;transition:all .15s}
+.stage .modes button[aria-pressed="true"]{background:var(--sheet);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:700}
+
+/* controls and buttons */
+.iconbtn{border:1px solid var(--line);background:var(--sheet);border-radius:999px;width:32px;height:32px;display:inline-grid;place-items:center;cursor:pointer;color:var(--ink-2);transition:color .2s,border-color .2s;flex:none}
+.iconbtn:hover{color:var(--red);border-color:var(--red)}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--sheet);border-radius:var(--r);padding:7px 16px;cursor:pointer;font-weight:700;font-size:.95rem;transition:background .2s}
+.btn:hover{background:var(--red);border-color:var(--red)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--chip);border-color:var(--ink)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;max-width:100%;background:var(--sheet);border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:var(--s-1);color:var(--ink-2);font-weight:700;letter-spacing:.04em;background:var(--chip)}
+td.ro,td .ro{font-size:1.1rem}
+tbody tr.w{cursor:pointer;transition:background .15s}
+tbody tr.w:hover{background:var(--chip)}
+tbody tr.w.sel{background:var(--red-soft)}
+td.rule{font-family:var(--f-mono);color:var(--red);font-size:.85rem;white-space:nowrap}
+td.tr{color:var(--ink-2);font-size:.9rem}
+
+/* dialogues & speech acts */
+.dialogue-box{display:flex;flex-direction:column;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.dline{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;padding-block:6px;border-bottom:1px dashed var(--line)}
+.dline:last-child{border-bottom:0}
+.dline-spk{font-weight:700;font-size:var(--s-1);color:var(--red);min-width:80px}
+.dline-body{display:flex;flex-direction:column;gap:2px}
+.dline-ro{font-family:var(--f-display);font-size:1.15rem;font-weight:500}
+.dline-ru{color:var(--ink-2);font-size:.88rem}
+
+/* vocabulary cards */
+.vocab-grid, .wordgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.wcard{
+  background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 15px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;
+  gap:3px 12px;align-items:center;cursor:pointer;
+  transition:transform .15s,border-color .15s,box-shadow .15s,background .15s;
+  user-select:none;
+}
+.wcard:hover{
+  border-color:var(--red);background:var(--chip);transform:translateY(-1px);
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+.wcard .ro{
+  grid-column:1;grid-row:1;font-family:var(--f-display);
+  font-size:1.15rem;font-weight:600;color:var(--ink);line-height:1.25;
+}
+.wcard .ru{
+  grid-column:1;grid-row:2;color:var(--ink-2);
+  font-size:.88rem;line-height:1.25;
+}
+.wcard::after{
+  grid-column:2;grid-row:1 / span 2;content:"";
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e06d53' stroke-width='2'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'%3E%3C/polygon%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+  transition:background-color .15s,border-color .15s;justify-self:end;
+}
+.wcard:hover::after{
+  background-color:var(--sheet);border-color:var(--red);
+}
+
+/* interactive exercises */
+.exercise-box{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:16px}
+.ex-row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;line-height:1.8}
+.ex-row input.ans{font:inherit;font-family:var(--f-display);font-size:1.08rem;padding:2px 8px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);width:14ch;text-align:center;transition:border-color .2s,background .2s}
+.ex-row input.ans.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.ex-row input.ans.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.ex-feedback{font-size:.88rem;color:var(--ink-2);margin-top:4px}
+.ex-feedback.ok{color:var(--ok);font-weight:700}
+.ex-feedback.bad{color:var(--bad);font-weight:700}
+
+/* quiz */
+.quiz{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--ink-2);font-size:var(--s-1)}
+.dots{display:flex;gap:4px;flex-wrap:wrap}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.ok{background:var(--ok)} .dots i.no{background:var(--bad)} .dots i.cur{box-shadow:0 0 0 2px var(--ink)}
+.qq{font-family:var(--f-display);font-size:var(--s2);font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.opts button{border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:10px 14px;text-align:left;cursor:pointer;font-family:var(--f-display);font-size:1.12rem}
+.opts button:hover:not(:disabled){border-color:var(--ink)}
+.opts button.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.opts button.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.opts button:disabled{cursor:default}
+.why{color:var(--ink-2);min-height:1.5em;font-size:.92rem}
+.qnav{display:flex;justify-content:flex-end;gap:8px}
+.score{font-family:var(--f-display);font-size:var(--s4);font-weight:800}
+
+/* topbar for mobile */
+.topbar{display:none}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);padding-inline:16px;padding-block:0 60px;gap:0}
+  .toc{display:none}
+  .page::before{display:none}
+  .topbar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 0;gap:10px;align-items:center;margin-bottom:20px;width:100%}
+  .topbar select{flex:1;min-width:0;font:inherit;padding:6px 8px;border-radius:var(--r);border:1px solid var(--line);background:var(--sheet);color:var(--ink)}
+  .topbar .prog{width:60px;flex:none}
+  section{scroll-margin-top:64px}
+}
+@media (max-width:600px){
+  .forms3,.opts{grid-template-columns:minmax(0,1fr)}
+  .vocab-grid, .wordgrid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- TOC SIDEBAR -->
+  <aside class="toc" aria-label="Содержание стандарта">
+    <a class="backlib" href="../index.html">← В библиотеку</a>
+    <div class="book">Descrierea minimală<small>Elena Platon, Ioana Sonea, Lavinia Vasiu, Dina Vîlcu · Universitatea Babeș-Bolyai Cluj-Napoca</small></div>
+    <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+    <div class="chapters" id="chapBtns">
+      <button data-c="0" aria-current="true"><span>0. Введение и методология RLS</span></button>
+      <button data-c="1"><span>1. Nivel A1: Începător</span></button>
+      <button data-c="2"><span>2. Nivel A2: Elementar</span></button>
+      <button data-c="3"><span>3. Nivel B1: Intermediar</span></button>
+      <button data-c="4"><span>4. Nivel B2: Avansat</span></button>
+      <button data-c="5"><span>5. Сравнительная матрица A1–B2</span></button>
+      <button data-c="6"><span>6. Оценка и сертификация</span></button>
+    </div>
+    <ol id="secList"></ol>
+  </aside>
+
+  <!-- MAIN READING COLUMN -->
+  <main class="page">
+    <div class="topbar">
+      <a class="backlib" href="../index.html" aria-label="В библиотеку">←</a>
+      <select id="mNav" aria-label="Выбор раздела">
+        <option value="0">0. Введение и методология RLS</option>
+        <option value="1">1. Nivel A1: Începător</option>
+        <option value="2">2. Nivel A2: Elementar</option>
+        <option value="3">3. Nivel B1: Intermediar</option>
+        <option value="4">4. Nivel B2: Avansat</option>
+        <option value="5">5. Сравнительная матрица A1–B2</option>
+        <option value="6">6. Оценка и сертификация</option>
+      </select>
+      <div class="prog" aria-hidden="true"><i id="progBar2"></i></div>
+    </div>
+
+    <!-- CHAPTER 0: INTRODUCERE & METODOLOGIE -->
+    <article class="chapter" id="ch0">
+      <header class="hero">
+        <span class="eyebrow">Standard Academic RLS / RLNM · Universitatea Babeș-Bolyai</span>
+        <div class="word" onclick="say('Descrierea minimală a limbii române ca limbă străină')" title="Нажмите, чтобы прослушать">Descrierea minimală<span class="art"></span></div>
+        <h1>Descrierea minimală a limbii române (A1, A2, B1, B2)</h1>
+        <p class="lede">Официальный языковой стандарт румынского языка как иностранного (RLS / RLNM), разработанный лингвистами <b>Факультета филологии Университета Бабеш-Бойяи (Клуж-Напока)</b> под руководством Елены Платон. Стандарт гармонизирован с Общеевропейскими компетенциями владения иностранным языком (CEFR).</p>
+        <div class="forms3">
+          <div><small>Стандарт CEFR</small><span class="ro"><span class="art">A1</span> · <span class="art">A2</span> · <span class="art">B1</span> · <span class="art">B2</span></span><small>4 уровня владения языком</small></div>
+          <div><small>Три столпа обучения</small><span class="ro">Funcții · Structuri · Texte</span><small>Прагматика, грамматика, дискурс</small></div>
+          <div><small>Авторы стандарта</small><span class="ro">UBB Cluj-Napoca</span><small>E. Platon, I. Sonea, L. Vasiu, D. Vîlcu</small></div>
+        </div>
+      </header>
+
+      <section id="s0_1" data-t="Контекст и цели">
+        <div class="sec-head"><span class="eyebrow">0.1</span><h2>Необходимость и цели языкового стандарта</h2><span class="ro-title">Necesitatea şi utilitatea lucrării</span></div>
+        <p class="prose">До появления данного стандарта в методике преподавания румынского языка как иностранного (RLS) и неродного (RLNM) существовали существенные расхождения: разные авторы учебников и составители сертификационных тестов по-разному определяли объём грамматики и словарного запаса для уровней A1–B2.</p>
+        <p class="prose">Исследовательская группа кафедры румынского языка для иностранцев Университета Бабеш-Бойяи (Клуж-Напока) систематизировала требования и создала <b>Descrierea minimală</b> — минимальный обязательный профиль языковых навыков, необходимый для сдачи сертифицированных экзаменов и свободного общения.</p>
+        <div class="note">
+          <b class="t">Кому предназначено это издание:</b>
+          <ul>
+            <li><b>Изучающим румынский язык:</b> для самооценки, структурированной подготовки к экзаменам на сертификат компетентности (уровни A1, A2, B1, B2) и гражданство.</li>
+            <li><b>Преподавателям и авторам:</b> как нормативный ориентир при планировании уроков и подборе дидактических материалов.</li>
+            <li><b>Тестирующим центрам:</b> для объективной калибровки сложности экзаменационных заданий.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="s0_2" data-t="Три столпа стандарта">
+        <div class="sec-head"><span class="eyebrow">0.2</span><h2>Архитектура описания каждого уровня</h2><span class="ro-title">Cei trei piloni ai competenței lingvistice</span></div>
+        <p class="prose">В основе стандарта лежит функционально-коммуникативный подход: язык рассматривается не как абстрактный набор правил, а как живой инструмент взаимодействия. Каждый уровень A1, A2, B1, B2 описан по единой трёхчастной модели:</p>
+        
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Раздел</th><th>Содержание</th><th>Практическое значение</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Funcții comunicative: convențiile sociale, schimbul de informații, atitudini și sentimente')">
+                <td class="ro"><b>1. Funcții comunicative</b></td>
+                <td>Речевые акты: социальные конвенции (приветствия, обращения), обмен информацией, выражение чувств, желаний, просьб и мнений.</td>
+                <td>Что учащийся <i>умеет делать</i> с помощью румынской речи в реальных ситуациях.</td>
+              </tr>
+              <tr class="w" onclick="say('Construcția comunicării: clase gramaticale, elemente lexicale, exprimarea circumstanțelor, construcția enunțului, coeziune și coerență')">
+                <td class="ro"><b>2. Construcția comunicării</b></td>
+                <td>Грамматические формы, обязательные лексические сферы (словарь по темам), способы выражения времени/места/причины, типы предложений и логические связки (коннекторы).</td>
+                <td>С помощью каких <i>языковых средств</i> оформляется высказывание.</td>
+              </tr>
+              <tr class="w" onclick="say('Tipuri de texte: receptarea și producerea mesajului oral și scris')">
+                <td class="ro"><b>3. Tipuri de texte</b></td>
+                <td>Рецепция (понимание на слух и чтение) и продукция (говорение и письмо): от коротких записок и SMS на A1 до критических эссе и аргументированных дискуссий на B2.</td>
+                <td>С какими <i>жанрами текстов</i> работает студент на данном этапе.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="s0_3" data-t="Сквозной сюжет: Слон и Жираф">
+        <div class="sec-head"><span class="eyebrow">0.3</span><h2>Педагогический мотив: «Elefantul și girafa»</h2><span class="ro-title">Firul narativ didactic</span></div>
+        <p class="prose">Чтобы наглядно показать качественный скачок между уровнями, авторы стандарта используют сквозной юмористический сюжет с двумя персонажами — <b>Слоном (Elefantul)</b> и <b>Жирафом (Girafa)</b>. Наблюдая за тем, как трансформируются фразы об этих героях, легко проследить прогрессию грамматической сложности:</p>
+        
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Уровень A1</span>
+            <div class="dline-body">
+              <span class="ro dline-ro">Un elefant şi o girafă aleargă într-un parc. Girafa are multe surori. Girafa cumpără mere de la piață.</span>
+              <span class="dline-ru">Слон и жираф бегут в парке. У жирафа много сестёр. Жираф покупает яблоки на рынке (базовые формы, неопределённый артикль, N/Ac).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Un elefant şi o girafă aleargă într-un parc. Girafa are multe surori.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Уровень A2</span>
+            <div class="dline-body">
+              <span class="ro dline-ro">Urechile elefantului sunt mari. Gâtul girafei este lung. Girafa îi telefonează elefantului.</span>
+              <span class="dline-ru">Уши слона большие. Шея жирафа длинная. Жираф звонит слону (родительный и дательный падежи существительных, безударные местоимения).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Urechile elefantului sunt mari. Gâtul girafei este lung. Girafa îi telefonează elefantului.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Уровень B1</span>
+            <div class="dline-body">
+              <span class="ro dline-ro">Al cui este dicționarul? Dicționarul este al elefantului. Elefantul este grozav de simpatic.</span>
+              <span class="dline-ru">Чей это словарь? Словарь принадлежит слону. Слон чрезвычайно симпатичен (притяжательный артикль al/a/ai/ale, абсолютный превосходный суффикс).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Al cui este dicționarul? Dicționarul este al elefantului. Elefantul este grozav de simpatic.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Уровень B2</span>
+            <div class="dline-body">
+              <span class="ro dline-ro">Am citit un interviu al elefantului în revistă. Interviul elefantului și al girafei este captivant.</span>
+              <span class="dline-ru">Я прочитал интервью слона в журнале. Интервью слона и жирафа захватывающее (сложные конструкции притяжательного артикля при однородных членах и причастиях).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Am citit un interviu al elefantului în revistă. Interviul elefantului și al girafei este captivant.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 1: NIVEL A1 -->
+    <article class="chapter" id="ch1">
+      <header class="hero">
+        <span class="eyebrow">Nivel A1 · Utilizator elementar · Breakthrough</span>
+        <div class="word" onclick="say('Nivelul A1: Începător')" title="Нажмите, чтобы прослушать">Nivelul A1<span class="badge-lvl">A1</span><span class="art"></span></div>
+        <h1>Descrierea minimală: Nivelul A1</h1>
+        <p class="lede">Уровень выживания и базового контакта: способность понимать и использовать знакомые повседневные выражения, представляться, задавать простые вопросы о месте жительства, знакомых людях и покупках.</p>
+        <div class="forms3">
+          <div><small>Словарный запас</small><span class="ro">~500–800</span><small>слов активного минимума</small></div>
+          <div><small>Грамматический каркас</small><span class="ro">Prezent · P. compus · Viitor</span><small>Род, артикли un/o, -ul/-a, N/Ac</small></div>
+          <div><small>Речевой навык</small><span class="ro">Dialoguri simple</span><small>Знакомство, магазин, город, кафе</small></div>
+        </div>
+      </header>
+
+      <!-- 1.1 FUNCTII COMUNICATIVE A1 -->
+      <section id="s1_1" data-t="1.1 Речевые функции A1">
+        <div class="sec-head"><span class="eyebrow">1.1</span><h2>Коммуникативные функции уровня A1</h2><span class="ro-title">Funcții comunicative A1</span></div>
+        <p class="prose">Нажмите на любую реплику или значок динамика, чтобы прослушать аутентичное румынское произношение.</p>
+
+        <div class="note"><b class="t">A. Социальные конвенции (Convențiile sociale)</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Приветствие</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Servus, Maria! Bună ziua!')">Servus, Maria! / Bună ziua! / Bună!</span>
+              <span class="dline-ru">Привет, Мария! / Добрый день! / Привет! (при встрече)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Servus, Maria! Bună ziua!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Прощание</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Pa! La revedere! Pe curând!')">Pa! / La revedere!</span>
+              <span class="dline-ru">Пока! / До свидания!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Pa! La revedere!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">По телефону</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Alo? Aici Maria. Cu Mihai, vă rog!')">Alo? Aici Maria. Cu Mihai, vă rog!</span>
+              <span class="dline-ru">Алло? Это Мария. Позовите Михая, пожалуйста!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Alo? Aici Maria. Cu Mihai, vă rog!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Знакомство</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Sunt Iulia. El este Mihai. — Încântat!')">Sunt Iulia. El este Mihai. — Încântat!</span>
+              <span class="dline-ru">Я Юлия. А это Михай. — Очень приятно! (ответ на знакомство)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Sunt Iulia. El este Mihai. Încântat!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Пожелания</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('La mulți ani! Vacanță plăcută! Bine ați venit! — Mulțumesc!')">La mulți ani! / Vacanță plăcută! / Bine ați venit! — Mulțumesc!</span>
+              <span class="dline-ru">С днём рождения! / Приятных каникул! / Добро пожаловать! — Спасибо!</span>
+            </div>
+            <button class="iconbtn" onclick="say('La mulți ani! Vacanță plăcută! Bine ați venit!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Извинения</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Pardon! Scuze! — Nicio problemă!')">Pardon! / Scuze! — Nicio problemă!</span>
+              <span class="dline-ru">Простите! / Извините! — Никаких проблем! (всё в порядке)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Pardon! Scuze! Nicio problemă!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px"><b class="t">B. Обмен информацией, мнения и просьбы</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Вопрос / Ответ</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Cine este? — Este profesorul nostru. Ce este asta? — Este un dicționar.')">Cine este? — Este profesorul nostru. / Ce este asta? — Este un dicționar.</span>
+              <span class="dline-ru">Кто это? — Это наш преподаватель. / Что это? — Это словарь.</span>
+            </div>
+            <button class="iconbtn" onclick="say('Cine este? Este profesorul nostru. Ce este asta? Este un dicționar.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Вкусы</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Îmi place vinul. — Și mie! Nu-mi place cafeaua fără zahăr.')">Îmi place vinul. — Și mie! / Nu-mi place cafeaua fără zahăr.</span>
+              <span class="dline-ru">Мне нравится вино. — Мне тоже! / Мне не нравится кофе без сахара.</span>
+            </div>
+            <button class="iconbtn" onclick="say('Îmi place vinul. Și mie! Nu-mi place cafeaua fără zahăr.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Просьба</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Vreau o cafea, vă rog. Te rog să-mi dai sarea!')">Vreau o cafea, vă rog. / Te rog să-mi dai sarea!</span>
+              <span class="dline-ru">Я хочу кофе, пожалуйста. / Пожалуйста, передай мне соль!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Vreau o cafea, vă rog. Te rog să-mi dai sarea!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Приглашение</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Vii la film diseară? — Cu plăcere! / Din păcate nu pot.')">Vii la film diseară? — Cu plăcere! / Din păcate nu pot.</span>
+              <span class="dline-ru">Пойдёшь вечером в кино? — С удовольствием! / К сожалению, не могу.</span>
+            </div>
+            <button class="iconbtn" onclick="say('Vii la film diseară? Cu plăcere!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1.2 MORPH STAGE 1: SUBSTANTIVELE SI ARTICOLELE -->
+      <section id="s1_2" data-t="1.2 Морф-тренажёр A1: Артикли">
+        <div class="sec-head"><span class="eyebrow">1.2</span><h2>Интерактивный морф-тренажёр: Артикли и род A1</h2><span class="ro-title">Morfologia substantivului și a articolului</span></div>
+        <p class="prose">В румынском языке три рода: мужской (<b>masculin</b>), женский (<b>feminin</b>) и обоюдный/средний (<b>neutru</b>: ведёт себя как мужской в единственном числе и как женский во множественном). Определённый артикль прикрепляется к концу слова (энклитический).</p>
+        
+        <div class="stage">
+          <div class="modes">
+            <button id="btnA1_elefant" onclick="setA1Noun('elefant')" aria-pressed="true">Elefant (M)</button>
+            <button id="btnA1_girafa" onclick="setA1Noun('girafa')">Girafă (F)</button>
+            <button id="btnA1_parc" onclick="setA1Noun('parc')">Parc (N)</button>
+            <button id="btnA1_sora" onclick="setA1Noun('sora')">Soră (F neregulat)</button>
+            <button id="btnA1_om" onclick="setA1Noun('om')">Om (M neregulat)</button>
+          </div>
+          <div class="big" id="a1StageForm" onclick="sayA1Current()" title="Нажмите, чтобы прослушать">
+            <span class="ro w" id="a1Word">un elefant</span>
+          </div>
+          <div class="row">
+            <span class="rule" id="a1Rule">Masculin · Nehotărât singular (un)</span>
+            <button class="iconbtn" onclick="sayA1Current()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="seg">
+              <button id="btnA1Art_nehotSg" onclick="setA1Art('nehotSg')" aria-pressed="true">Nehotărât Sg</button>
+              <button id="btnA1Art_hotSg" onclick="setA1Art('hotSg')">Hotărât Sg</button>
+              <button id="btnA1Art_nehotPl" onclick="setA1Art('nehotPl')">Nehotărât Pl</button>
+              <button id="btnA1Art_hotPl" onclick="setA1Art('hotPl')">Hotărât Pl</button>
+            </div>
+          </div>
+          <div class="cap" id="a1Cap">Неопределённый артикль мужского рода ед. числа: un elefant (какой-то слон)</div>
+        </div>
+      </section>
+
+      <!-- 1.3 CLASE GRAMATICALE A1 -->
+      <section id="s1_3" data-t="1.3 Грамматика A1">
+        <div class="sec-head"><span class="eyebrow">1.3</span><h2>Грамматические классы уровня A1</h2><span class="ro-title">Clase gramaticale A1</span></div>
+        <p class="prose">Академический стандарт Babes-Bolyai устанавливает следующий обязательный минимум грамматических форм для уровня A1:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Часть речи</th><th>Формы уровня A1</th><th>Примеры из стандарта</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Un elefant şi o girafă aleargă într-un parc. Girafa are multe surori.')">
+                <td class="ro"><b>Substantivul</b></td>
+                <td>Род: M, F, N. Число: Sg, Pl.<br>Особые: <i>surori, oameni, ouă</i>.<br>Несчётные: <i>lapte, carne, miere, unt, zahăr</i>.<br>Неизменяемые: <i>ochi, pui, ochelari, vânzătoare</i>.</td>
+                <td><span class="ro">Girafa cumpără ouă. Girafa bea lapte în fiecare dimineață fără zahăr. Poartă ochelari.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Girafa cumpără ouă. Girafa bea lapte în fiecare dimineață fără zahăr.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Bicicleta lui Vlad este albastră. Bicicleta Mariei este albă. Lui Vlad îi plac bananele.')">
+                <td class="ro"><b>Cazul G/D</b></td>
+                <td>Родительный и дательный только с <b>собственными именами</b>: <i>lui Vlad, Mariei</i>.</td>
+                <td><span class="ro">Bicicleta lui Vlad este albastră. Mariei îi plac portocalele.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Bicicleta lui Vlad este albastră. Mariei îi plac portocalele.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Elefantul este gras şi simpatic, iar girafa este înaltă şi simpatică.')">
+                <td class="ro"><b>Adjectivul</b></td>
+                <td>С 4 формами (<i>alb, albă, albi, albe</i>), 3 формами, 2 формами (<i>mare/mari, dulce/dulci</i>) и неизменяемые (<i>gri, oranj, bej</i>).</td>
+                <td><span class="ro">Elefantul este gras şi simpatic, iar girafa este înaltă şi simpatică.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Elefantul este gras şi simpatic, iar girafa este înaltă şi simpatică.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Astăzi merg la grădina zoologică. Ieri am mers. Mâine voi merge. Vreau să merg. Mergeți!')">
+                <td class="ro"><b>Verbul</b></td>
+                <td>Prezent, Perfect compus, Viitor literar (<i>voi merge</i>), Viitor popular (<i>o să merg</i>), Conjunctiv prezent pers. 1-2 (<i>vreau să merg</i>), Imperativ pl. (<i>Mergeți!</i>), a putea + inf., verbe impersonale: <i>mi-e foame, mi-e sete, mi-e somn, mi-e rău</i>.</td>
+                <td><span class="ro">Astăzi merg la zoo. Ieri am mers. Mâine voi merge. Mi-e somn și nu pot să merg. Nu ți-e foame?</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Astăzi merg la zoo. Ieri am mers. Mâine voi merge. Mi-e somn.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Prepoziții: la, în, pe, cu, de, din, spre, pentru, fără, sub.')">
+                <td class="ro"><b>Prepoziții A1</b></td>
+                <td>Базовые пространственные и целевые: <i>la, în, pe, cu, de, din, spre, pentru, fără, sub</i>.</td>
+                <td><span class="ro">Merg la piață cu girafa pentru a cumpăra fructe fără zahăr.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Merg la piață cu girafa pentru a cumpăra fructe.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 1.4 LINGUISTIC VOCABULARY SPHERES A1 -->
+      <section id="s1_4" data-t="1.4 Тематический словарь A1">
+        <div class="sec-head"><span class="eyebrow">1.4</span><h2>Обязательные лексические сферы A1</h2><span class="ro-title">Elemente lexicale A1</span></div>
+        <p class="prose">Ключевые слова стандарта A1 для повседневного общения. Нажмите на карточку, чтобы услышать произношение:</p>
+        
+        <div class="vocab-grid">
+          <div class="wcard" onclick="say('luni, marți, miercuri, joi, vineri, sâmbătă, duminică')">
+            <span class="ro">Zilele săptămânii</span>
+            <span class="ru">luni, marți, miercuri, joi, vineri, sâmbătă, duminică</span>
+          </div>
+          <div class="wcard" onclick="say('cald, frig, soare, vânt, zăpadă, nori, a ploua, a ninge')">
+            <span class="ro">Vremea</span>
+            <span class="ru">cald, frig, soare, vânt, zăpadă, nori, a ploua, a ninge</span>
+          </div>
+          <div class="wcard" onclick="say('mamă, tată, bunic, bunică, fiu, fiică, frate, soră, unchi, mătușă')">
+            <span class="ro">Familia</span>
+            <span class="ru">mamă, tată, bunic, fiu, fiică, frate, soră, mătușă</span>
+          </div>
+          <div class="wcard" onclick="say('cap, ochi, nas, gură, ureche, mână, picior, dinte')">
+            <span class="ro">Corpul omenesc</span>
+            <span class="ru">cap, ochi, nas, gură, ureche, mână, picior, dinte</span>
+          </div>
+          <div class="wcard" onclick="say('casă, apartament, cameră de zi, bucătărie, dormitor, baie, masă, scaun, pat')">
+            <span class="ro">Locuința</span>
+            <span class="ru">casă, apartament, bucătărie, baie, masă, scaun, pat</span>
+          </div>
+          <div class="wcard" onclick="say('pantaloni, bluză, cămașă, tricou, pulover, fustă, rochie, pantofi, mănuși')">
+            <span class="ro">Îmbrăcămintea</span>
+            <span class="ru">pantaloni, cămașă, tricou, pulover, fustă, rochie, pantofi</span>
+          </div>
+          <div class="wcard" onclick="say('pâine, lapte, carne, brânză, ouă, apă, ceai, cafea, mere, roșii')">
+            <span class="ro">Alimente și băuturi</span>
+            <span class="ru">pâine, lapte, carne, brânză, ouă, apă, cafea, mere, roșii</span>
+          </div>
+          <div class="wcard" onclick="say('autobuz, tramvai, tren, mașină, avion, bicicletă, gară, aeroport')">
+            <span class="ro">Transport și oraș</span>
+            <span class="ru">autobuz, tramvai, tren, mașină, avion, gară, piață</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1.5 CIRCUMSTANTE SI COEZIUNE A1 -->
+      <section id="s1_5" data-t="1.5 Обстоятельства и связки A1">
+        <div class="sec-head"><span class="eyebrow">1.5</span><h2>Выражение обстоятельств и связность текста A1</h2><span class="ro-title">Exprimarea circumstanțelor și coeziunea textului</span></div>
+        <p class="prose">На уровне A1 высказывание строится с помощью элементарных временных наречий и базовых сочинительных союзов:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Значение</th><th>Коннекторы и маркеры</th><th>Эталонный пример из стандарта</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Când ai cursuri? Azi vremea este frumoasă. Ieri am stat acasă.')">
+                <td class="ro"><b>Timp (Время)</b></td>
+                <td><i>când, azi, astăzi, dimineaţă, ieri, mâine, acum, apoi, după, zilnic, niciodată</i></td>
+                <td><span class="ro">Când ai cursuri? Azi vremea este frumoasă. Ieri am stat acasă.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Când ai cursuri? Azi vremea este frumoasă.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Ei ascultă un dialog şi rezolvă un exerciţiu.')">
+                <td class="ro"><b>Asociere (И)</b></td>
+                <td><i>şi</i></td>
+                <td><span class="ro">Ei ascultă un dialog <b>şi</b> rezolvă un exerciţiu.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Ei ascultă un dialog şi rezolvă un exerciţiu.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('E cald, dar plouă.')">
+                <td class="ro"><b>Opoziţie (Но)</b></td>
+                <td><i>dar</i></td>
+                <td><span class="ro">E cald, <b>dar</b> plouă.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('E cald, dar plouă.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Vii cu noi sau stai acasă?')">
+                <td class="ro"><b>Opţiune (Или)</b></td>
+                <td><i>sau</i></td>
+                <td><span class="ro">Vii cu noi <b>sau</b> stai acasă?</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Vii cu noi sau stai acasă?')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Nu am venit pentru că nu am avut timp.')">
+                <td class="ro"><b>Cauză (Потому что)</b></td>
+                <td><i>că, pentru că</i></td>
+                <td><span class="ro">Nu am venit <b>pentru că</b> nu am avut timp.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Nu am venit pentru că nu am avut timp.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Dacă vrei, putem lua prânzul împreună.')">
+                <td class="ro"><b>Condiţie (Если)</b></td>
+                <td><i>dacă</i></td>
+                <td><span class="ro"><b>Dacă</b> vrei, putem lua prânzul împreună.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Dacă vrei, putem lua prânzul împreună.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 1.6 EXERCITII INTERACTIVE A1 -->
+      <section id="s1_6" data-t="1.6 Практикум A1">
+        <div class="sec-head"><span class="eyebrow">1.6</span><h2>Интерактивный практикум: Тест структур A1</h2><span class="ro-title">Exerciții interactive A1</span></div>
+        <p class="prose">Вставьте пропущенные формы (артикли, местоимения или предлоги). После ввода нажмите <b>«Проверить ответы»</b>:</p>
+
+        <div class="exercise-box" id="box_exA1">
+          <div class="ex-row">
+            <span>1. Un elefant şi</span>
+            <input type="text" class="ans" id="exA1_1" data-k="o" placeholder="...">
+            <span>girafă aleargă într-un parc. (неопределённый артикль F.sg)</span>
+          </div>
+          <div class="ex-row">
+            <span>2. Bicicleta</span>
+            <input type="text" class="ans" id="exA1_2" data-k="lui" placeholder="...">
+            <span>Vlad este albastră, iar bicicleta Mariei este albă. (G для мужских имён)</span>
+          </div>
+          <div class="ex-row">
+            <span>3. Ieri</span>
+            <input type="text" class="ans" id="exA1_3" data-k="am mers|am fost" placeholder="...">
+            <span>la grădina zoologică. (verbul a merge / a fi la Perfect compus, pers. I sg)</span>
+          </div>
+          <div class="ex-row">
+            <span>4. E cald,</span>
+            <input type="text" class="ans" id="exA1_4" data-k="dar" placeholder="...">
+            <span>plouă. (союз противопоставления уровня A1)</span>
+          </div>
+          <div class="ex-row">
+            <span>5. Nu am venit</span>
+            <input type="text" class="ans" id="exA1_5" data-k="pentru că|fiindcă" placeholder="...">
+            <span>nu am avut timp. (союз причины)</span>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="checkEx('exA1')">Проверить ответы</button>
+            <button class="btn ghost" onclick="showKey('exA1')">Показать ключ</button>
+          </div>
+          <div class="ex-feedback" id="fb_exA1"></div>
+        </div>
+      </section>
+
+      <!-- 1.7 QUIZ A1 -->
+      <section id="s1_7" data-t="1.7 Тест Nivel A1">
+        <div class="sec-head"><span class="eyebrow">1.7</span><h2>Сертификационный мини-тест: Nivel A1</h2><span class="ro-title">Test grilă de autoevaluare A1</span></div>
+        <p class="prose">Проверьте соответствие своих знаний официальному стандарту A1. Выберите один верный ответ из четырёх:</p>
+        
+        <div class="quiz" id="quizA1_box">
+          <div class="qtop"><span id="qA1_count">Вопрос 1 из 5</span><div class="dots" id="qA1_dots"></div></div>
+          <div class="qq" id="qA1_prompt">Какая форма артикля является правильной: «... fată este studentă»?</div>
+          <div class="opts" id="qA1_opts"></div>
+          <div class="why" id="qA1_why"></div>
+          <div class="qnav"><button class="btn" id="btnA1_nextQ" onclick="nextQuizA1()" style="display:none">Следующий вопрос →</button></div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 2: NIVEL A2 -->
+    <article class="chapter" id="ch2">
+      <header class="hero">
+        <span class="eyebrow">Nivel A2 · Utilizator elementar · Waystage</span>
+        <div class="word" onclick="say('Nivelul A2: Elementar')" title="Нажмите, чтобы прослушать">Nivelul A2<span class="badge-lvl">A2</span><span class="art"></span></div>
+        <h1>Descrierea minimală: Nivelul A2</h1>
+        <p class="lede">Уровень базовой самостоятельности: способность общаться в простых повседневных ситуациях, требующих прямого обмена информацией о семье, покупках, работе, ориентации в городе и планировании поездок.</p>
+        <div class="forms3">
+          <div><small>Словарный запас</small><span class="ro">~1200–1800</span><small>активных лексических единиц</small></div>
+          <div><small>Грамматический каркас</small><span class="ro">Genitiv-Dativ · Conjunctiv</span><small>Артикли -ului/-ei, să meargă, o să</small></div>
+          <div><small>Речевой навык</small><span class="ro">Discurs conectat</span><small>История о себе, советы, планы</small></div>
+        </div>
+      </header>
+
+      <!-- 2.1 FUNCTII COMUNICATIVE A2 -->
+      <section id="s2_1" data-t="2.1 Речевые функции A2">
+        <div class="sec-head"><span class="eyebrow">2.1</span><h2>Коммуникативные функции уровня A2</h2><span class="ro-title">Funcții comunicative A2</span></div>
+        <p class="prose">На уровне A2 коммуникация становится более вежливой, разветвлённой и точной:</p>
+
+        <div class="note"><b class="t">A. Социальные конвенции и вежливость</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Вежливое приветствие</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Sărut-mâna, doamnă! Bună dimineața!')">Sărut-mâna, doamnă! / Bună dimineața!</span>
+              <span class="dline-ru">Здравствуйте, уважаемая госпожа! / Доброе утро! (традиционное уважительное приветствие)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Sărut-mâna, doamnă! Bună dimineața!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Прощание</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Pe mâine! Vă îmbrățișez!')">Pe mâine! / Vă îmbrățișez!</span>
+              <span class="dline-ru">До завтра! / Обнимаю вас! (в письмах и сообщениях близким)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Pe mâine! Vă îmbrățișez!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Пожелания</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Drum bun! Poftă bună! — Mulțumesc, la fel!')">Drum bun! / Poftă bună! — Mulțumesc, la fel!</span>
+              <span class="dline-ru">Счастливого пути! / Приятного аппетита! — Спасибо, взаимно!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Drum bun! Poftă bună! Mulțumesc, la fel!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Благодарность</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Mulțumesc mult! — Pentru puțin!')">Mulțumesc mult! — Pentru puțin!</span>
+              <span class="dline-ru">Большое спасибо! — Не за что! (букв. «за малость»)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Mulțumesc mult! Pentru puțin!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Извинение</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Îmi pare rău! Scuzați-mă, vă rog! — Nu-i nimic!')">Îmi pare rău! / Scuzați-mă, vă rog! — Nu-i nimic!</span>
+              <span class="dline-ru">Мне очень жаль! / Извините меня, пожалуйста! — Ничего страшного!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Îmi pare rău! Scuzați-mă, vă rog! Nu-i nimic!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px"><b class="t">B. Оценки, просьбы и разрешение</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Сложность</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('E ușor să faci o omletă. E greu să înveți limba română.')">E ușor să faci o omletă. / E greu să înveți limba română.</span>
+              <span class="dline-ru">Легко приготовить омлет. / Трудно учить румынский язык.</span>
+            </div>
+            <button class="iconbtn" onclick="say('E ușor să faci o omletă. E greu să înveți limba română.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Вежливая просьба</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Ai putea să mă ajuți? Mă ajuți, te rog?')">Ai putea să mă ajuți? / Mă ajuți, te rog?</span>
+              <span class="dline-ru">Ты не мог бы мне помочь? / Помоги мне, пожалуйста!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Ai putea să mă ajuți? Mă ajuți, te rog?')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Разрешение</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Pot să deschid geamul? — Sigur că da! / Din păcate nu se poate.')">Pot să deschid geamul? — Sigur că da! / Din păcate nu se poate.</span>
+              <span class="dline-ru">Можно открыть окно? — Конечно да! / К сожалению, нельзя.</span>
+            </div>
+            <button class="iconbtn" onclick="say('Pot să deschid geamul? Sigur că da!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.2 MORPH STAGE 2: TIMPURILE VERBALE SI CONJUNCTIVUL -->
+      <section id="s2_2" data-t="2.2 Морф-тренажёр A2: Времена глагола">
+        <div class="sec-head"><span class="eyebrow">2.2</span><h2>Интерактивный морф-тренажёр: Времена и наклонения A2</h2><span class="ro-title">Sistemul verbal al nivelului A2</span></div>
+        <p class="prose">На уровне A2 румынская система времён охватывает настоящее, прошедшее законченное (Perfect compus), литературное и разговорное будущее (<i>o să</i>), а также сослагательное наклонение (<i>Conjunctiv: să...</i>):</p>
+        
+        <div class="stage">
+          <div class="modes">
+            <button id="btnA2_merge" onclick="setA2Verb('merge')" aria-pressed="true">a merge (идти)</button>
+            <button id="btnA2_citi" onclick="setA2Verb('citi')">a citi (читать)</button>
+            <button id="btnA2_vorbi" onclick="setA2Verb('vorbi')">a vorbi (говорить)</button>
+            <button id="btnA2_fi" onclick="setA2Verb('fi')">a fi (быть)</button>
+          </div>
+          <div class="big" id="a2StageForm" onclick="sayA2Current()" title="Нажмите, чтобы прослушать">
+            <span class="ro w" id="a2Pron">Eu</span>
+            <span class="ro w art" id="a2Verb">merg</span>
+            <span class="ro w muted" id="a2Tail">la piață</span>
+          </div>
+          <div class="row">
+            <span class="rule" id="a2Rule">Indicativ Prezent · Eu</span>
+            <button class="iconbtn" onclick="sayA2Current()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="seg">
+              <button id="btnA2Tense_prez" onclick="setA2Tense('prez')" aria-pressed="true">Prezent</button>
+              <button id="btnA2Tense_pc" onclick="setA2Tense('pc')">Perfect compus</button>
+              <button id="btnA2Tense_viit" onclick="setA2Tense('viit')">Viitor (o să...)</button>
+              <button id="btnA2Tense_conj" onclick="setA2Tense('conj')">Conjunctiv (să...)</button>
+            </div>
+            <button class="btn ghost" onclick="changeA2Person(-1)">← Лицо</button>
+            <button class="btn ghost" onclick="changeA2Person(1)">Лицо →</button>
+          </div>
+          <div class="cap" id="a2Cap">Настоящее время: Я иду на рынок.</div>
+        </div>
+      </section>
+
+      <!-- 2.3 CLASE GRAMATICALE A2 -->
+      <section id="s2_3" data-t="2.3 Грамматика A2">
+        <div class="sec-head"><span class="eyebrow">2.3</span><h2>Грамматические классы уровня A2</h2><span class="ro-title">Clase gramaticale A2</span></div>
+        <p class="prose">Главное качественное отличие A2 от A1 — свободное владение падежами Genitiv-Dativ для нарицательных существительных, степенями сравнения и возвратными глаголами:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Часть речи</th><th>Формы уровня A2</th><th>Примеры стандарта Babeș-Bolyai</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Urechile elefantului sunt mari. Gâtul girafei este lung. Girafa îi telefonează elefantului.')">
+                <td class="ro"><b>Substantivul: Genitiv-Dativ</b></td>
+                <td>G/D нарицательных существительных с определённым и неопределённым артиклем:<br>M: <i>-ului / unui</i>; F: <i>-ei / unei</i>; Pl: <i>-ilor / unor</i>.</td>
+                <td><span class="ro">Urechile elefantului sunt mari. Gâtul girafei este lung. Girafa îi telefonează elefantului.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Urechile elefantului sunt mari. Gâtul girafei este lung.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Girafa este mai înaltă decât elefantul. Elefantul este cel mai mare animal din parc.')">
+                <td class="ro"><b>Gradele de comparație</b></td>
+                <td>Сравнительная степень: <i>mai... decât / la fel de... ca / mai puțin... decât</i>.<br>Превосходная: <i>cel mai... / foarte...</i>.</td>
+                <td><span class="ro">Girafa este mai înaltă decât elefantul. Elefantul este cel mai puternic.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Girafa este mai înaltă decât elefantul. Elefantul este cel mai puternic.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Îmi place acel elefant și acea girafă. Acesta este un oraș care îmi place.')">
+                <td class="ro"><b>Pronumele</b></td>
+                <td>Указательные местоимения дали: <i>acel, acea, acei, acele / acela, aceea</i>.<br>Относительное местоимение <i>care</i>.<br>Возвратные местоимения в Ac и Dat: <i>mă spăl, îmi amintesc</i>.</td>
+                <td><span class="ro">Îmi place acel elefant. Acesta este un oraș care îmi place mult.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Îmi place acel elefant. Acesta este un oraș care îmi place mult.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Vreau să merg la mare. Maria o să vină mâine la Cluj.')">
+                <td class="ro"><b>Verbul A2</b></td>
+                <td>Полное спряжение Conjunctiv prezent (<i>să merg, să mergi, să meargă</i>).<br>Разговорное будущее: <i>o să merg, o să meargă</i>.</td>
+                <td><span class="ro">Vreau ca Maria să vină cu noi. O să vizităm muzeul mâine.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Vreau ca Maria să vină cu noi. O să vizităm muzeul mâine.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Prepoziții cu genitiv: în fața, în spatele, împotriva. Cu dativ: datorită, grație.')">
+                <td class="ro"><b>Prepoziții complexe</b></td>
+                <td>Требующие Genitiv: <i>în fața, în spatele, împotriva</i>.<br>Требующие Dativ: <i>datorită, grație, mulțumită</i>.</td>
+                <td><span class="ro">Banca se află în fața hotelului. Am reușit datorită ajutorului tău.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Banca se află în fața hotelului. Am reușit datorită ajutorului tău.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2.4 LINGUISTIC VOCABULARY SPHERES A2 -->
+      <section id="s2_4" data-t="2.4 Тематический словарь A2">
+        <div class="sec-head"><span class="eyebrow">2.4</span><h2>Обязательные лексические сферы A2</h2><span class="ro-title">Elemente lexicale A2</span></div>
+        <p class="prose">Лексика уровня A2 расширяет бытовой круг до сферы услуг, покупок картой, путешествий и здоровья:</p>
+        
+        <div class="vocab-grid">
+          <div class="wcard" onclick="say('furtună, ceață, ger, înnorat, a tuna, a fulgera')">
+            <span class="ro">Vreme nuanțată</span>
+            <span class="ru">furtună (буря), ceață (туман), ger (мороз), a tuna (греметь гром)</span>
+          </div>
+          <div class="wcard" onclick="say('card, coș, bon, rest, pungă, casă de marcat')">
+            <span class="ro">Cumpărături și plăți</span>
+            <span class="ru">card (карта), coș (корзина), bon (чек), rest (сдача)</span>
+          </div>
+          <div class="wcard" onclick="say('vilă, balcon, terasă, sufragerie, fotoliu, raft, aspirator')">
+            <span class="ro">Locuință extinsă</span>
+            <span class="ru">vilă, balcon, terasă, fotoliu (кресло), raft (полка), aspirator</span>
+          </div>
+          <div class="wcard" onclick="say('bancă, farmacie, hotel, gară, aeroport, stație de autobuz')">
+            <span class="ro">Servicii în oraș</span>
+            <span class="ru">bancă, farmacie, hotel, gară, aeroport, stație</span>
+          </div>
+          <div class="wcard" onclick="say('vegetarian, vegan, a gusta, a recomanda, a servi, chelner')">
+            <span class="ro">Restaurant și mâncare</span>
+            <span class="ru">vegetarian, a gusta (пробовать), a recomanda, chelner (официант)</span>
+          </div>
+          <div class="wcard" onclick="say('febră, tuse, durere, rețetă, medicament, pansament')">
+            <span class="ro">Sănătate și farmacie</span>
+            <span class="ru">febră (жар), tuse (кашель), durere (боль), rețetă, medicament</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.5 CIRCUMSTANTE SI COEZIUNE A2 -->
+      <section id="s2_5" data-t="2.5 Обстоятельства и связки A2">
+        <div class="sec-head"><span class="eyebrow">2.5</span><h2>Выражение обстоятельств и связность текста A2</h2><span class="ro-title">Exprimarea circumstanțelor și coeziunea textului A2</span></div>
+        <p class="prose">Вместо отрывистых фраз речь объединяется логическими союзами причины, цели и противопоставления:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Значение</th><th>Связки и союзы A2</th><th>Эталонный пример из стандарта</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('El vine întotdeauna la serviciu la timp. E târziu, trebuie să plec.')">
+                <td class="ro"><b>Timp nuanțat</b></td>
+                <td><i>atunci, alaltăieri, poimâine, la timp, devreme, târziu, după ce, peste</i></td>
+                <td><span class="ro">El vine întotdeauna la timp. <b>După ce</b> termin cursurile, merg la bibliotecă.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('După ce termin cursurile, merg la bibliotecă.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Turiştii au făcut o excursie. De asemenea, ei au vizitat un muzeu.')">
+                <td class="ro"><b>Asociere (Также)</b></td>
+                <td><i>de asemenea</i></td>
+                <td><span class="ro">Turiştii au făcut o excursie. <b>De asemenea</b>, ei au vizitat un muzeu.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Turiştii au făcut o excursie. De asemenea, ei au vizitat un muzeu.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Maria vrea să meargă la munte, iar Carmen la mare. Nu vreau ceai, ci cafea.')">
+                <td class="ro"><b>Opoziţie (А, однако, а именно)</b></td>
+                <td><i>însă, iar, ci</i></td>
+                <td><span class="ro">Maria vrea la munte, <b>iar</b> Carmen la mare. Nu cafea, <b>ci</b> ceai.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Maria vrea la munte, iar Carmen la mare.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Am comandat cafea din cauză că mi-e somn. Nu am auzit din cauza zgomotului.')">
+                <td class="ro"><b>Cauză (Из-за того, что)</b></td>
+                <td><i>din cauza, din cauză că</i></td>
+                <td><span class="ro">Am comandat cafea <b>din cauză că</b> mi-e somn.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Am comandat cafea din cauză că mi-e somn.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Te-am sunat ca să îţi mulţumesc.')">
+                <td class="ro"><b>Scop (Чтобы)</b></td>
+                <td><i>ca să</i></td>
+                <td><span class="ro">Te-am sunat <b>ca să</b> îţi mulţumesc pentru ajutor.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Te-am sunat ca să îţi mulţumesc pentru ajutor.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Nu am avut destui bani, deci nu am putut cumpăra biletul.')">
+                <td class="ro"><b>Concluzie (Следовательно)</b></td>
+                <td><i>deci</i></td>
+                <td><span class="ro">Nu am avut destui bani, <b>deci</b> nu am putut cumpăra biletul.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Nu am avut destui bani, deci nu am putut cumpăra biletul.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2.6 EXERCITII INTERACTIVE A2 -->
+      <section id="s2_6" data-t="2.6 Практикум A2">
+        <div class="sec-head"><span class="eyebrow">2.6</span><h2>Интерактивный практикум: Тест структур A2</h2><span class="ro-title">Exerciții interactive A2</span></div>
+        <p class="prose">Вставьте нужные окончания падежей, союзы или местоимения уровня A2. Нажмите <b>«Проверить ответы»</b>:</p>
+
+        <div class="exercise-box" id="box_exA2">
+          <div class="ex-row">
+            <span>1. Urechile</span>
+            <input type="text" class="ans" id="exA2_1" data-k="elefantului" placeholder="...">
+            <span>sunt mari, iar gâtul girafei este lung. (elefant la Genitiv singular)</span>
+          </div>
+          <div class="ex-row">
+            <span>2. Girafa este</span>
+            <input type="text" class="ans" id="exA2_2" data-k="mai înaltă|mai inalta" placeholder="...">
+            <span>decât elefantul. (сравнительная степень от înaltă)</span>
+          </div>
+          <div class="ex-row">
+            <span>3. Vreau ca Maria</span>
+            <input type="text" class="ans" id="exA2_3" data-k="să meargă|sa mearga" placeholder="...">
+            <span>cu noi la teatru. (verbul a merge la Conjunctiv prezent, pers. III sg)</span>
+          </div>
+          <div class="ex-row">
+            <span>4. Nu am vrut ceai,</span>
+            <input type="text" class="ans" id="exA2_4" data-k="ci" placeholder="...">
+            <span>cafea. (союз «а именно / но» после отрицания)</span>
+          </div>
+          <div class="ex-row">
+            <span>5. Am întârziat din</span>
+            <input type="text" class="ans" id="exA2_5" data-k="cauza|cauză" placeholder="...">
+            <span>traficului aglomerat. (предлог причины с родительным падежом)</span>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="checkEx('exA2')">Проверить ответы</button>
+            <button class="btn ghost" onclick="showKey('exA2')">Показать ключ</button>
+          </div>
+          <div class="ex-feedback" id="fb_exA2"></div>
+        </div>
+      </section>
+
+      <!-- 2.7 QUIZ A2 -->
+      <section id="s2_7" data-t="2.7 Тест Nivel A2">
+        <div class="sec-head"><span class="eyebrow">2.7</span><h2>Сертификационный мини-тест: Nivel A2</h2><span class="ro-title">Test grilă de autoevaluare A2</span></div>
+        <p class="prose">Проверьте понимание грамматических и прагматических норм уровня A2:</p>
+        
+        <div class="quiz" id="quizA2_box">
+          <div class="qtop"><span id="qA2_count">Вопрос 1 из 5</span><div class="dots" id="qA2_dots"></div></div>
+          <div class="qq" id="qA2_prompt">Выберите грамматически верный вариант: «Girafa îi telefonează ...»</div>
+          <div class="opts" id="qA2_opts"></div>
+          <div class="why" id="qA2_why"></div>
+          <div class="qnav"><button class="btn" id="btnA2_nextQ" onclick="nextQuizA2()" style="display:none">Следующий вопрос →</button></div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 3: NIVEL B1 -->
+    <article class="chapter" id="ch3">
+      <header class="hero">
+        <span class="eyebrow">Nivel B1 · Utilizator independent · Threshold</span>
+        <div class="word" onclick="say('Nivelul B1: Intermediar')" title="Нажмите, чтобы прослушать">Nivelul B1<span class="badge-lvl">B1</span><span class="art"></span></div>
+        <h1>Descrierea minimală: Nivelul B1</h1>
+        <p class="lede">Пороговый уровень независимого пользователя: способность свободно понимать основные положения четких сообщений на литературном румынском языке, описывать события, мечты, надежды и амбиции, кратко обосновывать свое мнение и планы на будущее.</p>
+        <div class="forms3">
+          <div><small>Словарный запас</small><span class="ro">~2500–3500</span><small>активных лексических единиц</small></div>
+          <div><small>Грамматический каркас</small><span class="ro">Imperfect · Condițional · Pasiv</span><small>Vocativ, al/a/ai/ale, gerunziu</small></div>
+          <div><small>Речевой навык</small><span class="ro">Argumentare & Nuanțe</span><small>Интервью, косвенная речь, работа</small></div>
+        </div>
+      </header>
+
+      <!-- 3.1 FUNCTII COMUNICATIVE B1 -->
+      <section id="s3_1" data-t="3.1 Речевые функции B1">
+        <div class="sec-head"><span class="eyebrow">3.1</span><h2>Коммуникативные функции уровня B1</h2><span class="ro-title">Funcții comunicative B1</span></div>
+        <p class="prose">Уровень B1 вводит формулы тонкого межличностного общения, прояснения недопонимания и выражения эмоций:</p>
+
+        <div class="note"><b class="t">A. Вежливость, поздравления и пожелания B1</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Особые пожелания</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Baftă la examen! Casă de piatră!')">Baftă la examen! / Casă de piatră!</span>
+              <span class="dline-ru">Удачи на экзамене! / Горько! (букв. «каменный дом» — пожелание молодожёнам крепости семьи)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Baftă la examen! Casă de piatră!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Благодарность</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Vă mulțumesc mult pentru ajutor! — Cu multă plăcere! / N-aveți pentru ce!')">Vă mulțumesc mult pentru ajutor! — Cu multă plăcere! / N-aveți pentru ce!</span>
+              <span class="dline-ru">Большое спасибо вам за помощь! — С великим удовольствием! / Не стоит благодарности!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Vă mulțumesc mult pentru ajutor! N-aveți pentru ce!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Передача приветов</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Salută-l și pe fratele tău din partea mea!')">Salută-l și pe fratele tău din partea mea!</span>
+              <span class="dline-ru">Передай привет и своему брату от меня!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Salută-l și pe fratele tău din partea mea!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Телефонный этикет</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Bună ziua! Alo? Aici Maria. Pot să vorbesc cu domnul director, vă rog?')">Bună ziua! Alo? Aici Maria. Pot să vorbesc cu domnul director, vă rog?</span>
+              <span class="dline-ru">Добрый день! Алло? Это Мария. Могу я поговорить с господином директором, пожалуйста?</span>
+            </div>
+            <button class="iconbtn" onclick="say('Alo? Aici Maria. Pot să vorbesc cu domnul director, vă rog?')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px"><b class="t">B. Преодоление языковых трудностей (Solicitarea clarificării)</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Запрос значения</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Te rog să-mi explici ce înseamnă cuvântul extraterestru.')">Te rog să-mi explici ce înseamnă „extraterestru”.</span>
+              <span class="dline-ru">Объясни мне, пожалуйста, что означает слово «инопланетянин».</span>
+            </div>
+            <button class="iconbtn" onclick="say('Te rog să-mi explici ce înseamnă acest cuvânt.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Уточнение мысли</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Ce vrei să spui cu asta? Cum se spune chimney în limba română?')">Ce vrei să spui cu asta? / Cum se spune „chimney” în limba română?</span>
+              <span class="dline-ru">Что ты хочешь этим сказать? / Как сказать «дымоход» по-румынски? (coș de fum)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Ce vrei să spui cu asta?')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Забытое слово</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Nu-mi amintesc cuvântul exact, dar este un obiect folosit la bucătărie.')">Nu-mi amintesc cuvântul exact, dar este un obiect folosit la bucătărie.</span>
+              <span class="dline-ru">Не припомню точного слова, но это предмет, используемый на кухне (описание через дефиницию).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Nu-mi amintesc cuvântul exact.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.2 MORPH STAGE 3: CLITICE SI VERBE COMPLEXE -->
+      <section id="s3_2" data-t="3.2 Морф-тренажёр B1: Клитики и Imperfect">
+        <div class="sec-head"><span class="eyebrow">3.2</span><h2>Интерактивный морф-тренажёр: Клитики Dativ/Acuzativ и Imperfectul</h2><span class="ro-title">Sistemul cliticelor și timpul Imperfect</span></div>
+        <p class="prose">На уровне B1 осваиваются безударные формы местоимений (клитики) в сочетании с прошедшим длительным временем (<b>Imperfectul</b>: <i>mergeam, citeam, se plimba</i>) и сослагательным наклонением:</p>
+        
+        <div class="stage">
+          <div class="modes">
+            <button id="btnB1_da" onclick="setB1Clitic('da')" aria-pressed="true">a da (давать)</button>
+            <button id="btnB1_spune" onclick="setB1Clitic('spune')">a spune (говорить)</button>
+            <button id="btnB1_trimite" onclick="setB1Clitic('trimite')">a trimite (отправлять)</button>
+            <button id="btnB1_aminti" onclick="setB1Clitic('aminti')">a-și aminti (вспоминать)</button>
+          </div>
+          <div class="big" id="b1StageForm" onclick="sayB1Current()" title="Нажмите, чтобы прослушать">
+            <span class="ro w art" id="b1Clitic">I-l</span>
+            <span class="ro w" id="b1Verb">dădeam</span>
+            <span class="ro w muted" id="b1Tail">în fiecare zi</span>
+          </div>
+          <div class="row">
+            <span class="rule" id="b1Rule">Dativ (îi -> i-) + Acuzativ (îl -> -l) + Imperfect (pers. I)</span>
+            <button class="iconbtn" onclick="sayB1Current()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="seg">
+              <button id="btnB1T_imp" onclick="setB1Tense('imp')" aria-pressed="true">Imperfect</button>
+              <button id="btnB1T_cond" onclick="setB1Tense('cond')">Condițional prezent</button>
+              <button id="btnB1T_ger" onclick="setB1Tense('ger')">Gerunziu</button>
+              <button id="btnB1T_impv" onclick="setB1Tense('impv')">Imperativ</button>
+            </div>
+          </div>
+          <div class="cap" id="b1Cap">Я давал ему это каждый день (слияние Dativ + Acuzativ с глаголом в Imperfect).</div>
+        </div>
+      </section>
+
+      <!-- 3.3 CLASE GRAMATICALE B1 -->
+      <section id="s3_3" data-t="3.3 Грамматика B1">
+        <div class="sec-head"><span class="eyebrow">3.3</span><h2>Грамматические классы уровня B1</h2><span class="ro-title">Clase gramaticale B1</span></div>
+        <p class="prose">Обязательный грамматический профиль независимого пользователя (Threshold) по стандарту кафедры RLS UBB:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Грамматическая категория</th><th>Формы уровня B1</th><th>Примеры стандарта Babeș-Bolyai</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Bunico, ce faci aici? Bună ziua, domnule Popescu!')">
+                <td class="ro"><b>Cazul Vocativ</b></td>
+                <td>Формы прямого обращения:<br>M: <i>-e / -le</i> (<i>băiete, domnule, prietene</i>)<br>F: <i>-o</i> (<i>bunico, fetițo, doamnă</i>)<br>Pl: <i>-lor / -ilor</i> (<i>domnilor, doamnelor, băieți, fetelor</i>).</td>
+                <td><span class="ro">Bunico, ce faci aici? Bună-ziua, domnule Popescu!</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Bunico, ce faci aici? Bună-ziua, domnule Popescu!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Al cui este dicționarul? Dicționarul este al elefantului. Ochelarii sunt ai elefantului.')">
+                <td class="ro"><b>Articolul posesiv-genitival</b></td>
+                <td><i>al, a, ai, ale</i> в вопросах и конструкциях с глаголом <i>a fi</i>.</td>
+                <td><span class="ro">Al cui este dicționarul? Dicționarul este al elefantului. Ochelarii sunt ai elefantului.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Al cui este dicționarul? Dicționarul este al elefantului.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Am doi prieteni: cel din Franța este blond, cel din Spania este brunet.')">
+                <td class="ro"><b>Articolul demonstrativ</b></td>
+                <td><i>cel, cea, cei, cele</i> (тот, та, те) в роли субстантиватора и выделителя.</td>
+                <td><span class="ro">Am doi prieteni: cel din Franța este blond, cel din Spania este brunet.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Cel din Franța este blond, cel din Spania este brunet.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('În timp ce citeam o carte, fratele meu asculta muzică. Aș dori o cafea.')">
+                <td class="ro"><b>Verbul: Imperfect & Condițional</b></td>
+                <td><b>Imperfectul</b> (длительное действие в прошлом: <i>cântam, mergeam</i>).<br><b>Condițional-optativ prezent</b> (желание, условие: <i>aș dori, ai merge, ar veni</i>).<br><b>Gerunziu</b> (деепричастие: <i>citind, mergând</i>).</td>
+                <td><span class="ro">În timp ce citeam, a început ploaia. Dacă aș avea bani, aș călători în toată lumea.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('În timp ce citeam, a început ploaia. Dacă aș avea bani, aș călători.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Cartea a fost scrisă de un autor celebru din Cluj.')">
+                <td class="ro"><b>Diateza pasivă</b></td>
+                <td>Страдательный залог: <i>a fi</i> + причастие прошедшего времени + <i>de (către)</i>.</td>
+                <td><span class="ro">Această clădire a fost construită în secolul trecut de către un arhitect faimos.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Această clădire a fost construită în secolul trecut.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 3.4 LINGUISTIC VOCABULARY SPHERES B1 -->
+      <section id="s3_4" data-t="3.4 Тематический словарь B1">
+        <div class="sec-head"><span class="eyebrow">3.4</span><h2>Обязательные лексические сферы B1</h2><span class="ro-title">Elemente lexicale B1</span></div>
+        <p class="prose">Лексика профессиональной жизни, контрактов, путешествий и абстрактных понятий:</p>
+        
+        <div class="vocab-grid">
+          <div class="wcard" onclick="say('caniculă, tunet, fulger, tornadă, uragan, grindină')">
+            <span class="ro">Fenomene extreme</span>
+            <span class="ru">caniculă (жара), tunet (гром), fulger (молния), tornadă, grindină (град)</span>
+          </div>
+          <div class="wcard" onclick="say('cumnat, cumnată, mamă vitregă, părinți adoptivi, rudă')">
+            <span class="ro">Familie extinsă</span>
+            <span class="ru">cumnat (деверь/шурин), mamă vitregă (мачеха), părinți adoptivi</span>
+          </div>
+          <div class="wcard" onclick="say('pardesiu, mânecă lungă, buzunar, pelerină, vestă, jerseu')">
+            <span class="ro">Vestimentație detaliată</span>
+            <span class="ru">pardesiu (пальто), buzunar (карман), vestă (жилет), pelerină</span>
+          </div>
+          <div class="wcard" onclick="say('sens giratoriu, parcare subterană, benzinărie, parbriz, portbagaj')">
+            <span class="ro">Transport și caroserie</span>
+            <span class="ru">sens giratoriu (кольцо), parcare, parbriz (лобовое стекло), portbagaj</span>
+          </div>
+          <div class="wcard" onclick="say('interviu de angajare, demisie, promovare, salariu brut, concediu')">
+            <span class="ro">Muncă și carieră</span>
+            <span class="ru">interviu (собеседование), demisie (увольнение), salariu, concediu (отпуск)</span>
+          </div>
+          <div class="wcard" onclick="say('asigurare, contract, abonament, cont bancar, chitanță')">
+            <span class="ro">Servicii și contracte</span>
+            <span class="ru">asigurare (страховка), contract, abonament, chitanță (квитанция)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.5 CIRCUMSTANTE SI COEZIUNE B1 -->
+      <section id="s3_5" data-t="3.5 Обстоятельства и связки B1">
+        <div class="sec-head"><span class="eyebrow">3.5</span><h2>Связность текста и косвенная речь B1</h2><span class="ro-title">Exprimarea circumstanțelor și coeziunea textului B1</span></div>
+        <p class="prose">На уровне B1 речь обогащается уступительными союзами (<i>deși, chiar dacă</i>), противопоставлением (<i>în timp ce, în loc să</i>) и правилами косвенной речи:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Связка / Коннектор</th><th>Функция в предложении</th><th>Пример из академического стандарта</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Pe lângă supă, am gătit și cartofi. În plus, am făcut curățenie.')">
+                <td class="ro"><b>pe lângă, în plus</b></td>
+                <td>Asociere (Вдобавок, кроме того)</td>
+                <td><span class="ro"><b>Pe lângă</b> supă, am gătit și cartofi. <b>În plus</b>, am spălat vasele.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Pe lângă supă, am gătit și cartofi.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('În loc de iaurt, a cumpărat smântână. Trebuie să studiezi, altfel nu treci examenul.')">
+                <td class="ro"><b>în loc de / în loc să, altfel</b></td>
+                <td>Opoziţie & Alternativă (Вместо того чтобы; иначе)</td>
+                <td><span class="ro"><b>În loc de</b> iaurt, a cumpărat smântână. Învață, <b>altfel</b> pici examenul!</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('În loc de iaurt, a cumpărat smântână.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Deși ploua torențial, am plecat în excursie la munte.')">
+                <td class="ro"><b>deși, chiar dacă, cu toate că</b></td>
+                <td>Concesie (Хотя, даже если, несмотря на то что)</td>
+                <td><span class="ro"><b>Deși</b> ploua tare, am plecat în drumeție.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Deși ploua tare, am plecat în drumeție.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Mi-a spus că va veni mâine la facultate.')">
+                <td class="ro"><b>Vorbire indirectă</b></td>
+                <td>Косвенная речь с союзом <i>că</i></td>
+                <td><span class="ro">Profesorul ne-a anunțat <b>că</b> testul se amână pentru săptămâna viitoare.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Profesorul ne-a anunțat că testul se amână.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 3.6 EXERCITII INTERACTIVE B1 -->
+      <section id="s3_6" data-t="3.6 Практикум B1">
+        <div class="sec-head"><span class="eyebrow">3.6</span><h2>Интерактивный практикум: Тест структур B1</h2><span class="ro-title">Exerciții interactive B1</span></div>
+        <p class="prose">Заполните пропуски союзами, артиклями или формами глаголов уровня B1:</p>
+
+        <div class="exercise-box" id="box_exB1">
+          <div class="ex-row">
+            <span>1. Al cui este dicționarul? Dicționarul este</span>
+            <input type="text" class="ans" id="exB1_1" data-k="al" placeholder="...">
+            <span>elefantului. (притяжательный артикль мужского рода)</span>
+          </div>
+          <div class="ex-row">
+            <span>2. Bună ziua,</span>
+            <input type="text" class="ans" id="exB1_2" data-k="domnule" placeholder="...">
+            <span>Popescu! (обращение в форме вокатива от domn)</span>
+          </div>
+          <div class="ex-row">
+            <span>3. În timp ce eu</span>
+            <input type="text" class="ans" id="exB1_3" data-k="citeam|lucram" placeholder="...">
+            <span>, afară a început furtuna. (verbul a citi / a lucra la Imperfect, pers. I sg)</span>
+          </div>
+          <div class="ex-row">
+            <span>4.</span>
+            <input type="text" class="ans" id="exB1_4" data-k="Deși|Chiar dacă|Cu toate că" placeholder="...">
+            <span>era obosit, a terminat proiectul la timp. (союз уступки: хотя)</span>
+          </div>
+          <div class="ex-row">
+            <span>5. Dacă aș avea bani,</span>
+            <input type="text" class="ans" id="exB1_5" data-k="aș călători|as calatori|aș pleca|as pleca" placeholder="...">
+            <span>în toată Europa. (condițional-optativ prezent de la a călători/a pleca, pers. I)</span>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="checkEx('exB1')">Проверить ответы</button>
+            <button class="btn ghost" onclick="showKey('exB1')">Показать ключ</button>
+          </div>
+          <div class="ex-feedback" id="fb_exB1"></div>
+        </div>
+      </section>
+
+      <!-- 3.7 QUIZ B1 -->
+      <section id="s3_7" data-t="3.7 Тест Nivel B1">
+        <div class="sec-head"><span class="eyebrow">3.7</span><h2>Сертификационный мини-тест: Nivel B1</h2><span class="ro-title">Test grilă de autoevaluare B1</span></div>
+        <p class="prose">Проверьте знание структур уровня B1:</p>
+        
+        <div class="quiz" id="quizB1_box">
+          <div class="qtop"><span id="qB1_count">Вопрос 1 из 5</span><div class="dots" id="qB1_dots"></div></div>
+          <div class="qq" id="qB1_prompt">Как правильно закончить фразу: «Ochelarii sunt ... elefantului»?</div>
+          <div class="opts" id="qB1_opts"></div>
+          <div class="why" id="qB1_why"></div>
+          <div class="qnav"><button class="btn" id="btnB1_nextQ" onclick="nextQuizB1()" style="display:none">Следующий вопрос →</button></div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 4: NIVEL B2 -->
+    <article class="chapter" id="ch4">
+      <header class="hero">
+        <span class="eyebrow">Nivel B2 · Utilizator independent avansat · Vantage</span>
+        <div class="word" onclick="say('Nivelul B2: Intermediar avansat')" title="Нажмите, чтобы прослушать">Nivelul B2<span class="badge-lvl">B2</span><span class="art"></span></div>
+        <h1>Descrierea minimală: Nivelul B2</h1>
+        <p class="lede">Уровень свободного академического и профессионального владения (Vantage): способность понимать сложное содержание абстрактных и конкретных текстов, свободно общаться с носителями языка без видимых усилий, писать ясные подробные тексты по широкому кругу вопросов и аргументировать позицию в дебатах.</p>
+        <div class="forms3">
+          <div><small>Словарный запас</small><span class="ro">~4500–6000+</span><small>активных и пассивных единиц</small></div>
+          <div><small>Грамматический каркас</small><span class="ro">Condițional perfect · Supin</span><small>Dacă aș fi știut, în vederea, grație</small></div>
+          <div><small>Речевой навык</small><span class="ro">Discurs argumentativ</span><small>Анализ, дебаты, официальные письма</small></div>
+        </div>
+      </header>
+
+      <!-- 4.1 FUNCTII COMUNICATIVE B2 -->
+      <section id="s4_1" data-t="4.1 Речевые функции B2">
+        <div class="sec-head"><span class="eyebrow">4.1</span><h2>Коммуникативные функции уровня B2</h2><span class="ro-title">Funcții comunicative B2</span></div>
+        <p class="prose">Уровень B2 требует безупречного владения стилистическими регистрами — от изысканной вежливости до академической полемики:</p>
+
+        <div class="note"><b class="t">A. Протокольная вежливость и официальное обращение</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Официальный этикет</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Vă salut, domnule director! Stimate domnule profesor, vă transmit întreaga mea considerație.')">Vă salut, domnule director! / Stimate domnule profesor, ...</span>
+              <span class="dline-ru">Приветствую вас, господин директор! / Уважаемый господин профессор! (официальный академический регистр)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Vă salut, domnule director!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Письменное завершение</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Cu stimă și considerație, vă urez mult succes.')">Cu stimă, ... / Cu toată considerația, ...</span>
+              <span class="dline-ru">С уважением, ... / Со всем почтением, ... (деловая и официальная переписка)</span>
+            </div>
+            <button class="iconbtn" onclick="say('Cu stimă și cu toată considerația.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Высокое признание</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Este o deosebită onoare să vă întâlnesc. Mii de mulțumiri!')">Este o deosebită onoare să vă întâlnesc. / Mii de mulțumiri!</span>
+              <span class="dline-ru">Для меня особая честь познакомиться с вами. / Тысяча благодарностей!</span>
+            </div>
+            <button class="iconbtn" onclick="say('Este o deosebită onoare să vă întâlnesc. Mii de mulțumiri!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px"><b class="t">B. Аргументация, полемика и условные гипотезы</b></div>
+        <div class="dialogue-box">
+          <div class="dline">
+            <span class="dline-spk">Позиция в споре</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Spre deosebire de antevorbitorul meu, consider că această măsură este ineficientă.')">Spre deosebire de ce s-a afirmat, consider că această măsură este ineficientă.</span>
+              <span class="dline-ru">В отличие от того, что утверждалось ранее, я считаю эту меру неэффективной.</span>
+            </div>
+            <button class="iconbtn" onclick="say('Spre deosebire de ce s-a afirmat, consider că această măsură este ineficientă.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="dline">
+            <span class="dline-spk">Контрафактуальность</span>
+            <div class="dline-body">
+              <span class="ro dline-ro" onclick="say('Dacă aș fi știut din timp, m-aș fi pregătit mult mai temeinic pentru această conferință.')">Dacă aș fi știut din timp, m-aș fi pregătit mult mai temeinic.</span>
+              <span class="dline-ru">Если бы я знал заранее, я подготовился бы куда основательнее (нереальное условие в прошлом).</span>
+            </div>
+            <button class="iconbtn" onclick="say('Dacă aș fi știut din timp, m-aș fi pregătit mult mai temeinic.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4.2 MORPH STAGE 4: CONDITIONALUL PERFECT SI SUPINUL -->
+      <section id="s4_2" data-t="4.2 Морф-тренажёр B2: Кондиционал и Супин">
+        <div class="sec-head"><span class="eyebrow">4.2</span><h2>Интерактивный морф-тренажёр: Condiționalul perfect și Supinul B2</h2><span class="ro-title">Morfologia avansată a nivelului B2</span></div>
+        <p class="prose">Ключевые конструкции B2: условное наклонение прошедшего времени (<b>Condiționalul perfect</b>: <i>aș fi mers</i>) и супин (<b>Supinul</b>: <i>pentru curățat, de înțeles, la cules</i>):</p>
+        
+        <div class="stage">
+          <div class="modes">
+            <button id="btnB2_pleca" onclick="setB2Verb('pleca')" aria-pressed="true">a pleca (уезжать)</button>
+            <button id="btnB2_face" onclick="setB2Verb('face')">a face (делать)</button>
+            <button id="btnB2_ajunge" onclick="setB2Verb('ajunge')">a ajunge (достигать)</button>
+            <button id="btnB2_spune" onclick="setB2Verb('spune')">a spune (говорить)</button>
+          </div>
+          <div class="big" id="b2StageForm" onclick="sayB2Current()" title="Нажмите, чтобы прослушать">
+            <span class="ro w" id="b2Prefix">Dacă aș fi avut timp,</span>
+            <span class="ro w art" id="b2Verb">aș fi plecat</span>
+            <span class="ro w muted" id="b2Tail">în vacanță</span>
+          </div>
+          <div class="row">
+            <span class="rule" id="b2Rule">Condițional-optativ perfect · pers. I sg</span>
+            <button class="iconbtn" onclick="sayB2Current()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="seg">
+              <button id="btnB2M_condPerf" onclick="setB2Mode('condPerf')" aria-pressed="true">Condițional Perfect</button>
+              <button id="btnB2M_conjPerf" onclick="setB2Mode('conjPerf')">Conjunctiv Perfect</button>
+              <button id="btnB2M_supin" onclick="setB2Mode('supin')">Supin</button>
+              <button id="btnB2M_inf" onclick="setB2Mode('inf')">Infinitiv lung cu «a»</button>
+            </div>
+          </div>
+          <div class="cap" id="b2Cap">Нереальное условие в прошлом: Если бы у меня было время, я бы уехал в отпуск.</div>
+        </div>
+      </section>
+
+      <!-- 4.3 CLASE GRAMATICALE B2 -->
+      <section id="s4_3" data-t="4.3 Грамматика B2">
+        <div class="sec-head"><span class="eyebrow">4.3</span><h2>Грамматические классы уровня B2</h2><span class="ro-title">Clase gramaticale B2</span></div>
+        <p class="prose">Грамматический каркас высшего промежуточного уровня согласно нормам Babeș-Bolyai:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Категория</th><th>Норма уровня B2</th><th>Примеры стандарта UBB</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Am probleme cu digestia, așa că trebuie să consult un gastroenterolog.')">
+                <td class="ro"><b>Substantive compuse</b></td>
+                <td>Сложные существительные и субстантивные обороты: <i>floarea-soarelui, scurtmetraj, bunăstare, punct de vedere, părere de rău, gastroenterolog, teleconferință</i>.</td>
+                <td><span class="ro">Numărul teleconferințelor a crescut semnificativ în ultimii ani.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Numărul teleconferințelor a crescut semnificativ.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Am citit un interviu al elefantului. Interviul elefantului și al girafei este foarte interesant.')">
+                <td class="ro"><b>Articol posesiv complet</b></td>
+                <td><i>al, a, ai, ale</i> во всех позициях: при однородных членах (<i>interviul elefantului și <b>al</b> girafei</i>), после косвенных определений, перед количественными числительными (<i>celui, celei, celor</i>).</td>
+                <td><span class="ro">Am citit interviul de azi al elefantului din revista Z. Le-am oferit celor trei premiul meritat.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Interviul elefantului și al girafei este foarte interesant.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Dumnealui a susținut această teză. Dânsa a fost aleasă președinte.')">
+                <td class="ro"><b>Pronume de politețe solemne</b></td>
+                <td>Формы вежливости 3-го лица: <i>dumnealui, dumneaei, dumnealor, dânsul, dânsa, dânșii, dânsele</i>.</td>
+                <td><span class="ro">Dumnealui a prezentat raportul, iar dânsa a răspuns la întrebările jurnaliștilor.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Dumnealui a prezentat raportul, iar dânsa a răspuns.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Înainte de a pleca, am stins lumina. Au plecat la cules de ciuperci.')">
+                <td class="ro"><b>Supin & Infinitiv</b></td>
+                <td>Инфинитивные обороты с <i>a</i> (<i>înainte de a pleca</i>) и супин цели/назначения (<i>un produs pentru curățat vase, ușor de demonstrat</i>).</td>
+                <td><span class="ro">Înainte de a lua o decizie, consultați specialiștii. Este un text greu de tradus.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Înainte de a lua o decizie, consultați specialiștii.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4.4 LINGUISTIC VOCABULARY SPHERES B2 -->
+      <section id="s4_4" data-t="4.4 Тематический словарь B2">
+        <div class="sec-head"><span class="eyebrow">4.4</span><h2>Обязательные лексические сферы B2</h2><span class="ro-title">Elemente lexicale B2</span></div>
+        <p class="prose">Продвинутая лексика анатомии, юриспруденции, экологии, спорта и науки:</p>
+        
+        <div class="vocab-grid">
+          <div class="wcard" onclick="say('gene, sprâncene, pleoape, bărbie, ceafă, talie, încheietură, gleznă, pancreas, intestine')">
+            <span class="ro">Anatomie & Sănătate</span>
+            <span class="ru">sprâncene (брови), pleoape (веки), gleznă (лодыжка), pancreas, intestine</span>
+          </div>
+          <div class="wcard" onclick="say('scrimă, parașutism, schior, baschetbalist, fileu, pârtie, ring')">
+            <span class="ro">Sporturi specializate</span>
+            <span class="ru">scrimă (фехтование), parașutism, fileu (сетка), pârtie (горнолыжный склон)</span>
+          </div>
+          <div class="wcard" onclick="say('omucidere, delapidare, recurs, sentință, martor, instanță, jurământ')">
+            <span class="ro">Justiție & Drept</span>
+            <span class="ru">omucidere (убийство), recurs (апелляция), sentință, instanță (суд)</span>
+          </div>
+          <div class="wcard" onclick="say('sustenabilitate, biodiversitate, emisii de carbon, deșeuri reciclabile')">
+            <span class="ro">Ecologie & Știință</span>
+            <span class="ru">sustenabilitate (устойчивость), emisii de carbon, deșeuri (отходы)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4.5 CIRCUMSTANTE SI COEZIUNE B2 -->
+      <section id="s4_5" data-t="4.5 Обстоятельства и связки B2">
+        <div class="sec-head"><span class="eyebrow">4.5</span><h2>Высшая связность и логические коннекторы B2</h2><span class="ro-title">Coeziunea și coerența textului B2</span></div>
+        <p class="prose">Маркеры зрелого академического и публицистического дискурса:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Коннектор B2</th><th>Значение</th><th>Пример из стандарта UBB</th><th>Аудио</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Nu numai că a întârziat, ci pe deasupra a uitat documentele acasă.')">
+                <td class="ro"><b>nu numai că..., ci și / pe deasupra</b></td>
+                <td>Усиленное присоединение (Не только..., но и; к тому же)</td>
+                <td><span class="ro">A lucrat foarte neatent. <b>Pe deasupra</b>, a încercat să ascundă greșelile făcute.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('Pe deasupra, a încercat să ascundă greșelile.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('Trebuie să respectați legea. În caz contrar, vom lua măsuri.')">
+                <td class="ro"><b>în caz contrar / spre deosebire de</b></td>
+                <td>Строгое противопоставление (В противном случае; в отличие от)</td>
+                <td><span class="ro">Trebuie să respectați regulamentul. <b>În caz contrar</b>, veți fi sancționat.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('În caz contrar, veți fi sancționat.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('În ciuda faptului că au existat dificultăți majore, echipa a finalizat proiectul.')">
+                <td class="ro"><b>în ciuda faptului că / sub rezerva că</b></td>
+                <td>Сложная уступка и ограничение (Несмотря на то что; с оговоркой)</td>
+                <td><span class="ro"><b>În ciuda faptului că</b> a plouat torențial, manifestația a continuat.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('În ciuda faptului că a plouat, manifestația a continuat.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+              <tr class="w" onclick="say('A obținut aceste rezultate prin intermediul unor calcule minuțioase.')">
+                <td class="ro"><b>prin intermediul / grație</b></td>
+                <td>Инструмент и причина (Посредством; благодаря)</td>
+                <td><span class="ro">A ajuns la succes <b>grație</b> muncii asidue și perseverenței.</span></td>
+                <td><button class="iconbtn" onclick="event.stopPropagation();say('A ajuns la succes grație muncii asidue.')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4.6 EXERCITII INTERACTIVE B2 -->
+      <section id="s4_6" data-t="4.6 Практикум B2">
+        <div class="sec-head"><span class="eyebrow">4.6</span><h2>Интерактивный практикум: Тест структур B2</h2><span class="ro-title">Exerciții interactive B2</span></div>
+        <p class="prose">Заполните пропуски продвинутыми конструкциями уровня B2:</p>
+
+        <div class="exercise-box" id="box_exB2">
+          <div class="ex-row">
+            <span>1. Dacă aș fi avut timp ieri,</span>
+            <input type="text" class="ans" id="exB2_1" data-k="aș fi venit|as fi venit|aș fi mers|as fi mers" placeholder="...">
+            <span>la petrecerea voastră. (verbul a veni / a merge la Condițional perfect)</span>
+          </div>
+          <div class="ex-row">
+            <span>2. Am citit interviul elefantului și</span>
+            <input type="text" class="ans" id="exB2_2" data-k="al" placeholder="...">
+            <span>girafei în presa de dimineață. (притяжательный артикль при однородном члене)</span>
+          </div>
+          <div class="ex-row">
+            <span>3. În</span>
+            <input type="text" class="ans" id="exB2_3" data-k="ciuda" placeholder="...">
+            <span>faptului că avertismentul a fost clar, mulți au ignorat regulile. (locuțiune concesivă)</span>
+          </div>
+          <div class="ex-row">
+            <span>4. Trimiteți raportul până la prânz. În caz</span>
+            <input type="text" class="ans" id="exB2_4" data-k="contrar" placeholder="...">
+            <span>, ședința se amână. (locuțiune de opoziție)</span>
+          </div>
+          <div class="ex-row">
+            <span>5. Înainte de</span>
+            <input type="text" class="ans" id="exB2_5" data-k="a pleca|a decide" placeholder="...">
+            <span>, am verificat toate documentele. (forma de infinitiv lung cu «a»)</span>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn" onclick="checkEx('exB2')">Проверить ответы</button>
+            <button class="btn ghost" onclick="showKey('exB2')">Показать ключ</button>
+          </div>
+          <div class="ex-feedback" id="fb_exB2"></div>
+        </div>
+      </section>
+
+      <!-- 4.7 QUIZ B2 -->
+      <section id="s4_7" data-t="4.7 Тест Nivel B2">
+        <div class="sec-head"><span class="eyebrow">4.7</span><h2>Сертификационный мини-тест: Nivel B2</h2><span class="ro-title">Test grilă de autoevaluare B2</span></div>
+        <p class="prose">Проверьте соответствие продвинутым нормам академического румынского языка B2:</p>
+        
+        <div class="quiz" id="quizB2_box">
+          <div class="qtop"><span id="qB2_count">Вопрос 1 из 5</span><div class="dots" id="qB2_dots"></div></div>
+          <div class="qq" id="qB2_prompt">Какая форма выражает гипотетическое действие в прошлом: «Dacă ... timp, aș fi venit»?</div>
+          <div class="opts" id="qB2_opts"></div>
+          <div class="why" id="qB2_why"></div>
+          <div class="qnav"><button class="btn" id="btnB2_nextQ" onclick="nextQuizB2()" style="display:none">Следующий вопрос →</button></div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 5: MATRICEA COMPARATIVA -->
+    <article class="chapter" id="ch5">
+      <header class="hero">
+        <span class="eyebrow">Sinteză Diacronică CEFR · Matricea Progresiei</span>
+        <div class="word" onclick="say('Matricea comparativă a nivelurilor de limbă română')" title="Нажмите, чтобы прослушать">Matricea A1 → B2<span class="badge-lvl">Evoluție</span><span class="art"></span></div>
+        <h1>Matricea comparativă a progresiei lingvistice</h1>
+        <p class="lede">Сводная аналитическая матрица эволюции структур румынского языка от уровня A1 до B2. Показывает, как одна и та же коммуникативная задача выражается на разных ступенях языкового мастерства.</p>
+      </header>
+
+      <!-- 5.1 MATRICEA CONECTORILOR -->
+      <section id="s5_1" data-t="5.1 Матрица логических связок">
+        <div class="sec-head"><span class="eyebrow">5.1</span><h2>Сравнительная матрица коннекторов и связности текста</h2><span class="ro-title">Matricea conectorilor logici și a coeziunii</span></div>
+        <p class="prose">Обратите внимание, как усложняется оформление логических связей в дискурсе:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Отношение</th><th>Nivel A1</th><th>Nivel A2</th><th>Nivel B1</th><th>Nivel B2</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('Evoluția opoziției: dar, însă, iar, ci, în timp ce, în loc de, spre deosebire de, în schimb')">
+                <td class="ro"><b>Opoziție (Противопоставление)</b></td>
+                <td><span class="ro"><b>dar</b></span><br><small>E cald, dar plouă.</small></td>
+                <td><span class="ro"><b>însă, iar, ci</b></span><br><small>Maria vrea la munte, iar Carmen la mare.</small></td>
+                <td><span class="ro"><b>în timp ce, în loc de, altfel</b></span><br><small>În loc de iaurt, a luat lapte.</small></td>
+                <td><span class="ro"><b>în schimb, pe când, spre deosebire de</b></span><br><small>Spre deosebire de el, eu am acceptat.</small></td>
+              </tr>
+              <tr class="w" onclick="say('Evoluția cauzei: că, pentru că, din cauză că, întrucât, din pricina')">
+                <td class="ro"><b>Cauză (Причина)</b></td>
+                <td><span class="ro"><b>pentru că, că</b></span><br><small>Nu am venit pentru că n-am timp.</small></td>
+                <td><span class="ro"><b>din cauză că, din cauza</b></span><br><small>Nu am auzit din cauza zgomotului.</small></td>
+                <td><span class="ro"><b>deoarece, fiindcă</b></span><br><small>A plecat mai repede, fiindcă se grăbea.</small></td>
+                <td><span class="ro"><b>întrucât, din pricină că</b></span><br><small>Întrucât termenul a expirat, contractul este nul.</small></td>
+              </tr>
+              <tr class="w" onclick="say('Evoluția asocierii: și, de asemenea, pe lângă, în plus, nu numai că ci și')">
+                <td class="ro"><b>Asociere (Присоединение)</b></td>
+                <td><span class="ro"><b>şi</b></span><br><small>Citesc şi ascult muzică.</small></td>
+                <td><span class="ro"><b>de asemenea</b></span><br><small>De asemenea, am vizitat muzeul.</small></td>
+                <td><span class="ro"><b>pe lângă, în plus</b></span><br><small>Pe lângă supă, am gătit friptură.</small></td>
+                <td><span class="ro"><b>nu numai că..., ci și, pe deasupra</b></span><br><small>Nu numai că a venit, ci a și ajutat.</small></td>
+              </tr>
+              <tr class="w" onclick="say('Evoluția concesiei: deși, chiar dacă, cu toate că, în ciuda faptului că')">
+                <td class="ro"><b>Concesie (Уступка)</b></td>
+                <td><span class="muted">— (недоступно на A1)</span></td>
+                <td><span class="muted">— (не входит в минимум)</span></td>
+                <td><span class="ro"><b>deși, chiar dacă, cu toate că</b></span><br><small>Deși ploua, am plecat la munte.</small></td>
+                <td><span class="ro"><b>în ciuda faptului că, fără să</b></span><br><small>În ciuda ploii, am finalizat lucrarea.</small></td>
+              </tr>
+              <tr class="w" onclick="say('Evoluția scopului: să, ca să, pentru a, în scopul, în vederea')">
+                <td class="ro"><b>Scop (Цель)</b></td>
+                <td><span class="ro"><b>să</b></span><br><small>Am venit să vorbim.</small></td>
+                <td><span class="ro"><b>ca să, pentru a</b></span><br><small>Te-am sunat ca să-ți mulțumesc.</small></td>
+                <td><span class="ro"><b>pentru ca... să</b></span><br><small>A deschis ușa pentru ca aerul să circule.</small></td>
+                <td><span class="ro"><b>în scopul, în vederea</b></span><br><small>A acționat în scopul protejării naturii.</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5.2 MATRICEA CIRCUMSTANTELOR DE TIMP -->
+      <section id="s5_2" data-t="5.2 Матрица времени">
+        <div class="sec-head"><span class="eyebrow">5.2</span><h2>Выражение времени от A1 до B2</h2><span class="ro-title">Exprimarea circumstanțelor de timp pe niveluri</span></div>
+        <p class="prose">Как меняется палитра временных наречий и оборотов:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Тип времени</th><th>Nivel A1</th><th>Nivel A2</th><th>Nivel B1</th><th>Nivel B2</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ro"><b>Situare în timp</b></td>
+                <td><i>când, azi, ieri, mâine, acum, dimineață</i></td>
+                <td><i>atunci, alaltăieri, poimâine, devreme, târziu</i></td>
+                <td><i>oricând, cândva, demult</i></td>
+                <td><i>nicicând, până să, vreodată, de îndată ce</i></td>
+              </tr>
+              <tr>
+                <td class="ro"><b>Anterioritate</b></td>
+                <td><i>deja, anul trecut, acum două ore</i></td>
+                <td><i>înainte de, cu două zile în urmă</i></td>
+                <td><i>înaintea, înainte să, prima dată</i></td>
+                <td><i>imediat ce, anterior, mai întâi</i></td>
+              </tr>
+              <tr>
+                <td class="ro"><b>Posterioritate</b></td>
+                <td><i>apoi, după, anul viitor</i></td>
+                <td><i>după ce, după aceea, peste</i></td>
+                <td><i>chiar după ce, pe urmă</i></td>
+                <td><i>ulterior, începând de atunci</i></td>
+              </tr>
+              <tr>
+                <td class="ro"><b>Frecvență / Iterație</b></td>
+                <td><i>zilnic, în fiecare zi, uneori, niciodată</i></td>
+                <td><i>săptămânal, lunar, lunea, din nou</i></td>
+                <td><i>din când în când, zi de zi, iarăși</i></td>
+                <td><i>ceas de ceas, tot la cinci minute, ori de câte ori</i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5.3 MATRICEA VERBALA -->
+      <section id="s5_3" data-t="5.3 Матрица глагольной системы">
+        <div class="sec-head"><span class="eyebrow">5.3</span><h2>Глагольная система румынского языка в сетке CEFR</h2><span class="ro-title">Sistemul timpurilor și modurilor verbale</span></div>
+        <p class="prose">Эталонное распределение глагольных форм по уровням:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Уровень</th><th>Обязательные времена и наклонения</th><th>Типичная речевая конструкция</th></tr>
+            </thead>
+            <tbody>
+              <tr class="w" onclick="say('A1: Indicativ prezent, Perfect compus, Viitor standard, Imperativ')">
+                <td class="ro"><b>Nivel A1</b></td>
+                <td>Indicativ prezent, Perfect compus (<i>am mers</i>), Viitor literar (<i>voi merge</i>), Imperativ persoana a II-a pl. (<i>Mergeți!</i>), verbe impersonale (<i>mi-e foame, mi-e somn</i>).</td>
+                <td><span class="ro">Astăzi merg la zoo. Ieri am mers la piață. Mâine voi pleca.</span></td>
+              </tr>
+              <tr class="w" onclick="say('A2: Conjunctiv prezent, Viitor popular o să, Verbe reflexive')">
+                <td class="ro"><b>Nivel A2</b></td>
+                <td>Conjunctiv prezent pers. I-VI (<i>să merg, să meargă</i>), Viitor popular (<i>o să merg</i>), Verbe reflexive în Acuzativ și Dativ (<i>mă spăl, îmi amintesc</i>).</td>
+                <td><span class="ro">Vreau ca prietenii mei să vină mâine. O să mă trezesc devreme.</span></td>
+              </tr>
+              <tr class="w" onclick="say('B1: Imperfect, Condițional prezent, Gerunziu, Diateza pasivă')">
+                <td class="ro"><b>Nivel B1</b></td>
+                <td>Imperfectul (<i>mergeam, citeam</i>), Condițional-optativ prezent (<i>aș dori, ai merge</i>), Gerunziu (<i>mergând, citind</i>), Diateza pasivă (<i>este construit</i>).</td>
+                <td><span class="ro">În timp ce citeam, a sunat telefonul. Dacă aș avea bani, aș călători.</span></td>
+              </tr>
+              <tr class="w" onclick="say('B2: Condițional perfect, Conjunctiv perfect, Supin specializat')">
+                <td class="ro"><b>Nivel B2</b></td>
+                <td>Condițional-optativ perfect (<i>aș fi mers, ai fi spus</i>), Conjunctiv perfect (<i>să fi știut</i>), Supin specializat (<i>la cules, pentru curățat</i>), Infinitiv cu «a» (<i>înainte de a pleca</i>).</td>
+                <td><span class="ro">Dacă aș fi știut, aș fi venit mai devreme. Este o problemă greu de rezolvat.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5.4 MORPH STAGE 5: PROGRESSION COMPARATOR -->
+      <section id="s5_4" data-t="5.4 Интерактивный компаратор">
+        <div class="sec-head"><span class="eyebrow">5.4</span><h2>Интерактивный компаратор языковой прогрессии</h2><span class="ro-title">Comparator interactiv de progresie</span></div>
+        <p class="prose">Выберите коммуникативную категорию, чтобы увидеть, как она формулируется на каждом из четырёх уровней:</p>
+        
+        <div class="stage">
+          <div class="modes">
+            <button id="btnProg_salut" onclick="setProgCategory('salut')" aria-pressed="true">Приветствие и статус</button>
+            <button id="btnProg_opozitie" onclick="setProgCategory('opozitie')">Противопоставление</button>
+            <button id="btnProg_cauza" onclick="setProgCategory('cauza')">Причина и аргумент</button>
+            <button id="btnProg_timp" onclick="setProgCategory('timp')">Действие во времени</button>
+          </div>
+          <div class="big" id="progStageBig" onclick="sayProgCurrent()" title="Нажмите, чтобы прослушать">
+            <span class="ro w" id="progText">Servus! / Bună ziua! (A1)</span>
+          </div>
+          <div class="row">
+            <span class="rule" id="progRule">Nivel A1 · Bază</span>
+            <button class="iconbtn" onclick="sayProgCurrent()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="seg">
+              <button id="btnProgLvl_a1" onclick="setProgLvl('a1')" aria-pressed="true">Nivel A1</button>
+              <button id="btnProgLvl_a2" onclick="setProgLvl('a2')">Nivel A2</button>
+              <button id="btnProgLvl_b1" onclick="setProgLvl('b1')">Nivel B1</button>
+              <button id="btnProgLvl_b2" onclick="setProgLvl('b2')">Nivel B2</button>
+            </div>
+          </div>
+          <div class="cap" id="progCap">Базовое неформальное и формальное приветствие: Servus! / Bună ziua!</div>
+        </div>
+      </section>
+    </article>
+
+    <!-- CHAPTER 6: EVALUARE SI TEST INTEGRAT -->
+    <article class="chapter" id="ch6">
+      <header class="hero">
+        <span class="eyebrow">Standard de Evaluare & Certificare · UBB Cluj-Napoca</span>
+        <div class="word" onclick="say('Ghidul de evaluare și testul integrat pe niveluri')" title="Нажмите, чтобы прослушать">Evaluare & Test<span class="badge-lvl">Examen</span><span class="art"></span></div>
+        <h1>Ghidul de evaluare și testul integrat A1–B2</h1>
+        <p class="lede">Методология оценивания знаний румынского языка как иностранного. Как строится реальный сертификационный экзамен и интерактивный тест для определения вашего текущего уровня.</p>
+      </header>
+
+      <!-- 6.1 STRUCTURA EXAMENULUI -->
+      <section id="s6_1" data-t="6.1 Структура экзамена">
+        <div class="sec-head"><span class="eyebrow">6.1</span><h2>Четыре модуля сертификационного экзамена</h2><span class="ro-title">Cele patru probe ale examenului de competență</span></div>
+        <p class="prose">Сертификация уровня владения румынским языком в университетских центрах (UBB, Университет Бухареста, ECL) строится по стандарту Совета Европы и включает 4 независимых модуля:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Модуль</th><th>Формат задания</th><th>Требования стандарта Descrierea minimală</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ro"><b>1. Înțelegerea după auz (Аудирование)</b></td>
+                <td>Прослушивание 2–3 аудиозаписей (объявления, диалоги, радиопередачи, интервью) с тестовыми вопросами.</td>
+                <td>A1: диалоги из 2 участников.<br>A2: объявления на вокзале, автоответчик.<br>B1: радионовости, интервью.<br>B2: сложные дискуссии, лекции.</td>
+              </tr>
+              <tr>
+                <td class="ro"><b>2. Înțelegerea textului scris (Чтение)</b></td>
+                <td>Чтение аутентичных текстов с проверкой детального и глобального понимания (multiple choice, истина/ложь).</td>
+                <td>A1: расписание, меню, афиша.<br>A2: брошюры, инструкции, рецепты.<br>B1: статьи из газет, биографии.<br>B2: аналитические эссе, юридические акты.</td>
+              </tr>
+              <tr>
+                <td class="ro"><b>3. Producerea textului scris (Письмо)</b></td>
+                <td>Написание 1–2 текстов в соответствии с коммуникативной задачей и объёмом слов.</td>
+                <td>A1: открытка, короткое SMS (30–40 слов).<br>A2: личное письмо (60–80 слов).<br>B1: эссе-рассуждение, жалоба (120–150 слов).<br>B2: аргументированное эссе, отчёт (200–250 слов).</td>
+              </tr>
+              <tr>
+                <td class="ro"><b>4. Proba orală (Говорение)</b></td>
+                <td>Собеседование с экзаменатором: монолог по заданной теме + диалог/дебаты со вторым кандидатом.</td>
+                <td>A1: рассказ о себе и семье.<br>A2: описание событий и планов.<br>B1: обоснование мнения, пересказ сюжета.<br>B2: защита тезиса, академическая полемика.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6.2 TESTUL INTEGRAT A1-B2 -->
+      <section id="s6_2" data-t="6.2 Итоговый тест A1-B2">
+        <div class="sec-head"><span class="eyebrow">6.2</span><h2>Комплексный тест определения уровня (A1 → B2)</h2><span class="ro-title">Test integrat de plasare pe niveluri</span></div>
+        <p class="prose">Пройдите 10 контрольных вопросов стандарта Babeș-Bolyai, возрастающих по сложности. В конце система подсчитает ваш балл и определит ориентировочный уровень владения языком:</p>
+
+        <div class="quiz" id="quizMain_box">
+          <div class="qtop"><span id="qMain_count">Вопрос 1 из 10</span><div class="dots" id="qMain_dots"></div></div>
+          <div class="qq" id="qMain_prompt">Загрузка вопроса...</div>
+          <div class="opts" id="qMain_opts"></div>
+          <div class="why" id="qMain_why"></div>
+          <div class="qnav"><button class="btn" id="btnMain_nextQ" onclick="nextQuizMain()" style="display:none">Следующий вопрос →</button></div>
+        </div>
+      </section>
+    </article>
+
+  </main>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   1. SPEECH SYNTHESIS (Clean Romanian TTS Engine)
+   ============================================================ */
+let roVoice = null;
+let currentAudio = null;
+
+function findVoice(){
+  try {
+    if(!('speechSynthesis' in window)) return;
+    const vs = speechSynthesis.getVoices();
+    roVoice = vs.find(v => /^ro/i.test(v.lang)) || null;
+  } catch(e){}
+}
+if('speechSynthesis' in window){
+  findVoice();
+  try { speechSynthesis.addEventListener('voiceschanged', findVoice); } catch(e){}
+}
+
+function say(text){
+  let spokenText = String(text || '').trim();
+  if(!spokenText) return;
+
+  if('speechSynthesis' in window){
+    try { speechSynthesis.cancel(); } catch(e){}
+  }
+  if(currentAudio){
+    try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){}
+    currentAudio = null;
+  }
+
+  // 1. Native Romanian speech voice
+  if(roVoice){
+    try {
+      const u = new SpeechSynthesisUtterance(spokenText);
+      u.voice = roVoice;
+      u.lang = roVoice.lang;
+      u.rate = 0.85;
+      speechSynthesis.speak(u);
+      return;
+    } catch(e){}
+  }
+
+  // 2. Fallback stream: Google TTS stream for authentic Romanian sounds
+  try {
+    const q = encodeURIComponent(spokenText.slice(0, 240));
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ro&client=tw-ob&q=${q}`;
+    currentAudio = new Audio(url);
+    currentAudio.play().catch(() => {});
+  } catch(e){}
+}
+
+/* ============================================================
+   2. CHAPTER NAVIGATION & SECTIONS LIST
+   ============================================================ */
+let currentChapterIdx = 0;
+
+function switchChapter(idx){
+  currentChapterIdx = idx;
+  const articles = document.querySelectorAll('article.chapter');
+  articles.forEach((art, i) => {
+    art.style.display = (i === idx) ? 'flex' : 'none';
+  });
+
+  const buttons = document.querySelectorAll('#chapBtns button');
+  buttons.forEach((btn, i) => {
+    btn.setAttribute('aria-current', i === idx ? 'true' : 'false');
+  });
+
+  const mNav = document.getElementById('mNav');
+  if(mNav) mNav.value = idx;
+
+  try {
+    localStorage.setItem('descrierea_chap', idx);
+  } catch(e){}
+
+  buildSectionList(idx);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildSectionList(chapIdx){
+  const secList = document.getElementById('secList');
+  if(!secList) return;
+  secList.innerHTML = '';
+  const chap = document.getElementById('ch' + chapIdx);
+  if(!chap) return;
+  const sections = chap.querySelectorAll('section');
+  sections.forEach((sec, i) => {
+    const id = sec.id;
+    const title = sec.getAttribute('data-t') || ('Раздел ' + (i+1));
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#${id}"><span>${chapIdx}.${i+1}</span><span>${title}</span></a>`;
+    secList.appendChild(li);
+  });
+}
+
+// Mobile nav change
+const mNavEl = document.getElementById('mNav');
+if(mNavEl){
+  mNavEl.addEventListener('change', (e) => {
+    switchChapter(parseInt(e.target.value, 10));
+  });
+}
+
+// Sidebar buttons
+const chapBtnsEl = document.getElementById('chapBtns');
+if(chapBtnsEl){
+  chapBtnsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const c = parseInt(btn.getAttribute('data-c'), 10);
+    if(!isNaN(c)) switchChapter(c);
+  });
+}
+
+// Scroll progress bar
+function updateProgress(){
+  const scrollH = document.documentElement.scrollHeight - window.innerHeight;
+  if(scrollH <= 0) return;
+  const p = Math.min(100, Math.max(0, (window.scrollY / scrollH) * 100));
+  const pb1 = document.getElementById('progBar');
+  const pb2 = document.getElementById('progBar2');
+  if(pb1) pb1.style.width = p + '%';
+  if(pb2) pb2.style.width = p + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+
+/* ============================================================
+   3. MORPH STAGE 1: ARTICOLE SI GENURI (Nivel A1)
+   ============================================================ */
+const a1Data = {
+  elefant: {
+    nehotSg: { w: 'un elefant', rule: 'Masculin · Nehotărât singular (un)', cap: 'Неопределённый артикль мужского рода: un elefant (какой-то слон)' },
+    hotSg:   { w: 'elefantul', rule: 'Masculin · Hotărât singular (-ul)', cap: 'Определённый энклитический артикль: elefantul (этот конкретный слон)' },
+    nehotPl: { w: 'niște elefanți', rule: 'Masculin · Nehotărât plural (niște)', cap: 'Неопределённый артикль множественного числа: niște elefanți' },
+    hotPl:   { w: 'elefanții', rule: 'Masculin · Hotărât plural (-ii)', cap: 'Определённый артикль множественного числа с чередованием t -> ț: elefanții' }
+  },
+  girafa: {
+    nehotSg: { w: 'o girafă', rule: 'Feminin · Nehotărât singular (o)', cap: 'Неопределённый артикль женского рода: o girafă (какой-то жираф)' },
+    hotSg:   { w: 'girafa', rule: 'Feminin · Hotărât singular (-a)', cap: 'Определённый энклитический артикль: girafa (эта жирафа)' },
+    nehotPl: { w: 'niște girafe', rule: 'Feminin · Nehotărât plural (niște)', cap: 'Неопределённый артикль множ. числа: niște girafe' },
+    hotPl:   { w: 'girafele', rule: 'Feminin · Hotărât plural (-le)', cap: 'Определённый артикль множ. числа: girafele (эти жирафы)' }
+  },
+  parc: {
+    nehotSg: { w: 'un parc', rule: 'Neutru · Nehotărât singular (un)', cap: 'Средний род в единственном числе ведёт себя как мужской: un parc' },
+    hotSg:   { w: 'parcul', rule: 'Neutru · Hotărât singular (-ul)', cap: 'Определённый артикль ед. ч. среднего рода: parcul' },
+    nehotPl: { w: 'niște parcuri', rule: 'Neutru · Nehotărât plural (niște)', cap: 'Во множественном числе средний род принимает окончание -uri (как женский)' },
+    hotPl:   { w: 'parcurile', rule: 'Neutru · Hotărât plural (-le)', cap: 'Определённый артикль множ. ч. среднего рода: parcurile' }
+  },
+  sora: {
+    nehotSg: { w: 'o soră', rule: 'Feminin neregulat · Nehotărât singular', cap: 'Неправильное существительное: o soră (сестра)' },
+    hotSg:   { w: 'sora', rule: 'Feminin neregulat · Hotărât singular', cap: 'Определённая форма единственного числа: sora' },
+    nehotPl: { w: 'niște surori', rule: 'Feminin neregulat · Nehotărât plural', cap: 'Чередование гласной o -> u во множественном числе: surori' },
+    hotPl:   { w: 'surorile', rule: 'Feminin neregulat · Hotărât plural', cap: 'Определённая форма множественного числа: surorile' }
+  },
+  om: {
+    nehotSg: { w: 'un om', rule: 'Masculin neregulat · Nehotărât singular', cap: 'Существительное со сменой основы: un om (человек)' },
+    hotSg:   { w: 'omul', rule: 'Masculin neregulat · Hotărât singular', cap: 'Определённый артикль ед. числа: omul' },
+    nehotPl: { w: 'niște oameni', rule: 'Masculin neregulat · Nehotărât plural', cap: 'Супплетивная форма множественного числа: oameni (люди)' },
+    hotPl:   { w: 'oamenii', rule: 'Masculin neregulat · Hotărât plural', cap: 'Определённая форма множественного числа: oamenii' }
+  }
+};
+let curA1Noun = 'elefant';
+let curA1Art = 'nehotSg';
+
+function setA1Noun(nounKey){
+  curA1Noun = nounKey;
+  ['elefant','girafa','parc','sora','om'].forEach(k => {
+    const b = document.getElementById('btnA1_' + k);
+    if(b) b.setAttribute('aria-pressed', k === nounKey ? 'true' : 'false');
+  });
+  updateA1Stage();
+}
+
+function setA1Art(artKey){
+  curA1Art = artKey;
+  ['nehotSg','hotSg','nehotPl','hotPl'].forEach(k => {
+    const b = document.getElementById('btnA1Art_' + k);
+    if(b) b.setAttribute('aria-pressed', k === artKey ? 'true' : 'false');
+  });
+  updateA1Stage();
+}
+
+function updateA1Stage(){
+  const d = a1Data[curA1Noun][curA1Art];
+  const wEl = document.getElementById('a1Word');
+  const rEl = document.getElementById('a1Rule');
+  const cEl = document.getElementById('a1Cap');
+  if(wEl) wEl.textContent = d.w;
+  if(rEl) rEl.textContent = d.rule;
+  if(cEl) cEl.textContent = d.cap;
+}
+
+function sayA1Current(){
+  const d = a1Data[curA1Noun][curA1Art];
+  say(d.w);
+}
+
+
+/* ============================================================
+   4. MORPH STAGE 2: TIMPURILE VERBALE (Nivel A2)
+   ============================================================ */
+const a2Verbs = {
+  merge: {
+    tail: 'la piață',
+    prez: [
+      { p: 'Eu', v: 'merg', ru: 'Я иду на рынок' },
+      { p: 'Tu', v: 'mergi', ru: 'Ты идёшь на рынок' },
+      { p: 'El / Ea', v: 'merge', ru: 'Он/она идёт на рынок' },
+      { p: 'Noi', v: 'mergem', ru: 'Мы идём на рынок' },
+      { p: 'Voi', v: 'mergeți', ru: 'Вы идёте на рынок' },
+      { p: 'Ei / Ele', v: 'merg', ru: 'Они идут на рынок' }
+    ],
+    pc: [
+      { p: 'Eu', v: 'am mers', ru: 'Я пошёл на рынок' },
+      { p: 'Tu', v: 'ai mers', ru: 'Ты пошёл на рынок' },
+      { p: 'El / Ea', v: 'a mers', ru: 'Он/она пошёл на рынок' },
+      { p: 'Noi', v: 'am mers', ru: 'Мы пошли на рынок' },
+      { p: 'Voi', v: 'ați mers', ru: 'Вы пошли на рынок' },
+      { p: 'Ei / Ele', v: 'au mers', ru: 'Они пошли на рынок' }
+    ],
+    viit: [
+      { p: 'Eu', v: 'o să merg', ru: 'Я пойду на рынок (разговорное будущее)' },
+      { p: 'Tu', v: 'o să mergi', ru: 'Ты пойдёшь на рынок' },
+      { p: 'El / Ea', v: 'o să meargă', ru: 'Он/она пойдёт на рынок' },
+      { p: 'Noi', v: 'o să mergem', ru: 'Мы пойдём на рынок' },
+      { p: 'Voi', v: 'o să mergeți', ru: 'Вы пойдёте на рынок' },
+      { p: 'Ei / Ele', v: 'o să meargă', ru: 'Они пойдут на рынок' }
+    ],
+    conj: [
+      { p: 'Eu vreau', v: 'să merg', ru: 'Я хочу пойти на рынок' },
+      { p: 'Tu vrei', v: 'să mergi', ru: 'Ты хочешь пойти на рынок' },
+      { p: 'El vrea', v: 'să meargă', ru: 'Он хочет пойти на рынок' },
+      { p: 'Noi vrem', v: 'să mergem', ru: 'Мы хотим пойти на рынок' },
+      { p: 'Voi vreți', v: 'să mergeți', ru: 'Вы хотите пойти на рынок' },
+      { p: 'Ei vor', v: 'să meargă', ru: 'Они хотят пойти на рынок' }
+    ]
+  },
+  citi: {
+    tail: 'o carte interesantă',
+    prez: [
+      { p: 'Eu', v: 'citesc', ru: 'Я читаю интересную книгу' },
+      { p: 'Tu', v: 'citești', ru: 'Ты читаешь книгу' },
+      { p: 'El / Ea', v: 'citește', ru: 'Он/она читает книгу' },
+      { p: 'Noi', v: 'citim', ru: 'Мы читаем книгу' },
+      { p: 'Voi', v: 'citiți', ru: 'Вы читаете книгу' },
+      { p: 'Ei / Ele', v: 'citesc', ru: 'Они читают книгу' }
+    ],
+    pc: [
+      { p: 'Eu', v: 'am citit', ru: 'Я прочитал книгу' },
+      { p: 'Tu', v: 'ai citit', ru: 'Ты прочитал книгу' },
+      { p: 'El / Ea', v: 'a citit', ru: 'Он/она прочитал книгу' },
+      { p: 'Noi', v: 'am citit', ru: 'Мы прочитали книгу' },
+      { p: 'Voi', v: 'ați citit', ru: 'Вы прочитали книгу' },
+      { p: 'Ei / Ele', v: 'au citit', ru: 'Они прочитали книгу' }
+    ],
+    viit: [
+      { p: 'Eu', v: 'o să citesc', ru: 'Я буду читать книгу' },
+      { p: 'Tu', v: 'o să citești', ru: 'Ты будешь читать книгу' },
+      { p: 'El / Ea', v: 'o să citească', ru: 'Он/она будет читать книгу' },
+      { p: 'Noi', v: 'o să citim', ru: 'Мы будем читать книгу' },
+      { p: 'Voi', v: 'o să citiți', ru: 'Вы будете читать книгу' },
+      { p: 'Ei / Ele', v: 'o să citească', ru: 'Они будут читать книгу' }
+    ],
+    conj: [
+      { p: 'Eu pot', v: 'să citesc', ru: 'Я могу прочитать книгу' },
+      { p: 'Tu poți', v: 'să citești', ru: 'Ты можешь прочитать книгу' },
+      { p: 'El poate', v: 'să citească', ru: 'Он может прочитать книгу' },
+      { p: 'Noi putem', v: 'să citim', ru: 'Мы можем прочитать книгу' },
+      { p: 'Voi puteți', v: 'să citiți', ru: 'Вы можете прочитать книгу' },
+      { p: 'Ei pot', v: 'să citească', ru: 'Они могут прочитать книгу' }
+    ]
+  },
+  vorbi: {
+    tail: 'limba română',
+    prez: [
+      { p: 'Eu', v: 'vorbesc', ru: 'Я говорю по-румынски' },
+      { p: 'Tu', v: 'vorbești', ru: 'Ты говоришь по-румынски' },
+      { p: 'El / Ea', v: 'vorbește', ru: 'Он/она говорит по-румынски' },
+      { p: 'Noi', v: 'vorbim', ru: 'Мы говорим по-румынски' },
+      { p: 'Voi', v: 'vorbiți', ru: 'Вы говорите по-румынски' },
+      { p: 'Ei / Ele', v: 'vorbesc', ru: 'Они говорят по-румынски' }
+    ],
+    pc: [
+      { p: 'Eu', v: 'am vorbit', ru: 'Я говорил по-румынски' },
+      { p: 'Tu', v: 'ai vorbit', ru: 'Ты говорил по-румынски' },
+      { p: 'El / Ea', v: 'a vorbit', ru: 'Он говорил по-румынски' },
+      { p: 'Noi', v: 'am vorbit', ru: 'Мы говорили по-румынски' },
+      { p: 'Voi', v: 'ați vorbit', ru: 'Вы говорили по-румынски' },
+      { p: 'Ei / Ele', v: 'au vorbit', ru: 'Они говорили по-румынски' }
+    ],
+    viit: [
+      { p: 'Eu', v: 'o să vorbesc', ru: 'Я поговорю по-румынски' },
+      { p: 'Tu', v: 'o să vorbești', ru: 'Ты поговоришь по-румынски' },
+      { p: 'El / Ea', v: 'o să vorbească', ru: 'Он поговорит по-румынски' },
+      { p: 'Noi', v: 'o să vorbim', ru: 'Мы поговорим по-румынски' },
+      { p: 'Voi', v: 'o să vorbiți', ru: 'Вы поговорите по-румынски' },
+      { p: 'Ei / Ele', v: 'o să vorbească', ru: 'Они договорят по-румынски' }
+    ],
+    conj: [
+      { p: 'Trebuie', v: 'să vorbesc', ru: 'Мне нужно говорить по-румынски' },
+      { p: 'Trebuie', v: 'să vorbești', ru: 'Тебе нужно говорить по-румынски' },
+      { p: 'Trebuie', v: 'să vorbească', ru: 'Ему нужно говорить по-румынски' },
+      { p: 'Trebuie', v: 'să vorbim', ru: 'Нам нужно говорить по-румынски' },
+      { p: 'Trebuie', v: 'să vorbiți', ru: 'Вам нужно говорить по-румынски' },
+      { p: 'Trebuie', v: 'să vorbească', ru: 'Им нужно говорить по-румынски' }
+    ]
+  },
+  fi: {
+    tail: 'la Cluj-Napoca',
+    prez: [
+      { p: 'Eu', v: 'sunt', ru: 'Я нахожусь в Клуже' },
+      { p: 'Tu', v: 'ești', ru: 'Ты находишься в Клуже' },
+      { p: 'El / Ea', v: 'este', ru: 'Он/она находится в Клуже' },
+      { p: 'Noi', v: 'suntem', ru: 'Мы находимся в Клуже' },
+      { p: 'Voi', v: 'sunteți', ru: 'Вы находитесь в Клуже' },
+      { p: 'Ei / Ele', v: 'sunt', ru: 'Они находятся в Клуже' }
+    ],
+    pc: [
+      { p: 'Eu', v: 'am fost', ru: 'Я был в Клуже' },
+      { p: 'Tu', v: 'ai fost', ru: 'Ты был в Клуже' },
+      { p: 'El / Ea', v: 'a fost', ru: 'Он был в Клуже' },
+      { p: 'Noi', v: 'am fost', ru: 'Мы были в Клуже' },
+      { p: 'Voi', v: 'ați fost', ru: 'Вы были в Клуже' },
+      { p: 'Ei / Ele', v: 'au fost', ru: 'Они были в Клуже' }
+    ],
+    viit: [
+      { p: 'Eu', v: 'o să fiu', ru: 'Я буду в Клуже' },
+      { p: 'Tu', v: 'o să fii', ru: 'Ты будешь в Клуже' },
+      { p: 'El / Ea', v: 'o să fie', ru: 'Он/она будет в Клуже' },
+      { p: 'Noi', v: 'o să fim', ru: 'Мы будем в Клуже' },
+      { p: 'Voi', v: 'o să fiți', ru: 'Вы будете в Клуже' },
+      { p: 'Ei / Ele', v: 'o să fie', ru: 'Они будут в Клуже' }
+    ],
+    conj: [
+      { p: 'Vreau', v: 'să fiu', ru: 'Я хочу быть в Клуже' },
+      { p: 'Vreau', v: 'să fii', ru: 'Я хочу, чтобы ты был в Клуже' },
+      { p: 'Vreau', v: 'să fie', ru: 'Я хочу, чтобы он был в Клуже' },
+      { p: 'Vrem', v: 'să fim', ru: 'Мы хотим быть в Клуже' },
+      { p: 'Vrem', v: 'să fiți', ru: 'Мы хотим, чтобы вы были в Клуже' },
+      { p: 'Vrem', v: 'să fie', ru: 'Они хотят быть в Клуже' }
+    ]
+  }
+};
+let curA2VerbKey = 'merge';
+let curA2TenseKey = 'prez';
+let curA2PersonIdx = 0;
+
+function setA2Verb(key){
+  curA2VerbKey = key;
+  ['merge','citi','vorbi','fi'].forEach(k => {
+    const b = document.getElementById('btnA2_' + k);
+    if(b) b.setAttribute('aria-pressed', k === key ? 'true' : 'false');
+  });
+  updateA2Stage();
+}
+
+function setA2Tense(tKey){
+  curA2TenseKey = tKey;
+  ['prez','pc','viit','conj'].forEach(k => {
+    const b = document.getElementById('btnA2Tense_' + k);
+    if(b) b.setAttribute('aria-pressed', k === tKey ? 'true' : 'false');
+  });
+  updateA2Stage();
+}
+
+function changeA2Person(dir){
+  const list = a2Verbs[curA2VerbKey][curA2TenseKey];
+  curA2PersonIdx = (curA2PersonIdx + dir + list.length) % list.length;
+  updateA2Stage();
+}
+
+function updateA2Stage(){
+  const verbData = a2Verbs[curA2VerbKey];
+  const item = verbData[curA2TenseKey][curA2PersonIdx];
+  const pEl = document.getElementById('a2Pron');
+  const vEl = document.getElementById('a2Verb');
+  const tEl = document.getElementById('a2Tail');
+  const rEl = document.getElementById('a2Rule');
+  const cEl = document.getElementById('a2Cap');
+  if(pEl) pEl.textContent = item.p;
+  if(vEl) vEl.textContent = item.v;
+  if(tEl) tEl.textContent = verbData.tail;
+  if(rEl) rEl.textContent = `${curA2TenseKey.toUpperCase()} · ${item.p}`;
+  if(cEl) cEl.textContent = item.ru;
+}
+
+function sayA2Current(){
+  const verbData = a2Verbs[curA2VerbKey];
+  const item = verbData[curA2TenseKey][curA2PersonIdx];
+  say(`${item.p} ${item.v} ${verbData.tail}`);
+}
+
+
+/* ============================================================
+   5. MORPH STAGE 3: CLITICE SI IMPERFECTUL (Nivel B1)
+   ============================================================ */
+const b1CliticData = {
+  da: {
+    imp:  { c: 'I-l', v: 'dădeam', tail: 'în fiecare zi', rule: 'Dativ (îi -> i-) + Acuzativ (îl -> -l) + Imperfect', cap: 'Я давал ему это каждый день.' },
+    cond: { c: 'I l-aș', v: 'da', tail: 'dacă mi-ar cere', rule: 'Dativ + Acuzativ + Condițional prezent', cap: 'Я бы дал ему это, если бы он попросил.' },
+    ger:  { c: 'Dându-i-l', v: '', tail: 'pe masă, am plecat', rule: 'Gerunziu cu pronume clitic alipit prin cratimă', cap: 'Положив ему это на стол, я ушёл.' },
+    impv: { c: 'Dă-i-l', v: '', tail: 'imediat colegului tău!', rule: 'Imperativ afirmativ cu dublu clitic', cap: 'Отдай ему это немедленно!' }
+  },
+  spune: {
+    imp:  { c: 'I-o', v: 'spuneam', tail: 'frecvent la telefon', rule: 'Dativ (i-) + Acuzativ fem. (-o) + Imperfect', cap: 'Я говорил ему это часто по телефону.' },
+    cond: { c: 'I-aș', v: 'spune', tail: 'tot adevărul fără ezitare', rule: 'Dativ + Condițional prezent', cap: 'Я сказал бы ему всю правду без колебаний.' },
+    ger:  { c: 'Spunându-i', v: '', tail: 'veștile bune, s-a bucurat', rule: 'Gerunziu cu pronume în Dativ alipit', cap: 'Сказав ему хорошие новости, он обрадовался.' },
+    impv: { c: 'Spune-mi-o', v: '', tail: 'acum în direct!', rule: 'Imperativ cu Dativ (-mi-) + Acuzativ (-o)', cap: 'Скажи мне это прямо сейчас!' }
+  },
+  trimite: {
+    imp:  { c: 'Mi le', v: 'trimitea', tail: 'pe adresa biroului', rule: 'Dativ (mi) + Acuzativ pl. (le) + Imperfect', cap: 'Он присылал мне их на адрес офиса.' },
+    cond: { c: 'Ni le-ar', v: 'trimite', tail: 'dacă ar fi gata', rule: 'Dativ (ni) + Acuzativ (le) + Condițional', cap: 'Он прислал бы их нам, будь они готовы.' },
+    ger:  { c: 'Trimițându-le', v: '', tail: 'la timp, am rezolvat', rule: 'Gerunziu cu clitic de acuzativ', cap: 'Отправив их вовремя, мы решили проблему.' },
+    impv: { c: 'Trimite-ni-le', v: '', tail: 'prin curier rapid!', rule: 'Imperativ cu clitic compus', cap: 'Пришли нам их со срочным курьером!' }
+  },
+  aminti: {
+    imp:  { c: 'Îmi', v: 'aminteam', tail: 'mereu de anii de studenție', rule: 'Reflexiv în Dativ + Imperfect', cap: 'Я всегда вспоминал студенческие годы.' },
+    cond: { c: 'Și-ar', v: 'aminti', tail: 'cu drag dacă l-ai întreba', rule: 'Reflexiv în Dativ + Condițional', cap: 'Он вспомнил бы с удовольствием, спроси ты его.' },
+    ger:  { c: 'Amintindu-și', v: '', tail: 'detaliile, a zâmbit', rule: 'Gerunziu reflexiv', cap: 'Вспоминая детали, он улыбнулся.' },
+    impv: { c: 'Amintește-ți', v: '', tail: 'ce am promis ieri!', rule: 'Imperativ reflexiv', cap: 'Вспомни, что мы обещали вчера!' }
+  }
+};
+let curB1Verb = 'da';
+let curB1Tense = 'imp';
+
+function setB1Clitic(verbKey){
+  curB1Verb = verbKey;
+  ['da','spune','trimite','aminti'].forEach(k => {
+    const b = document.getElementById('btnB1_' + k);
+    if(b) b.setAttribute('aria-pressed', k === verbKey ? 'true' : 'false');
+  });
+  updateB1Stage();
+}
+
+function setB1Tense(tKey){
+  curB1Tense = tKey;
+  ['imp','cond','ger','impv'].forEach(k => {
+    const b = document.getElementById('btnB1T_' + k);
+    if(b) b.setAttribute('aria-pressed', k === tKey ? 'true' : 'false');
+  });
+  updateB1Stage();
+}
+
+function updateB1Stage(){
+  const d = b1CliticData[curB1Verb][curB1Tense];
+  const cEl = document.getElementById('b1Clitic');
+  const vEl = document.getElementById('b1Verb');
+  const tEl = document.getElementById('b1Tail');
+  const rEl = document.getElementById('b1Rule');
+  const capEl = document.getElementById('b1Cap');
+  if(cEl) cEl.textContent = d.c;
+  if(vEl) vEl.textContent = d.v;
+  if(tEl) tEl.textContent = d.tail;
+  if(rEl) rEl.textContent = d.rule;
+  if(capEl) capEl.textContent = d.cap;
+}
+
+function sayB1Current(){
+  const d = b1CliticData[curB1Verb][curB1Tense];
+  say(`${d.c} ${d.v} ${d.tail}`);
+}
+
+
+/* ============================================================
+   6. MORPH STAGE 4: CONDITIONALUL PERFECT SI SUPINUL (Nivel B2)
+   ============================================================ */
+const b2ModesData = {
+  pleca: {
+    condPerf: { pre: 'Dacă aș fi avut timp,', v: 'aș fi plecat', tail: 'la munte', rule: 'Condițional-optativ perfect', cap: 'Нереальное условие в прошлом: Если бы у меня было время, я бы уехал в горы.' },
+    conjPerf: { pre: 'Mă bucur nespus', v: 'să fi plecat', tail: 'împreună cu ei', rule: 'Conjunctiv perfect (să fi + participiu)', cap: 'Я несказанно рад, что уехал вместе с ними.' },
+    supin:    { pre: 'Bagajul este gata', v: 'de plecat', tail: 'în orice clipă', rule: 'Supin cu valoare finală (de + participiu)', cap: 'Багаж готов к отъезду в любую секунду.' },
+    inf:      { pre: 'Înainte de', v: 'a pleca', tail: 'la gară, am verificat biletul', rule: 'Infinitiv lung cu prepoziția «a»', cap: 'Перед отъездом на вокзал я проверил билет.' }
+  },
+  face: {
+    condPerf: { pre: 'Dacă m-ai fi avertizat,', v: 'aș fi făcut', tail: 'totul altfel', rule: 'Condițional-optativ perfect', cap: 'Если бы ты меня предупредил, я бы сделал всё иначе.' },
+    conjPerf: { pre: 'Era imposibil', v: 'să fi făcut', tail: 'o asemenea eroare gravă', rule: 'Conjunctiv perfect', cap: 'Было невозможно сделать столь грубую ошибку.' },
+    supin:    { pre: 'Acesta este un exercițiu', v: 'ușor de făcut', tail: 'pentru nivelul B2', rule: 'Supin după adjective (ușor de)', cap: 'Это упражнение, лёгкое для выполнения на уровне B2.' },
+    inf:      { pre: 'Fără a', v: 'face', tail: 'nicio greșeală, a trecut testul', rule: 'Infinitiv negativ cu «fără a»', cap: 'Не сделав ни единой ошибки, он сдал тест.' }
+  },
+  ajunge: {
+    condPerf: { pre: 'Dacă trenul nu întârzia,', v: 'am fi ajuns', tail: 'la timp la conferință', rule: 'Condițional perfect pers. I pl', cap: 'Если бы поезд не опоздал, мы прибыли бы вовремя на конференцию.' },
+    conjPerf: { pre: 'Ar fi fost de dorit', v: 'să fi ajuns', tail: 'înaintea deschiderii', rule: 'Conjunctiv perfect', cap: 'Было бы желательно приехать до открытия.' },
+    supin:    { pre: 'Destinația este', v: 'greu de atins', tail: 'pe timp de iarnă', rule: 'Supin de calificare', cap: 'До этого пункта назначения тяжело добраться зимой.' },
+    inf:      { pre: 'Pentru a', v: 'ajunge', tail: 'la un nivel avansat, e nevoie de efort', rule: 'Infinitiv de scop cu «pentru a»', cap: 'Чтобы достичь продвинутого уровня, нужны усилия.' }
+  },
+  spune: {
+    condPerf: { pre: 'Dacă aș fi știut,', v: 'ți-aș fi spus', tail: 'imediat adevărul', rule: 'Condițional perfect cu pronume în Dativ', cap: 'Если бы я знал, я бы сразу сказал тебе правду.' },
+    conjPerf: { pre: 'E regretabil', v: 'să nu fi spus', tail: 'nimic la ședință', rule: 'Conjunctiv perfect negativ', cap: 'Достойно сожаления, что он ничего не сказал на заседании.' },
+    supin:    { pre: 'Povestea este fascinantă', v: 'de spus', tail: 'prietenilor dragi', rule: 'Supin', cap: 'Эта история увлекательна для пересказа дорогим друзьям.' },
+    inf:      { pre: 'În loc de a', v: 'spune', tail: 'lucruri inutile, a preferat să tacă', rule: 'Infinitiv cu «în loc de a»', cap: 'Вместо пустых слов он предпочёл промолчать.' }
+  }
+};
+let curB2Verb = 'pleca';
+let curB2Mode = 'condPerf';
+
+function setB2Verb(k){
+  curB2Verb = k;
+  ['pleca','face','ajunge','spune'].forEach(x => {
+    const b = document.getElementById('btnB2_' + x);
+    if(b) b.setAttribute('aria-pressed', x === k ? 'true' : 'false');
+  });
+  updateB2Stage();
+}
+
+function setB2Mode(m){
+  curB2Mode = m;
+  ['condPerf','conjPerf','supin','inf'].forEach(x => {
+    const b = document.getElementById('btnB2M_' + x);
+    if(b) b.setAttribute('aria-pressed', x === m ? 'true' : 'false');
+  });
+  updateB2Stage();
+}
+
+function updateB2Stage(){
+  const d = b2ModesData[curB2Verb][curB2Mode];
+  const pEl = document.getElementById('b2Prefix');
+  const vEl = document.getElementById('b2Verb');
+  const tEl = document.getElementById('b2Tail');
+  const rEl = document.getElementById('b2Rule');
+  const cEl = document.getElementById('b2Cap');
+  if(pEl) pEl.textContent = d.pre;
+  if(vEl) vEl.textContent = d.v;
+  if(tEl) tEl.textContent = d.tail;
+  if(rEl) rEl.textContent = d.rule;
+  if(cEl) cEl.textContent = d.cap;
+}
+
+function sayB2Current(){
+  const d = b2ModesData[curB2Verb][curB2Mode];
+  say(`${d.pre} ${d.v} ${d.tail}`);
+}
+
+
+/* ============================================================
+   7. MORPH STAGE 5: PROGRESSION COMPARATOR (A1 -> B2)
+   ============================================================ */
+const progData = {
+  salut: {
+    a1: { t: 'Servus, Maria! / Bună ziua! (A1)', r: 'Nivel A1 · Formule directe simple', c: 'Базовое приветствие при встрече со знакомыми или на улице.' },
+    a2: { t: 'Sărut-mâna, doamnă! / Bună dimineața! (A2)', r: 'Nivel A2 · Formule de politețe tradițională', c: 'Уважительное обращение к старшим и женщинам.' },
+    b1: { t: 'Vă salut, domnule Popescu! Ce plăcere să vă revăd! (B1)', r: 'Nivel B1 · Formule de menținere a conversației', c: 'Элегантное приветствие с выражением искренней радости от встречи.' },
+    b2: { t: 'Stimate domnule director, vă transmit întreaga mea considerație. (B2)', r: 'Nivel B2 · Registru protocolar academic și oficial', c: 'Высший дипломатический и деловой регистр общения.' }
+  },
+  opozitie: {
+    a1: { t: 'E cald, dar plouă. (A1)', r: 'Nivel A1 · Conectorul «dar»', c: 'Простейшее соединение двух противоположных фактов через союзы dar / însă.' },
+    a2: { t: 'Maria vrea la munte, iar Carmen la mare. (A2)', r: 'Nivel A2 · Conectorii «iar, ci»', c: 'Дифференциация субъектов и прямое противопоставление после отрицания (nu... ci).' },
+    b1: { t: 'În loc de ceai, a comandat cafea. Altfel nu se trezea. (B1)', r: 'Nivel B1 · Locuțiuni «în loc de / în loc să, altfel»', c: 'Альтернатива и условие-угроза («иначе не проснулся бы»).' },
+    b2: { t: 'Spre deosebire de ce s-a afirmat, eu consider măsura utilă. (B2)', r: 'Nivel B2 · Locuțiuni «spre deosebire de, în schimb, pe când»', c: 'Академическая полемика с формулировкой собственного альтернативного взгляда.' }
+  },
+  cauza: {
+    a1: { t: 'Nu am venit pentru că nu am avut timp. (A1)', r: 'Nivel A1 · Conectorul «pentru că / că»', c: 'Прямая причинная связь простого предложения.' },
+    a2: { t: 'Am întârziat din cauza traficului aglomerat. (A2)', r: 'Nivel A2 · Prepoziția «din cauza + Genitiv»', c: 'Оформление причины через отглагольное существительное в родительном падеже.' },
+    b1: { t: 'A refuzat oferta, deoarece condițiile erau inacceptabile. (B1)', r: 'Nivel B1 · Conectorul «deoarece / fiindcă»', c: 'Формальное обоснование в связном повествовании.' },
+    b2: { t: 'Întrucât termenul a expirat, contractul este reziliat de drept. (B2)', r: 'Nivel B2 · Conectorul «întrucât / din pricină că»', c: 'Юридическая и аналитическая причинно-следственная детерминация.' }
+  },
+  timp: {
+    a1: { t: 'Ieri am fost la Cluj. Mâine voi pleca la București. (A1)', r: 'Nivel A1 · Prezent, Perfect compus, Viitor literar', c: 'Прямая линейная временная шкала (вчера, сегодня, завтра).' },
+    a2: { t: 'După ce termin cursurile, o să merg la bibliotecă. (A2)', r: 'Nivel A2 · Posterioritate (după ce) și Viitor popular', c: 'Согласование придаточного времени с разговорным будущим временем.' },
+    b1: { t: 'În timp ce citeam, a început furtuna. (B1)', r: 'Nivel B1 · Imperfect + Perfect compus (simultaneitate)', c: 'Классическое сочетание длительного фона (Imperfect) с точечным событием (Perfect compus).' },
+    b2: { t: 'De îndată ce am primit raportul, am inițiat procedura. (B2)', r: 'Nivel B2 · Imediatețe și anterioritate avansată', c: 'Мгновенное следование одного сложного действия за другим (de îndată ce / imediat ce).' }
+  }
+};
+let curProgCat = 'salut';
+let curProgLvl = 'a1';
+
+function setProgCategory(cat){
+  curProgCat = cat;
+  ['salut','opozitie','cauza','timp'].forEach(k => {
+    const b = document.getElementById('btnProg_' + k);
+    if(b) b.setAttribute('aria-pressed', k === cat ? 'true' : 'false');
+  });
+  updateProgStage();
+}
+
+function setProgLvl(lvl){
+  curProgLvl = lvl;
+  ['a1','a2','b1','b2'].forEach(k => {
+    const b = document.getElementById('btnProgLvl_' + k);
+    if(b) b.setAttribute('aria-pressed', k === lvl ? 'true' : 'false');
+  });
+  updateProgStage();
+}
+
+function updateProgStage(){
+  const d = progData[curProgCat][curProgLvl];
+  const tEl = document.getElementById('progText');
+  const rEl = document.getElementById('progRule');
+  const cEl = document.getElementById('progCap');
+  if(tEl) tEl.textContent = d.t;
+  if(rEl) rEl.textContent = d.r;
+  if(cEl) cEl.textContent = d.c;
+}
+
+function sayProgCurrent(){
+  const d = progData[curProgCat][curProgLvl];
+  say(d.t);
+}
+
+
+/* ============================================================
+   8. INTERACTIVE EXERCISE CHECKERS
+   ============================================================ */
+function checkEx(exId){
+  const inputs = document.querySelectorAll(`input[id^="${exId}_"]`);
+  let allOk = true;
+  inputs.forEach((inp) => {
+    const valid = (inp.getAttribute('data-k') || '').split('|').map(s => s.trim().toLowerCase());
+    const userVal = inp.value.trim().toLowerCase();
+    if(valid.includes(userVal)){
+      inp.className = 'ans ok';
+    } else {
+      inp.className = 'ans bad';
+      allOk = false;
+    }
+  });
+  const fb = document.getElementById('fb_' + exId);
+  if(fb){
+    if(allOk){
+      fb.className = 'ex-feedback ok';
+      fb.textContent = '✓ Excelent! Toate răspunsurile sunt absolut corecte.';
+    } else {
+      fb.className = 'ex-feedback bad';
+      fb.textContent = '✗ Există greșeli. Verificați tabelele de mai sus sau apăsați «Показать ключ».';
+    }
+  }
+}
+
+function showKey(exId){
+  const inputs = document.querySelectorAll(`input[id^="${exId}_"]`);
+  inputs.forEach((inp) => {
+    const key = (inp.getAttribute('data-k') || '').split('|')[0];
+    inp.value = key;
+    inp.className = 'ans ok';
+  });
+  const fb = document.getElementById('fb_' + exId);
+  if(fb){
+    fb.className = 'ex-feedback ok';
+    fb.textContent = 'Răspunsurile corecte au fost completate conform standardului.';
+  }
+}
+
+
+/* ============================================================
+   9. QUIZZES (A1, A2, B1, B2, Main Test)
+   ============================================================ */
+// --- QUIZ A1 ---
+const qA1Questions = [
+  {
+    q: 'Какая форма артикля является правильной: «... fată este studentă la Cluj»?',
+    opts: ['Un', 'O', 'Niște', 'Oamenii'],
+    correct: 1,
+    why: 'Существительное «fată» относится к женскому роду, неопределённый артикль женского рода единственного числа — «o».'
+  },
+  {
+    q: 'Как правильно сказать: «У жирафа много сестёр»?',
+    opts: ['Girafa are mulți frați.', 'Girafa are multe surori.', 'Girafa are multă surori.', 'Girafa are niște sora.'],
+    correct: 1,
+    why: 'Множественное число от soră — surori (женский род), согласуется с определителем multe.'
+  },
+  {
+    q: 'Выберите верную форму родительного падежа для мужского имени: «Bicicleta ... este albastră»:',
+    opts: ['Mariei', 'lui Vlad', 'la Vlad', 'unui Vlad'],
+    correct: 1,
+    why: 'С мужскими именами собственными в румынском языке притяжательность оформляется частицей lui: lui Vlad.'
+  },
+  {
+    q: 'Какая фраза выражает противопоставление уровня A1: «E cald, ... plouă»?',
+    opts: ['dar', 'deși', 'spre deosebire de', 'în caz contrar'],
+    correct: 0,
+    why: 'Базовым сочинительным союзом противопоставления на уровне A1 является «dar».'
+  },
+  {
+    q: 'Как переводится речевая формула вежливости: «— Mulțumesc! — ...»?',
+    opts: ['Pardon!', 'Cu plăcere!', 'La revedere!', 'Poftă bună!'],
+    correct: 1,
+    why: 'Стандартный ответ на благодарность на уровне A1 — «Cu plăcere!» (Пожалуйста / С удовольствием).'
+  }
+];
+let qA1Cur = 0, qA1Score = 0;
+
+function renderQuizA1(){
+  const q = qA1Questions[qA1Cur];
+  document.getElementById('qA1_count').textContent = `Вопрос ${qA1Cur+1} из ${qA1Questions.length}`;
+  document.getElementById('qA1_prompt').textContent = q.q;
+  const dotsEl = document.getElementById('qA1_dots');
+  dotsEl.innerHTML = qA1Questions.map((_, i) => `<i class="${i===qA1Cur?'cur':''}"></i>`).join('');
+  const optsEl = document.getElementById('qA1_opts');
+  optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizA1(${i})">${opt}</button>`).join('');
+  document.getElementById('qA1_why').textContent = '';
+  document.getElementById('btnA1_nextQ').style.display = 'none';
+}
+
+function answerQuizA1(idx){
+  const q = qA1Questions[qA1Cur];
+  const btns = document.querySelectorAll('#qA1_opts button');
+  const isOk = (idx === q.correct);
+  if(isOk) qA1Score++;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+  document.getElementById('qA1_why').textContent = (isOk ? '✓ Верно! ' : '✗ Неверно. ') + q.why;
+  const dots = document.querySelectorAll('#qA1_dots i');
+  if(dots[qA1Cur]) dots[qA1Cur].className = isOk ? 'ok' : 'no';
+  document.getElementById('btnA1_nextQ').style.display = 'inline-block';
+}
+
+function nextQuizA1(){
+  qA1Cur++;
+  if(qA1Cur < qA1Questions.length){
+    renderQuizA1();
+  } else {
+    const box = document.getElementById('quizA1_box');
+    const pct = Math.round((qA1Score / qA1Questions.length) * 100);
+    box.innerHTML = `
+      <div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center">
+        <span class="eyebrow">Результат Nivel A1</span>
+        <div class="score">${qA1Score} из ${qA1Questions.length} (${pct}%)</div>
+        <p class="prose" style="text-align:center">${pct >= 80 ? 'Поздравляем! Ваш уровень A1 полностью соответствует академическому стандарту Babeș-Bolyai.' : 'Рекомендуем повторить склонение артиклей и базовые глаголы a fi, a merge, a avea.'}</p>
+        <button class="btn" onclick="restartQuizA1()">Пройти тест A1 заново</button>
+      </div>`;
+  }
+}
+
+function restartQuizA1(){
+  qA1Cur = 0; qA1Score = 0;
+  const box = document.getElementById('quizA1_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qA1_count"></span><div class="dots" id="qA1_dots"></div></div>
+    <div class="qq" id="qA1_prompt"></div>
+    <div class="opts" id="qA1_opts"></div>
+    <div class="why" id="qA1_why"></div>
+    <div class="qnav"><button class="btn" id="btnA1_nextQ" onclick="nextQuizA1()" style="display:none">Следующий вопрос →</button></div>`;
+  renderQuizA1();
+}
+
+
+// --- QUIZ A2 ---
+const qA2Questions = [
+  {
+    q: 'Выберите правильное окончание дательного падежа: «Girafa îi telefonează ...»:',
+    opts: ['elefantul', 'elefantului', 'lui elefant', 'un elefant'],
+    correct: 1,
+    why: 'Дательный падеж мужского рода единственного числа с определённым артиклем имеет окончание -ului: elefantului.'
+  },
+  {
+    q: 'Какая форма выражает сравнительную степень: «Girafa este ... decât elefantul»?',
+    opts: ['cea mai înaltă', 'foarte înaltă', 'mai înaltă', 'la fel înaltă'],
+    correct: 2,
+    why: 'Сравнительная степень образуется с помощью наречия mai + прилагательное + decât: mai înaltă decât.'
+  },
+  {
+    q: 'Какая форма глагола требуется: «Vreau ca Maria ... cu noi»?',
+    opts: ['merge', 'să meargă', 'o să meargă', 'a mers'],
+    correct: 1,
+    why: 'После глагола волеизъявления «a vrea» в 3-м лице используется Conjunctiv prezent: să meargă.'
+  },
+  {
+    q: 'Какой союз используется в качестве «а именно / но» после отрицания: «Nu vreau ceai, ... cafea»?',
+    opts: ['dar', 'însă', 'ci', 'sau'],
+    correct: 2,
+    why: 'В румынском языке после отрицания для замены отвергнутого факта используется противительный союз «ci».'
+  },
+  {
+    q: 'Как правильно ответить на пожелание «— Drum bun!»?',
+    opts: ['— Pentru puțin!', '— Mulțumesc, la fel!', '— Nicio problemă!', '— Îmi pare rău!'],
+    correct: 1,
+    why: 'Традиционный вежливый ответ на пожелание счастливого пути или приятного аппетита: «Mulțumesc, la fel!» (Спасибо, взаимно!).'
+  }
+];
+let qA2Cur = 0, qA2Score = 0;
+
+function renderQuizA2(){
+  const q = qA2Questions[qA2Cur];
+  document.getElementById('qA2_count').textContent = `Вопрос ${qA2Cur+1} из ${qA2Questions.length}`;
+  document.getElementById('qA2_prompt').textContent = q.q;
+  const dotsEl = document.getElementById('qA2_dots');
+  dotsEl.innerHTML = qA2Questions.map((_, i) => `<i class="${i===qA2Cur?'cur':''}"></i>`).join('');
+  const optsEl = document.getElementById('qA2_opts');
+  optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizA2(${i})">${opt}</button>`).join('');
+  document.getElementById('qA2_why').textContent = '';
+  document.getElementById('btnA2_nextQ').style.display = 'none';
+}
+
+function answerQuizA2(idx){
+  const q = qA2Questions[qA2Cur];
+  const btns = document.querySelectorAll('#qA2_opts button');
+  const isOk = (idx === q.correct);
+  if(isOk) qA2Score++;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+  document.getElementById('qA2_why').textContent = (isOk ? '✓ Верно! ' : '✗ Неверно. ') + q.why;
+  const dots = document.querySelectorAll('#qA2_dots i');
+  if(dots[qA2Cur]) dots[qA2Cur].className = isOk ? 'ok' : 'no';
+  document.getElementById('btnA2_nextQ').style.display = 'inline-block';
+}
+
+function nextQuizA2(){
+  qA2Cur++;
+  if(qA2Cur < qA2Questions.length){
+    renderQuizA2();
+  } else {
+    const box = document.getElementById('quizA2_box');
+    const pct = Math.round((qA2Score / qA2Questions.length) * 100);
+    box.innerHTML = `
+      <div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center">
+        <span class="eyebrow">Результат Nivel A2</span>
+        <div class="score">${qA2Score} из ${qA2Questions.length} (${pct}%)</div>
+        <p class="prose" style="text-align:center">${pct >= 80 ? 'Великолепно! Уровень A2 освоен уверенно. Вы готовы перейти к уровню B1.' : 'Потренируйтесь в образовании родительного/дательного падежей и спряжении сослагательного наклонения.'}</p>
+        <button class="btn" onclick="restartQuizA2()">Пройти тест A2 заново</button>
+      </div>`;
+  }
+}
+
+function restartQuizA2(){
+  qA2Cur = 0; qA2Score = 0;
+  const box = document.getElementById('quizA2_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qA2_count"></span><div class="dots" id="qA2_dots"></div></div>
+    <div class="qq" id="qA2_prompt"></div>
+    <div class="opts" id="qA2_opts"></div>
+    <div class="why" id="qA2_why"></div>
+    <div class="qnav"><button class="btn" id="btnA2_nextQ" onclick="nextQuizA2()" style="display:none">Следующий вопрос →</button></div>`;
+  renderQuizA2();
+}
+
+
+// --- QUIZ B1 ---
+const qB1Questions = [
+  {
+    q: 'Какая форма притяжательного артикля согласуется со словом «ochelari» (очки): «Ochelarii sunt ... elefantului»?',
+    opts: ['al', 'a', 'ai', 'ale'],
+    correct: 2,
+    why: 'Слово «ochelari» относится к мужскому роду множественного числа, притяжательный артикль — «ai».'
+  },
+  {
+    q: 'Какая форма глагола выражает длительное прошедшее время: «În timp ce el ..., a sunat telefonul»?',
+    opts: ['citește', 'a citit', 'citea', 'o să citească'],
+    correct: 2,
+    why: 'Для выражения протяжённого фонового действия в прошлом используется Imperfectul: citea.'
+  },
+  {
+    q: 'Как звучит правильное обращение в звательном падеже (Vocativ) к господину директору?',
+    opts: ['Domn director!', 'Domnul director!', 'Domnule director!', 'La domnul director!'],
+    correct: 2,
+    why: 'Форма вокатива от domn — «domnule».'
+  },
+  {
+    q: 'Какой союз переводится как «хотя / несмотря на то что»: «... ploua, am mers pe jos»?',
+    opts: ['Deși', 'Pentru că', 'În loc de', 'Altfel'],
+    correct: 0,
+    why: 'Уступительным союзом уровня B1 является «deși» (или chiar dacă / cu toate că).'
+  },
+  {
+    q: 'Что означает традиционное свадебное пожелание «Casă de piatră!»?',
+    opts: ['Удачного переезда в новую квартиру', 'Крепкого брака и счастливой семейной жизни', 'Быстрого завершения ремонта', 'Богатства и каменных стен'],
+    correct: 1,
+    why: 'В румынской культуре фразеологизм «Casă de piatră» желает молодожёнам прочности союза, как у каменного дома.'
+  }
+];
+let qB1Cur = 0, qB1Score = 0;
+
+function renderQuizB1(){
+  const q = qB1Questions[qB1Cur];
+  document.getElementById('qB1_count').textContent = `Вопрос ${qB1Cur+1} из ${qB1Questions.length}`;
+  document.getElementById('qB1_prompt').textContent = q.q;
+  const dotsEl = document.getElementById('qB1_dots');
+  dotsEl.innerHTML = qB1Questions.map((_, i) => `<i class="${i===qB1Cur?'cur':''}"></i>`).join('');
+  const optsEl = document.getElementById('qB1_opts');
+  optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizB1(${i})">${opt}</button>`).join('');
+  document.getElementById('qB1_why').textContent = '';
+  document.getElementById('btnB1_nextQ').style.display = 'none';
+}
+
+function answerQuizB1(idx){
+  const q = qB1Questions[qB1Cur];
+  const btns = document.querySelectorAll('#qB1_opts button');
+  const isOk = (idx === q.correct);
+  if(isOk) qB1Score++;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+  document.getElementById('qB1_why').textContent = (isOk ? '✓ Верно! ' : '✗ Неверно. ') + q.why;
+  const dots = document.querySelectorAll('#qB1_dots i');
+  if(dots[qB1Cur]) dots[qB1Cur].className = isOk ? 'ok' : 'no';
+  document.getElementById('btnB1_nextQ').style.display = 'inline-block';
+}
+
+function nextQuizB1(){
+  qB1Cur++;
+  if(qB1Cur < qB1Questions.length){
+    renderQuizB1();
+  } else {
+    const box = document.getElementById('quizB1_box');
+    const pct = Math.round((qB1Score / qB1Questions.length) * 100);
+    box.innerHTML = `
+      <div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center">
+        <span class="eyebrow">Результат Nivel B1</span>
+        <div class="score">${qB1Score} из ${qB1Questions.length} (${pct}%)</div>
+        <p class="prose" style="text-align:center">${pct >= 80 ? 'Блестяще! Пороговый уровень B1 подтверждён. Вы свободно владеете сложными временами и нормами связности.' : 'Обратите внимание на времена Imperfect и Condițional prezent.'}</p>
+        <button class="btn" onclick="restartQuizB1()">Пройти тест B1 заново</button>
+      </div>`;
+  }
+}
+
+function restartQuizB1(){
+  qB1Cur = 0; qB1Score = 0;
+  const box = document.getElementById('quizB1_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qB1_count"></span><div class="dots" id="qB1_dots"></div></div>
+    <div class="qq" id="qB1_prompt"></div>
+    <div class="opts" id="qB1_opts"></div>
+    <div class="why" id="qB1_why"></div>
+    <div class="qnav"><button class="btn" id="btnB1_nextQ" onclick="nextQuizB1()" style="display:none">Следующий вопрос →</button></div>`;
+  renderQuizB1();
+}
+
+
+// --- QUIZ B2 ---
+const qB2Questions = [
+  {
+    q: 'Какая конструкция выражает нереальное условие в прошлом: «Dacă ... din timp, nu aș fi întârziat»?',
+    opts: ['aș fi știut', 'aș ști', 'știu', 'să știu'],
+    correct: 0,
+    why: 'Кондиционал прошедшего времени (Condițional-optativ perfect) строится: вспомогательный глагол + fi + причастие (aș fi știut).'
+  },
+  {
+    q: 'Какая форма притяжательного артикля нужна во фразе: «Interviul elefantului și ... girafei»?',
+    opts: ['a', 'al', 'ai', 'ale'],
+    correct: 1,
+    why: 'Поскольку главное слово «interviu» мужского/среднего рода ед. ч., повторяющийся перед вторым определением артикль — «al».'
+  },
+  {
+    q: 'Выберите союз строгого противопоставления со значением «в противном случае»:',
+    opts: ['de asemenea', 'în caz contrar', 'întrucât', 'pe deasupra'],
+    correct: 1,
+    why: 'Официальный противительный оборот B2 — «în caz contrar».'
+  },
+  {
+    q: 'Как грамматически квалифицируется выделенная форма: «Este o problemă ușor DE REZOLVAT»?',
+    opts: ['Gerunziu', 'Infinitiv', 'Supin', 'Participiu pasiv'],
+    correct: 2,
+    why: 'Конструкция предлог (de, pentru, la) + причастие образует румынский супин (Supinul).'
+  },
+  {
+    q: 'Какое из местоимений относится к регистру высокой вежливости 3-го лица женского рода?',
+    opts: ['dumnealui', 'dânsa', 'ea', 'dumneata'],
+    correct: 1,
+    why: 'Форма «dânsa» (или «dumneaei») является вежливой заменой местоимения 3-го лица женского рода «ea».'
+  }
+];
+let qB2Cur = 0, qB2Score = 0;
+
+function renderQuizB2(){
+  const q = qB2Questions[qB2Cur];
+  document.getElementById('qB2_count').textContent = `Вопрос ${qB2Cur+1} из ${qB2Questions.length}`;
+  document.getElementById('qB2_prompt').textContent = q.q;
+  const dotsEl = document.getElementById('qB2_dots');
+  dotsEl.innerHTML = qB2Questions.map((_, i) => `<i class="${i===qB2Cur?'cur':''}"></i>`).join('');
+  const optsEl = document.getElementById('qB2_opts');
+  optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizB2(${i})">${opt}</button>`).join('');
+  document.getElementById('qB2_why').textContent = '';
+  document.getElementById('btnB2_nextQ').style.display = 'none';
+}
+
+function answerQuizB2(idx){
+  const q = qB2Questions[qB2Cur];
+  const btns = document.querySelectorAll('#qB2_opts button');
+  const isOk = (idx === q.correct);
+  if(isOk) qB2Score++;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+  document.getElementById('qB2_why').textContent = (isOk ? '✓ Верно! ' : '✗ Неверно. ') + q.why;
+  const dots = document.querySelectorAll('#qB2_dots i');
+  if(dots[qB2Cur]) dots[qB2Cur].className = isOk ? 'ok' : 'no';
+  document.getElementById('btnB2_nextQ').style.display = 'inline-block';
+}
+
+function nextQuizB2(){
+  qB2Cur++;
+  if(qB2Cur < qB2Questions.length){
+    renderQuizB2();
+  } else {
+    const box = document.getElementById('quizB2_box');
+    const pct = Math.round((qB2Score / qB2Questions.length) * 100);
+    box.innerHTML = `
+      <div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center">
+        <span class="eyebrow">Результат Nivel B2</span>
+        <div class="score">${qB2Score} из ${qB2Questions.length} (${pct}%)</div>
+        <p class="prose" style="text-align:center">${pct >= 80 ? 'Превосходно! Вы в совершенстве ориентируетесь в нормах уровня B2 (Vantage), требуемых для университетского обучения и профессиональной практики в Румынии.' : 'Рекомендуем повторить Condiționalul perfect и употребление супина.'}</p>
+        <button class="btn" onclick="restartQuizB2()">Пройти тест B2 заново</button>
+      </div>`;
+  }
+}
+
+function restartQuizB2(){
+  qB2Cur = 0; qB2Score = 0;
+  const box = document.getElementById('quizB2_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qB2_count"></span><div class="dots" id="qB2_dots"></div></div>
+    <div class="qq" id="qB2_prompt"></div>
+    <div class="opts" id="qB2_opts"></div>
+    <div class="why" id="qB2_why"></div>
+    <div class="qnav"><button class="btn" id="btnB2_nextQ" onclick="nextQuizB2()" style="display:none">Следующий вопрос →</button></div>`;
+  renderQuizB2();
+}
+
+
+// --- MAIN INTEGRATED TEST (10 QUESTIONS A1-B2) ---
+const qMainQuestions = [
+  { q: '[A1] Какое окончание имеет определённый артикль мужского рода: «bărbat...»?', opts: ['-a', '-ul', '-le', '-i'], correct: 1, why: 'Существительные мужского рода, оканчивающиеся на согласный, принимают артикль -ul: bărbatul.' },
+  { q: '[A1] Как сказать «У меня болит голова / Мне хочется спать»?', opts: ['Mi-e somn', 'Sunt somn', 'Am somn', 'Fac somn'], correct: 0, why: 'В румынском языке физиологические состояния выражаются безличной конструкцией: Mi-e somn / Mi-e foame.' },
+  { q: '[A2] Какая форма выражает превосходную степень: «acest elefant este ... mare»?',
+    opts: ['cel mai', 'mai', 'foarte', 'la fel de'], correct: 0, why: 'Относительное превосходство выражается оборотом cel mai (cel mai mare).' },
+  { q: '[A2] Выберите форму сослагательного наклонения 3-го лица: «Ei vor ...»:',
+    opts: ['să vină', 'să vin', 'o să vină', 'au venit'], correct: 0, why: 'Форма 3-го лица Conjunctiv prezent от a veni — să vină.' },
+  { q: '[B1] Какой падеж выражен во фразе «Băieți, fiți atenți!»?',
+    opts: ['Genitiv', 'Dativ', 'Vocativ', 'Acuzativ'], correct: 2, why: 'Прямое обращение во множественном числе «Băieți!» — это звательный падеж (Vocativ).' },
+  { q: '[B1] В каком времени стоит глагол: «Noi mergeam la facultate în fiecare dimineață»?',
+    opts: ['Prezent', 'Imperfect', 'Perfect compus', 'Mai-mult-ca-perfect'], correct: 1, why: 'Форма mergeam представляет собой прошедшее незавершённое время (Imperfectul).' },
+  { q: '[B1] Какой союз вводит придаточное уступки: «... a încercat din răsputeri, nu a reușit»?',
+    opts: ['Deși', 'Pentru că', 'Dacă', 'Înainte să'], correct: 0, why: 'Союз «Deși» выражает уступку (Хотя он изо всех сил старался...).' },
+  { q: '[B2] Какая глагольная форма использована: «Dacă m-ai fi chemat, aș fi venit»?',
+    opts: ['Condițional-optativ perfect', 'Conjunctiv perfect', 'Imperfect', 'Viitor anterior'], correct: 0, why: 'Конструкция ai fi chemat / aș fi venit — это сослагательно-условное наклонение прошедшего времени.' },
+  { q: '[B2] Что означает предложный оборот «grație eforturilor voastre»?',
+    opts: ['Вопреки вашим усилиям', 'Благодаря вашим усилиям', 'Вместо ваших усилий', 'По причине ваших ошибок'], correct: 1, why: 'Предлог grație (как и datorită / mulțumită) требует дательного падежа и переводится «благодаря».' },
+  { q: '[B2] Как переводится логический коннектор «pe deasupra»?',
+    opts: ['Сверху вниз', 'В противном случае', 'К тому же / вдобавок', 'Вместо этого'], correct: 2, why: 'Оборот pe deasupra выражает добавочный аргумент («к тому же, вдобавок ко всему»).' }
+];
+let qMainCur = 0, qMainScore = 0;
+
+function renderQuizMain(){
+  const q = qMainQuestions[qMainCur];
+  document.getElementById('qMain_count').textContent = `Вопрос ${qMainCur+1} из ${qMainQuestions.length}`;
+  document.getElementById('qMain_prompt').textContent = q.q;
+  const dotsEl = document.getElementById('qMain_dots');
+  dotsEl.innerHTML = qMainQuestions.map((_, i) => `<i class="${i===qMainCur?'cur':''}"></i>`).join('');
+  const optsEl = document.getElementById('qMain_opts');
+  optsEl.innerHTML = q.opts.map((opt, i) => `<button onclick="answerQuizMain(${i})">${opt}</button>`).join('');
+  document.getElementById('qMain_why').textContent = '';
+  document.getElementById('btnMain_nextQ').style.display = 'none';
+}
+
+function answerQuizMain(idx){
+  const q = qMainQuestions[qMainCur];
+  const btns = document.querySelectorAll('#qMain_opts button');
+  const isOk = (idx === q.correct);
+  if(isOk) qMainScore++;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.className = 'ok';
+    else if(i === idx && !isOk) btn.className = 'no';
+  });
+  document.getElementById('qMain_why').textContent = (isOk ? '✓ Верно! ' : '✗ Неверно. ') + q.why;
+  const dots = document.querySelectorAll('#qMain_dots i');
+  if(dots[qMainCur]) dots[qMainCur].className = isOk ? 'ok' : 'no';
+  document.getElementById('btnMain_nextQ').style.display = 'inline-block';
+}
+
+function nextQuizMain(){
+  qMainCur++;
+  if(qMainCur < qMainQuestions.length){
+    renderQuizMain();
+  } else {
+    const box = document.getElementById('quizMain_box');
+    const pct = Math.round((qMainScore / qMainQuestions.length) * 100);
+    let levelEst = 'Nivel A1 (Începător)';
+    if(qMainScore >= 9) levelEst = 'Nivel B2 (Vantage / Avansat independent)';
+    else if(qMainScore >= 7) levelEst = 'Nivel B1 (Threshold / Independent)';
+    else if(qMainScore >= 4) levelEst = 'Nivel A2 (Waystage / Elementar)';
+
+    box.innerHTML = `
+      <div style="text-align:center;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center">
+        <span class="eyebrow">Итог комплексного тестирования</span>
+        <div class="score">${qMainScore} из ${qMainQuestions.length} (${pct}%)</div>
+        <div style="font-family:var(--f-display);font-size:1.4rem;font-weight:700;color:var(--red)">Ориентировочный уровень: ${levelEst}</div>
+        <p class="prose" style="text-align:center">
+          ${qMainScore >= 7 ? 'Вы демонстрируете свободное понимание нормативной румынской грамматики и связности текста по шкале Совета Европы.' : 'Рекомендуется уделить внимание поуровневым разделам стандарта и повторить сложные грамматические структуры.'}
+        </p>
+        <button class="btn" onclick="restartQuizMain()">Пройти комплексный тест заново</button>
+      </div>`;
+  }
+}
+
+function restartQuizMain(){
+  qMainCur = 0; qMainScore = 0;
+  const box = document.getElementById('quizMain_box');
+  box.innerHTML = `
+    <div class="qtop"><span id="qMain_count"></span><div class="dots" id="qMain_dots"></div></div>
+    <div class="qq" id="qMain_prompt"></div>
+    <div class="opts" id="qMain_opts"></div>
+    <div class="why" id="qMain_why"></div>
+    <div class="qnav"><button class="btn" id="btnMain_nextQ" onclick="nextQuizMain()" style="display:none">Следующий вопрос →</button></div>`;
+  renderQuizMain();
+}
+
+
+/* ============================================================
+   10. INITIALIZATION
+   ============================================================ */
+let initialChap = 0;
+try {
+  const saved = localStorage.getItem('descrierea_chap');
+  if(saved !== null) initialChap = parseInt(saved, 10) || 0;
+} catch(e){}
+
+switchChapter(initialChap);
+updateA1Stage();
+updateA2Stage();
+updateB1Stage();
+updateB2Stage();
+updateProgStage();
+
+renderQuizA1();
+renderQuizA2();
+renderQuizB1();
+renderQuizB2();
+renderQuizMain();
+</script>
+</body>
+</html>

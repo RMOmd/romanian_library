@@ -46,10 +46,10 @@ h1 .art{color:var(--red)}
 .stats b{color:var(--ink);font-family:var(--f-mono);font-weight:400}
 
 /* bookcase */
-.case{display:flex;flex-direction:column;gap:34px}
-.shelf{display:flex;flex-direction:column;gap:0}
+.case{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:32px 24px}
+.shelf{display:flex;flex-direction:column;gap:0;max-width:490px;width:100%;margin:0 auto}
 .shelf-name{font-family:var(--f-display);font-style:italic;color:var(--red);font-size:1.1rem;margin-bottom:8px}
-.row{position:relative;display:flex;align-items:flex-end;gap:6px;padding:44px 22px 0;min-height:280px;overflow-x:auto;overflow-y:hidden;
+.row{position:relative;display:flex;align-items:flex-end;gap:5px;padding:44px 16px 0;min-height:280px;overflow-x:auto;overflow-y:hidden;
   background:linear-gradient(180deg,var(--back),var(--back) 70%,color-mix(in srgb,var(--back) 80%,#000 20%));border-radius:6px 6px 0 0;
   box-shadow:inset 0 10px 18px -12px rgba(0,0,0,.35),inset 8px 0 14px -10px rgba(0,0,0,.3),inset -8px 0 14px -10px rgba(0,0,0,.3);scrollbar-width:thin}
 .plank{height:18px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,var(--wood-hi),var(--wood) 45%,var(--wood-lo));box-shadow:0 8px 14px -8px rgba(0,0,0,.45)}
@@ -57,7 +57,7 @@ h1 .art{color:var(--red)}
   width:var(--w);height:var(--h);background:var(--c1);color:var(--c2);
   box-shadow:inset 3px 0 0 rgba(255,255,255,.12),inset -4px 0 6px rgba(0,0,0,.25),0 2px 4px rgba(0,0,0,.25);
   transform-origin:bottom center;transition:transform .35s cubic-bezier(.2,.9,.3,1.2),box-shadow .3s;
-  animation:arrive .7s cubic-bezier(.2,.9,.3,1.1) both;animation-delay:calc(var(--i)*110ms + 150ms);
+  animation:arrive .5s cubic-bezier(.2,.9,.3,1.1) both;animation-delay:calc(var(--d, 0ms) + 50ms);
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding-block:14px 12px}
 @keyframes arrive{from{transform:translateY(-40px) rotate(-4deg);opacity:0}}
 .spine:hover{transform:translateY(-10px)}
@@ -69,7 +69,7 @@ h1 .art{color:var(--red)}
 .spine .yr{font-family:var(--f-mono);font-size:.72rem;opacity:.85}
 .spine .badge{position:absolute;top:-9px;right:-6px;background:var(--red);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:1px 6px;border-radius:999px;text-transform:uppercase}
 .slot{flex:none;width:var(--w);height:var(--h);border:2px dashed var(--ghost);border-radius:3px;display:grid;place-items:center;color:var(--ink-3);font-size:.7rem;text-align:center;
-  writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;text-transform:uppercase;opacity:.9;animation:arrive .7s ease both;animation-delay:calc(var(--i)*110ms + 150ms)}
+  writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;text-transform:uppercase;opacity:.9;animation:arrive .5s ease both;animation-delay:calc(var(--d, 0ms) + 50ms)}
 .bookend{flex:none;width:16px;height:120px;background:linear-gradient(90deg,var(--wood-lo),var(--wood));border-radius:3px 3px 0 0;margin-left:auto}
 
 /* card */
@@ -157,15 +157,29 @@ const BOOKS=[
   desc:'Учебник для самого начала: картинки вместо слов, приветствия, еда, дом, одежда, город, врач, вокзал, гостиница. Грамматика объяснена по-русски, упражнения превращены в интерактивные, словарь — карточки с картинками и озвучкой.',
   chapters:['Salut. Mă prezint','Facem cunoștință','Unde locuiesc','Ce mănânc','Locuința mea','Cum mă îmbrac','În oraș. La farmacie','Corpul','Alo? Taxi?','La doctor','Recapitulare. Evaluare','La gară','În tren','La hotel','În oraș','Recapitulare parțială'],
   features:['16 уроков, 2 итоговых теста','Картинки учебника в упражнениях','Объяснения на русском','Ответы составлены редактором (в учебнике нет ключа)']},
+ {id:'brancus',file:'books/manual-studenti-straini.html',shelf:'Учебники',
+  title:'Limba română. Manual pentru studenții străini',spineTitle:'Manual studenți străini',ro:'Manual pentru studenții străini · Anul pregătitor (Semestrul I)',
+  author:'Г. Брынкуш, А. Ионеску, М. Сараманду',spineAuthor:'Brâncuș',year:1996,publisher:'Бухарест: Editura Universității București',pages:456,
+  colors:['#7a1c30','#fbf9f5','#d49a37'],mark:'UniBuc',
+  desc:'Фундаментальный академический курс Бухарестского университета для подготовительного отделения: вводно-фонетический курс, 38 аутентичных уроков, систематическая морфология и синтаксис от «a fi» до сослагательного наклонения, супина и пассивного залога, тексты о культуре (Эминеску, Брынкуши, Блага). Интерактивное издание: чистая румынская озвучка, интерактивные тренажёры спряжения и падежей, упражнения с самопроверкой и экзаменационный тест.',
+  chapters:['Fonetică și alfabet','Lecțiile 1–7: Baza','Lecțiile 8–15: Trecut','Lecțiile 16–20: Cazuri','Lecțiile 21–28: Sintaxă','Lecțiile 29–38: Cultură','Tabele și Examen'],chapterStart:0,
+  features:['Вводный курс и 38 уроков Бухарестского университета','Чистый румынский синтез речи (0 лишних файлов)','Интерактивные morph-тренажёры времён и падежей','Упражнения с проверкой по ключу к каждому блоку','Итоговый университетский экзамен A1–B2']},
  {id:'legko',file:'books/rumynskij-legko-i-prosto.html',shelf:'Самоучители',
   title:'Румынский легко и просто. Самоучитель для начинающих',spineTitle:'Легко и просто',ro:'Româna ușor și simplu · Curs pentru începători',
   author:'А. Вулпе, А. Завадски, И. Гуцу',spineAuthor:'Вулпе',year:2015,publisher:'Кишинёв: Biblion',pages:304,
   colors:['#b83227','#fff5eb','#e67e22'],mark:'A1',
   desc:'Полный практический самоучитель: вводно-фонетический курс, 20 уроков грамматики от a fi до сослагательного, условного и пассивного залогов, живые диалоги в Кишинёве и Бухаресте, упражнения с самопроверкой по ключам. Интерактивное издание: чистая румынская озвучка, интерактивные морф-тренажёры спряжений и итоговый экзамен.',
   chapters:['Алфавит и фонетика','Урок 1: Знакомство, a fi, род','Урок 2: Артикль un/o, предлоги','Урок 3: Мн. число, a avea','Урок 4: Артикль -ul/-a, глаголы I','Урок 5: Прилагательные, суффикс -ez','Урок 6: Семья, падежи','Урок 7: Особые глаголы, счет >20','Урок 8: Календарь, глаголы II','Урок 9: Глаголы III, a putea','Урок 10: Глаголы IV, степени сравнения','Урок 11: Глаголы на -esc, Acuzativ, город','Урок 12: Возвратные глаголы, Dativ','Урок 13: Прошедшее (Perfect compus)','Урок 14: Сослагательное (Conjunctiv)','Урок 15: Повелительное (Imperativ)','Урок 16: Условное (Condițional)','Урок 17: Будущее I standard','Урок 18: Будущее разговорное (o să)','Урок 19: Прошедшее Imperfectul','Урок 20: Пассивный залог, деепричастие, супин','Контрольный практикум и тесты'],chapterStart:0,
-  features:['Вводный курс и 20 полных уроков','Чистый румынский синтез речи (0 лишних файлов)','14 интерактивных morph-виджетов спряжения','Интерактивные упражнения с ключами к каждому уроку','Итоговый экзаменационный тест']}
+  features:['Вводный курс и 20 полных уроков','Чистый румынский синтез речи (0 лишних файлов)','14 интерактивных morph-виджетов спряжения','Интерактивные упражнения с ключами к каждому уроку','Итоговый экзаменационный тест']},
+ {id:'descrierea',file:'books/descrierea-minimala.html',shelf:'Стандарты и уровни',
+  title:'Descrierea minimală a limbii române (A1, A2, B1, B2)',spineTitle:'Descrierea minimală',ro:'Descrierea minimală a limbii române · Standard RLS / RLNM',
+  author:'Е. Платон, И. Сонея, Л. Васиу, Д. Вылку',spineAuthor:'Platon',year:2012,publisher:'Клуж-Напока: Universitatea Babeș-Bolyai',pages:97,
+  colors:['#1b3a4b','#f8f9fa','#e06d53'],mark:'A1–B2',
+  desc:'Официальный европейский языковой стандарт румынского языка как иностранного (CEFR / RLS). Полное поуровневое описание от A1 до B2: коммуникативные функции, речевые акты, грамматические формы, лексические сферы, типы текстов и матрицы связности. Интерактивное издание: эталонное произношение, сравнительные морф-тренажёры и тесты для каждого уровня.',
+  chapters:['Введение и методология RLS','Nivel A1: Începător','Nivel A2: Elementar','Nivel B1: Intermediar','Nivel B2: Avansat','Сравнительная матрица A1–B2','Оценка и сертификация'],chapterStart:0,
+  features:['Полный стандарт 4 уровней CEFR (A1–B2)','Живая озвучка речевых актов и диалогов','Сравнительный тренажёр прогрессии структур','Интерактивные упражнения с самопроверкой','5 проверочных тестов для сертификации']}
 ];
-const SLOTS_PER_SHELF=6;
+const SLOTS_PER_SHELF=5;
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -180,13 +194,16 @@ function render(){
   if(!shelves.length)shelves.push('Полка');
   const pages=BOOKS.reduce((s,b)=>s+(b.pages||0),0);
   $('#stats').innerHTML=`<span><b>${BOOKS.length}</b> ${plural(BOOKS.length,'книга','книги','книг')}</span><span><b>${pages}</b> ${plural(pages,'страница','страницы','страниц')} оригиналов</span><span><b>${shelves.length}</b> ${plural(shelves.length,'полка','полки','полок')}</span>`;
-  let i=0;
-  $('#case').innerHTML=shelves.map(sh=>{
+  $('#case').innerHTML=shelves.map((sh,shIdx)=>{
     const bs=BOOKS.filter(b=>b.shelf===sh);
-    const books=bs.map(b=>{const w=Math.max(60,Math.min(92,44+b.pages/3)),h=Math.max(214,Math.min(240,200+b.pages/2));
-      return `<button class="spine" style="${vars(b)};--w:${w}px;--h:${h}px;--i:${i++}" data-id="${b.id}" aria-pressed="${b.id===sel}" aria-label="${esc(b.title)}">${last===b.id?'<span class="badge">читаю</span>':''}<span><span class="band"></span><span class="band b2"></span></span><span class="t">${esc(b.spineTitle||b.title)}</span><span class="a">${esc(b.spineAuthor||b.author)}</span><span class="yr">${b.year||''}</span></button>`}).join('');
+    let itemIdx=0;
+    const books=bs.map(b=>{const w=Math.max(54,Math.min(80,40+b.pages/3.5)),h=Math.max(214,Math.min(240,200+b.pages/2));
+      const d=shIdx*90+itemIdx*45; itemIdx++;
+      return `<button class="spine" style="${vars(b)};--w:${w}px;--h:${h}px;--d:${d}ms" data-id="${b.id}" aria-pressed="${b.id===sel}" aria-label="${esc(b.title)}">${last===b.id?'<span class="badge">читаю</span>':''}<span><span class="band"></span><span class="band b2"></span></span><span class="t">${esc(b.spineTitle||b.title)}</span><span class="a">${esc(b.spineAuthor||b.author)}</span><span class="yr">${b.year||''}</span></button>`}).join('');
     const hs=[205,190,218,198,210,186];
-    const slots=Array.from({length:Math.max(2,SLOTS_PER_SHELF-bs.length)},(_,k)=>`<div class="slot" style="--w:${[58,64,52,70,60,56][k%6]}px;--h:${hs[k%6]}px;--i:${i++}" aria-hidden="true">${k===0?'скоро':''}</div>`).join('');
+    const slots=Array.from({length:Math.max(0,SLOTS_PER_SHELF-bs.length)},(_,k)=>{
+      const d=shIdx*90+itemIdx*45; itemIdx++;
+      return `<div class="slot" style="${vars({colors:['#3a4860','#e2e8f0','#829ab1']})};--w:${[52,58,48,62,54][k%5]}px;--h:${hs[k%6]}px;--d:${d}ms" aria-hidden="true">${k===0?'скоро':''}</div>`}).join('');
     return `<section class="shelf" aria-label="Полка: ${esc(sh)}"><div class="shelf-name">${esc(sh)}</div><div class="row">${books}${slots}<div class="bookend" aria-hidden="true"></div></div><div class="plank" aria-hidden="true"></div></section>`;
   }).join('');
   renderDetail();
